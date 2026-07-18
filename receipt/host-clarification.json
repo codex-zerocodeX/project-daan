@@ -1,0 +1,48 @@
+{
+  "receipt_id": "host_clarification",
+  "receipt_type": "host_clarification",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Rafaello",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "pending",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "question": [
+    {
+      "question_code": "local_build_period",
+      "answer": null,
+      "source_excerpt": null
+    },
+    {
+      "question_code": "public_reuse",
+      "answer": null,
+      "source_excerpt": null
+    },
+    {
+      "question_code": "model_requirement",
+      "answer": null,
+      "source_excerpt": null
+    },
+    {
+      "question_code": "demo_duration",
+      "answer": null,
+      "source_excerpt": null
+    },
+    {
+      "question_code": "judge_route",
+      "answer": null,
+      "source_excerpt": null
+    },
+    {
+      "question_code": "devpost_route",
+      "answer": null,
+      "source_excerpt": null
+    }
+  ]
+}

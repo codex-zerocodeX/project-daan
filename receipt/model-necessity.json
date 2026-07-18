@@ -1,0 +1,23 @@
+{
+  "receipt_id": "model_necessity",
+  "receipt_type": "model_necessity",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Gelo",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "pending",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "candidate_code": null,
+  "comparison": {
+    "model_job": null,
+    "with_model_outcome": null,
+    "without_model_outcome": null,
+    "is_material_loss_observed": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "receipt_id": "quota_check",
+  "receipt_type": "quota_check",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Gelo",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "not_required",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "quota_state": null,
+  "request_state": null,
+  "request_acknowledgement_ref": null
+}

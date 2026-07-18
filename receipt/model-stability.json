@@ -1,0 +1,44 @@
+{
+  "receipt_id": "model_stability",
+  "receipt_type": "model_stability",
+  "evidence_tier": "tier_2",
+  "state": "pending",
+  "owner": "Gelo",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "not_applicable",
+    "redaction_state": "not_applicable",
+    "is_personal_data_included": false
+  },
+  "candidate_code": null,
+  "schema_sha256": null,
+  "run": [
+    {
+      "run_code": "run_1",
+      "output_sha256": null,
+      "schema_sha256": null,
+      "duration_millisecond": null,
+      "is_schema_valid": false,
+      "error_code": null
+    },
+    {
+      "run_code": "run_2",
+      "output_sha256": null,
+      "schema_sha256": null,
+      "duration_millisecond": null,
+      "is_schema_valid": false,
+      "error_code": null
+    },
+    {
+      "run_code": "run_3",
+      "output_sha256": null,
+      "schema_sha256": null,
+      "duration_millisecond": null,
+      "is_schema_valid": false,
+      "error_code": null
+    }
+  ]
+}
