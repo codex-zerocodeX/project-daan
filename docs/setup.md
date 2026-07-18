@@ -29,6 +29,8 @@ cp apps/mobile/.env.example apps/mobile/.env
 | --- | --- |
 | `SUPABASE_URL` | API only |
 | `SUPABASE_SERVICE_ROLE_KEY` | API only; never expose to mobile or web |
+| `OPENAI_API_KEY` | Optional API-only credential for route explanations; never expose to mobile or web |
+| `OPENAI_MODEL` | Optional explanation model override |
 | `PORT` | Optional API port, default `8787` |
 | `EXPO_PUBLIC_SUPABASE_URL` | Public mobile configuration |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Public mobile client key |
@@ -63,9 +65,33 @@ Development signing uses local credential configuration. `credentials.json`, `cr
 
 The display name is Alitaptap, while the current slug, scheme, application ID, and EAS UUID remain compatibility identifiers. See the [brand contract](brand.md) before changing native identity.
 
+## Web deployment
+
+The public fixture demo is [project-daan.pages.dev](https://project-daan.pages.dev/). It is a manual Cloudflare Pages project with no Git provider, so merging `main` does not deploy automatically.
+
+From a clean `main` checkout, run the full root gate and then publish the generated web directory:
+
+```bash
+npm ci
+npm run build
+npm run typecheck
+npm run lint
+npm run test
+node script/route-flow.mjs
+
+npx --yes wrangler@4 pages deploy apps/web/dist \
+  --project-name project-daan \
+  --branch codex/daan-integration \
+  --commit-hash "$(git rev-parse HEAD)" \
+  --commit-dirty=false
+```
+
+The Pages production-branch label is a retained compatibility identifier; the attached commit must be the clean `main` SHA. After deployment, verify the public alias, the immutable deployment URL printed by Wrangler, the 390 px route flow, and browser console errors. This procedure does not deploy `apps/api` or submit a native mobile build.
+
 ## Troubleshooting
 
 - **Map is blank:** confirm the device is online and the configured tile source is reachable.
 - **Community cannot load:** confirm the API is running and `EXPO_PUBLIC_API_URL` uses a LAN address on physical hardware.
 - **Auth fails:** confirm both migrations were applied and the mobile app uses the anonymous key.
 - **Workspace binary is missing:** run `npm ci` from the repository root.
+- **Pages deploy becomes a preview:** use the retained production branch label shown in the deployment command above.

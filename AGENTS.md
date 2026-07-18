@@ -47,4 +47,5 @@ Alitaptap is an evidence-first commuter-intelligence platform for the Philippine
 - Mobile needs a development build; Expo Go does not load native MapLibre.
 - Physical devices need a LAN-reachable `EXPO_PUBLIC_API_URL`.
 - The web MapLibre chunk is currently large; build warning is known and should be handled as a performance task, not hidden.
+- The public web demo is deployed manually to the Cloudflare Pages project `project-daan`; it is not Git-connected. Release only a clean, gated `main` build using the compatibility production-branch label documented in `docs/setup.md`.
 - `routing-engine` is not yet exercised by the root workspace gate.

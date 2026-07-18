@@ -54,7 +54,7 @@ Geometry uses a 4 px spacing basis, 14 px web card radius, pill chips, and one s
 | Repository front door | Alitaptap | `README.md` | README truth check |
 | Repository description | Evidence-first commuter intelligence for the Philippines | GitHub repository setting | GitHub API read-back |
 
-No canonical public URL or deployment exists yet, so canonical-link and absolute social-image metadata remain intentionally unset.
+The current public fixture demo is [project-daan.pages.dev](https://project-daan.pages.dev/). The compatibility URL is not a final branded domain, so canonical-link and absolute social-image metadata remain intentionally unset until a domain decision is coordinated.
 
 ## Technical compatibility identifier
 
