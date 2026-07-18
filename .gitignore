@@ -9,3 +9,5 @@ dist-check/
 .DS_Store
 .superpowers/
 /.claude/
+credentials.json
+credentials/
