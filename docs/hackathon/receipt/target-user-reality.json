@@ -1,0 +1,26 @@
+{
+  "receipt_id": "target_user_reality",
+  "receipt_type": "target_user_reality",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Rafaello",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "pending",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "candidate_code": null,
+  "participant_role": null,
+  "interview": {
+    "current_workflow": null,
+    "failure": null,
+    "workaround": null,
+    "practical_cost": null,
+    "exact_language": null,
+    "interpretation": null
+  }
+}

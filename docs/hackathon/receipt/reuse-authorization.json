@@ -1,0 +1,31 @@
+{
+  "receipt_id": "reuse_authorization",
+  "receipt_type": "reuse_authorization",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Gelo",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "pending",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "candidate_code": null,
+  "authorization": [
+    {
+      "authorization_code": "source_right",
+      "source_ref": null,
+      "permission_scope": null,
+      "attribution_requirement": null
+    },
+    {
+      "authorization_code": "host_reuse",
+      "source_ref": null,
+      "permission_scope": null,
+      "attribution_requirement": null
+    }
+  ]
+}

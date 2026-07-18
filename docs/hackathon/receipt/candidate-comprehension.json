@@ -1,0 +1,34 @@
+{
+  "receipt_id": "candidate_comprehension",
+  "receipt_type": "candidate_comprehension",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Rafaello",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "pending",
+    "redaction_state": "pending",
+    "is_personal_data_included": false
+  },
+  "candidate_code": null,
+  "observer_role": null,
+  "retell": {
+    "causal_state_change": null,
+    "decisive_visible_evidence": null
+  },
+  "criterion": [
+    {
+      "criterion_code": "rank_comparison",
+      "applies_to_candidate_code": "saan_tayo",
+      "observation": null
+    },
+    {
+      "criterion_code": "editable_assumption",
+      "applies_to_candidate_code": "saan_tayo",
+      "observation": null
+    }
+  ]
+}

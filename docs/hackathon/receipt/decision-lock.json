@@ -1,0 +1,77 @@
+{
+  "receipt_id": "decision_lock",
+  "receipt_type": "decision_lock",
+  "evidence_tier": "tier_3",
+  "state": "pending",
+  "owner": "Gelo and Rafaello",
+  "captured_at": null,
+  "source_ref": null,
+  "artifact_sha256": null,
+  "claim_boundary": null,
+  "privacy": {
+    "consent_state": "not_applicable",
+    "redaction_state": "not_applicable",
+    "is_personal_data_included": false
+  },
+  "selected_candidate_code": null,
+  "fallback_candidate_code": "build_receipt",
+  "candidate": [
+    {
+      "candidate_code": "saan_tayo",
+      "state": "pending",
+      "failed_gate": null
+    },
+    {
+      "candidate_code": "tumpak",
+      "state": "pending",
+      "failed_gate": null
+    },
+    {
+      "candidate_code": "clean_route",
+      "state": "pending",
+      "failed_gate": null
+    },
+    {
+      "candidate_code": "build_receipt",
+      "state": "fallback",
+      "failed_gate": null
+    }
+  ],
+  "dependency": [
+    {
+      "receipt_type": "host_clarification",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "quota_check",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "candidate_comprehension",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "target_user_reality",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "reuse_authorization",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "model_stability",
+      "required_state": "passed",
+      "candidate_code": null
+    },
+    {
+      "receipt_type": "model_necessity",
+      "required_state": "passed",
+      "candidate_code": null
+    }
+  ]
+}
