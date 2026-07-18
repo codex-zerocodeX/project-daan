@@ -1,5 +1,7 @@
 # Prompt
 
+> **Historical naming note.** These July 2026 prompts use **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 These prompts preserve repeatable thinking outside chat history. Replace bracketed fields before use. Each implementation prompt must contain an explicit stop point.
 
 ## Rule normalization
@@ -23,7 +25,7 @@ Using context.md, asset.md, research.md, and framework/competition.md, run five 
 ## Idea refinement (event-day starting prompt)
 
 ```text
-You are a skeptical hackathon co-founder helping refine one idea for the OpenAI Community Buildathon Manila (July 18, 2026, Ateneo). Hard constraint: all code starts today; roughly 3 hours 35 minutes of total build time across two sprints; submission hard cutoff 3:00 PM; team of [team size]; judged on working build quality, usefulness, and visible Codex impact — a working state today beats a promised feature.
+You are a skeptical hackathon co-founder helping refine one idea for the OpenAI Community Buildathon Manila (July 18, 2026, Ateneo). Hard constraint: all code starts today; roughly 3 hours 35 minutes of total build time across two sprints; submission hard cutoff 3:00 PM; team of [team size]. Before scoring, pass Clean Start, Runs Live, and Claims Have Evidence. Then optimize equally for Codex Craft, Product Judgment, and Problem & Insight. Scores are only 10, 8, 7, or 5, and judges ask for one material Codex improvement from today.
 
 My raw idea: [describe the idea in 2–5 sentences, however rough].
 
@@ -66,7 +68,7 @@ Rules: cite primary sources (product pages, docs, papers), prefer current pages 
 ## Daan platform deep research — moats, strategy, bottlenecks (July 18)
 
 ```text
-Stress-test the strategy of Project Daan, a modular commuter-intelligence platform for Metro Manila. Do not flatter it; your job is to find where it dies. Context: one shared "receipt engine" — evidence in (public data, community reports, later partner feeds), deterministic score out, per-item evidence links, unknowns explicitly disclosed. Modules: M1 route walkability receipts (OpenStreetMap + live weather — built, working); M2 community reports weighted by contributor karma; M3 station/terminal queue states as a report kind; M4 opt-in walk-miles with future partner rewards; M5 route-condition intelligence via partnerships. Free for commuters, no signup to consume; revenue thesis is institutional (LGU/DPWH dashboards of worst-scored pedestrian routes, before/after evidence for sidewalk projects) and partner-sponsored incentives. Claimed moats: (a) the auditable evidence receipt with admitted data gaps, vs. black-box scores; (b) Philippine route-level coverage no global player prioritizes; (c) community evidence with credibility weighting, seeded by behavior that already exists unpaid on r/HowToGetTherePH; (d) modular engine so new evidence sources plug in without new apps.
+Stress-test the strategy of Project Daan, a modular commuter-intelligence platform for Metro Manila. Do not flatter it; your job is to find where it dies. Context: one shared "receipt engine" — evidence in (public data, community reports, later partner feeds), deterministic score out, per-item evidence links, unknowns explicitly disclosed. Current proof is fixture-bounded: M1 route choice, walkability receipt, weather/time comparison, and M2 community interaction work on a local Katipunan graph and disclosed evidence fixtures; live OSM/Overpass, live weather, shared backend, GPT explanation, M4 walk-miles, and M5 partner intelligence are not shipped. Free for commuters, no signup to consume; revenue thesis is institutional (LGU/DPWH dashboards of worst-scored pedestrian routes, before/after evidence for sidewalk projects) and partner-sponsored incentives. Claimed moats to test, not assume: (a) the auditable evidence receipt with admitted data gaps; (b) a Philippine route-level wedge; (c) community evidence with credibility weighting; and (d) a modular engine for later evidence sources.
 
 Part 1 — Platform prior art and post-mortems. Who has built crowdsourced urban/mobility evidence platforms, and what actually happened to them? Cover at minimum: Safetipin (safety audit scores in Indian and other cities — the closest structural analog; did it reach consumers, or become a B2G audit tool? any Philippine deployment?); FixMyStreet / SeeClickFix / civic-reporting platforms (what sustains them, what kills clones); Waze's crowdsourcing and its Connected Citizens / Waze for Cities data program; Ushahidi; Premise Data (paid micro-observation, active in the Philippines — what does it pay, does it work?); OpenStreetMap community programs (Kaart, HOT/Maproulette campaigns, especially any Philippine sidewalk/mapping drives); community mapping in Manila specifically (MapPH, OSM Philippines, Project NOAH's crowdsourcing history). For each: consumer traction vs. institutional pivot, what the contribution incentive really was, and why the failures failed. Then the incentive-programs screen for M4: Strava Metro (who pays, how much, for what data), StreetLight Data, BetterPoints, the late Carrot Rewards (why it died), Miles app (its privacy backlash), toll/transit loyalty pilots in Southeast Asia. State clearly per item: confirmed vs. not found in this bounded search.
 
@@ -79,7 +81,9 @@ Part 4 — Verdict. (a) Rank the four claimed moats from most to least real, eac
 Rules: cite primary sources (product pages, terms, papers, NPC/official issuances, credible post-mortems); prefer current pages; search by mechanism and user job, not our product name; always distinguish "not found in this bounded search" from "does not exist"; flag every claim you could not verify. Blunt over polite.
 ```
 
-## Daan UI + modular design system (Codex build, July 18 — platform revision)
+## Daan UI + modular design system (historical Codex build prompt)
+
+This prompt records the intended event-day build and contains features that were later cut. It is not evidence of current behavior. The implementation boundary in [README.md](README.md) and [prd.md](prd.md) wins.
 
 Run in Codex one phase at a time; each phase has an explicit stop point. The mock fixture in Phase 0 is the contract between the screen lane and the data lane — the screen is finished against the fixture, and the real pipeline lands by replacing the functions in `src/lib` with identical shapes. Fixture shape mirrors [prd.md](prd.md) exactly; prd.md wins on conflict.
 
@@ -200,19 +204,19 @@ Implement [one outcome]. Scope: [file/surface]. Non-goal: [explicit exclusion]. 
 ## Reliability review
 
 ```text
-Try to falsify the current demo path for [idea]. Test fresh start, deterministic scoring, malformed structured output, missing key, timeout, slow network, stale cache, wrong fixture, and disclosed fallback behavior. Record each reproducible failure in triage.md with severity, owner, and acceptance test. Fix nothing unless explicitly requested. Stop after ranking the smallest set that can invalidate judging readiness.
+Try to falsify the current demo path for [idea]. Start from the implementation boundary in README.md. Test fresh start, deterministic scoring, map-tile failure, stale localStorage, malformed URL state, wrong fixture, and disclosed fallback behavior. Test missing key, timeout, or structured model output only if the current build actually has that dependency. Record each reproducible failure in triage.md with severity, owner, and acceptance test. Fix nothing unless explicitly requested. Stop after ranking the smallest set that can invalidate judging readiness.
 ```
 
 ## Judge simulation
 
 ```text
-Act as a skeptical judge using only the official rubric in context.md. Watch or read the current 90-second demo once. Score technical implementation, design, impact, and idea quality separately. For every score, cite observed evidence and the strongest counterpoint. Identify the one question most likely to expose overclaim. Do not reward planned features. Save actionable changes to triage.md and stop.
+Act as one of four skeptical judges using only the official local rubric in context.md. First decide whether the project passes Clean Start, Runs Live, and Claims Have Evidence. If it passes, score Codex Craft, Product Judgment, and Problem & Insight independently using only 10, 8, 7, or 5. For every score, cite observed evidence and the strongest counterpoint. Ask for one thing Codex materially improved today and identify the question most likely to expose overclaim. Do not reward planned features. Save actionable changes to triage.md and stop.
 ```
 
 ## Pitch compression
 
 ```text
-Rewrite the current pitch to [60/90/180] seconds. Preserve: user, costly failure, live transformation, why GPT-5.6 is central, deterministic proof, limitation, and closing line. Remove architecture detail that is not visible and every unsupported market or novelty claim. Update pitch.md only. Stop after providing the estimated spoken duration.
+Rewrite the current pitch to [60/90/180] seconds. Preserve: user, costly failure, visibly working transformation, one material Codex improvement, deterministic proof, fixture/source boundary, limitation, and closing line. Include a runtime model only if it is present and central in the current build. Remove architecture detail that is not visible and every unsupported market or novelty claim. Update pitch.md only. Stop after providing the estimated spoken duration.
 ```
 
 ## Retrospective

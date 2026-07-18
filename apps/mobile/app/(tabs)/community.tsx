@@ -1,5 +1,4 @@
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
-import { AskAiCard } from "../../src/components/AskAiCard";
 import { ThreadCard } from "../../src/components/ThreadCard";
 import { Button } from "../../src/components/ui/Button";
 import { useThreads } from "../../src/hooks/useThreads";
@@ -38,7 +37,6 @@ export default function CommunityScreen() {
       onRefresh={() => refetch()}
       style={styles.screen}
       contentContainerStyle={styles.list}
-      ListHeaderComponent={<AskAiCard />}
       ListEmptyComponent={
         <View style={styles.center}>
           <Text style={styles.emptyText}>

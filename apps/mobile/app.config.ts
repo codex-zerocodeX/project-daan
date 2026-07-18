@@ -1,7 +1,7 @@
 import type { ExpoConfig } from "expo/config";
 
 const config: ExpoConfig = {
-  name: "ALITAPTAP",
+  name: "Alitaptap",
   slug: "komyut",
   version: "0.1.0",
   scheme: "komyut",
@@ -16,7 +16,7 @@ const config: ExpoConfig = {
     package: "ph.komyut.app",
     adaptiveIcon: {
       foregroundImage: "./assets/images/android-icon-foreground.png",
-      backgroundColor: "#ffffff",
+      backgroundColor: "#082237",
     },
   },
   plugins: [
@@ -28,14 +28,14 @@ const config: ExpoConfig = {
         image: "./assets/images/splash-icon.png",
         imageWidth: 200,
         resizeMode: "contain",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#082237",
       },
     ],
     [
       "expo-location",
       {
         locationWhenInUsePermission:
-          "ALITAPTAP uses your location to show you on the map and plan commute routes.",
+          "Alitaptap uses your location to show you on the map and plan commute routes.",
       },
     ],
   ],

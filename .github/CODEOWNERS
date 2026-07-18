@@ -1,0 +1,9 @@
+# Default review owner until workspace-specific maintainers are assigned.
+* @marwie0904
+
+/apps/api/ @marwie0904
+/apps/mobile/ @marwie0904
+/apps/web/ @marwie0904
+/packages/shared/ @marwie0904
+/supabase/ @marwie0904
+/.github/ @marwie0904

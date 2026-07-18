@@ -15,7 +15,6 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { ensureDemoSession } from "../src/hooks/useDemoSession";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,14 +34,6 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded]);
-
-  // Warm the shared demo session so a write has a session ready by the time
-  // anyone posts. Deliberately fire-and-forget: nothing renders behind it.
-  useEffect(() => {
-    ensureDemoSession().then(({ error }) => {
-      if (error) console.warn("Demo sign-in failed:", error);
-    });
-  }, []);
 
   if (!fontsLoaded) return null;
 

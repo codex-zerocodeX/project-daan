@@ -1,71 +1,71 @@
-# Komyut - Team Setup
+# Alitaptap team setup
 
-## Prerequisites
+## Prerequisite
 
-- Node 22 (`nvm install 22 && nvm use`), git
-- An [Expo account](https://expo.dev) (free) + `npm i -g eas-cli`
-- Android phone/emulator or iPhone (physical iPhone needs a paid Apple
-  Developer account for dev builds; Android is free - start there)
+- Node 22 (`nvm install 22 && nvm use`)
+- Git
+- An Expo account and EAS CLI for native development builds
+- Android phone/emulator or an Apple development environment
 
-## 1. Fork and clone
-
-Fork `codex-zerocodeX/buildathon` on GitHub, then:
+## Install
 
 ```bash
-git clone git@github.com:<you>/buildathon.git komyut
-cd komyut && nvm use && npm install
+git clone git@github.com:codex-zerocodeX/project-daan.git
+cd project-daan
+nvm use
+npm ci
 ```
 
-## 2. Env files
+Install only from the repository root. Do not create workspace-specific lockfiles.
+
+## Environment
 
 ```bash
 cp apps/api/.env.example apps/api/.env
 cp apps/mobile/.env.example apps/mobile/.env
 ```
 
-Get `SUPABASE_URL` / keys from the team's shared Supabase project (ask the
-repo owner - Project Settings > API). Anon key goes in the mobile .env,
-**service role key only in the API .env**. Set `EXPO_PUBLIC_API_URL` to your
-machine's LAN IP (macOS: `ipconfig getifaddr en0`), port 8787.
+| Variable | Boundary |
+| --- | --- |
+| `SUPABASE_URL` | API only |
+| `SUPABASE_SERVICE_ROLE_KEY` | API only; never expose to mobile or web |
+| `PORT` | Optional API port, default `8787` |
+| `EXPO_PUBLIC_SUPABASE_URL` | Public mobile configuration |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Public mobile client key |
+| `EXPO_PUBLIC_API_URL` | Mobile-reachable API URL; use a LAN address on physical devices |
 
-## 3. Supabase (repo owner does this once)
+## Supabase
 
-1. Create a project at supabase.com (free tier), region Southeast Asia.
-2. Open SQL Editor, paste all of `supabase/migrations/0001_initial_schema.sql`, run it.
-3. Share the project URL + anon key with the team; keep the service key private.
+Apply every file in `supabase/migrations` in numeric order. For a new hosted project, that currently means `0001_initial_schema.sql` followed by `0002_routes_nodes_karma.sql`. Keep the service-role key server-side.
 
-## 4. Run the API
+## Run
 
 ```bash
+npm run dev:web
 npm run dev:api
-# check: curl http://localhost:8787/health -> {"data":{"status":"ok"}}
+npm run dev:mobile
 ```
 
-## 5. Mobile dev build (one-time)
+The mobile app uses native MapLibre and does not run in Expo Go.
 
-The app uses MapLibre (native code), so Expo Go won't work. Build a dev
-client once; after that it's JS-only iteration:
+## Expo development build
+
+The repository is already linked to an EAS project. Verify the authenticated project before building; do not run `eas init` against a different project.
 
 ```bash
 cd apps/mobile
 eas login
-eas init            # links the project to your Expo account (repo owner once)
+eas project:info
 eas build --profile development --platform android
 ```
 
-Install the built APK on your device/emulator (EAS gives you a QR/link).
-Then, day to day:
+Development signing uses local credential configuration. `credentials.json`, `credentials/`, native build output, and signing material must remain untracked.
 
-```bash
-npm run dev:mobile   # from repo root; scan the QR with the dev build
-```
+The display name is Alitaptap, while the current slug, scheme, application ID, and EAS UUID remain compatibility identifiers. See the [brand contract](brand.md) before changing native identity.
 
 ## Troubleshooting
 
-- **Map is blank:** OSM tiles need network; check the device is online.
-- **Community tab shows an error:** is the API running, and is
-  `EXPO_PUBLIC_API_URL` your LAN IP (not localhost) for a physical phone?
-- **Auth errors:** confirm the migration ran (profiles table + trigger exist)
-  and the anon key matches the project.
-- **`npm install` weirdness:** delete `node_modules` everywhere and reinstall
-  from the root. Never run `npm install` inside a workspace with a lockfile.
+- **Map is blank:** confirm the device is online and the configured tile source is reachable.
+- **Community cannot load:** confirm the API is running and `EXPO_PUBLIC_API_URL` uses a LAN address on physical hardware.
+- **Auth fails:** confirm both migrations were applied and the mobile app uses the anonymous key.
+- **Workspace binary is missing:** run `npm ci` from the repository root.

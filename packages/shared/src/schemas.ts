@@ -126,53 +126,20 @@ export const ComposeResponseSchema = z.object({
   }),
 });
 
-// AI thread search: a natural-language question answered from existing threads.
-// Prior turns, oldest first. Capped because the whole thread corpus already
-// shares the prompt - history is context for pronouns, not a transcript.
-export const AiSearchTurnSchema = z.object({
-  question: z.string().max(200),
-  answer: z.string().max(1000),
+export const RouteExplainRequestSchema = z.object({
+  route: z.object({
+    summary: z.string().trim().min(1).max(2000),
+    distance_meter: z.number().nonnegative(),
+    step: z.array(z.string().trim().min(1).max(500)).min(1).max(50),
+  }),
+  preference: z.string().trim().min(1).max(1000).optional(),
 });
 
-export const AiSearchRequestSchema = z.object({
-  query: z.string().min(3).max(200),
-  history: z.array(AiSearchTurnSchema).max(3).default([]),
+export const RouteExplainResponseSchema = z.object({
+  headline: z.string().trim().min(1).max(120),
+  reason: z.array(z.string().trim().min(1).max(500)).min(1).max(3),
+  caution: z.array(z.string().trim().min(1).max(500)).max(3),
 });
-
-export const AiSearchResponseSchema = z.object({
-  answer: z.string(),
-  // threads the answer drew on, most relevant first
-  thread_ids: z.array(z.uuid()).max(5),
-});
-
-// Thread search: find community threads relevant to an origin->destination trip.
-// This is the primary flow - threads first, composed routes only as a fallback.
-export const ThreadSearchRequestSchema = z.object({
-  origin: LatLngSchema,
-  destination: LatLngSchema,
-});
-
-/** "exact" = one answer-route covers both ends; "partial" = it covers only one. */
-export const ThreadMatchSchema = z.enum(["exact", "partial"]);
-
-export const ThreadSearchResultSchema = z.object({
-  thread: ThreadSchema,
-  match: ThreadMatchSchema,
-  /** metres from the trip endpoint to the nearest node on this thread's answers */
-  origin_distance_m: z.number().nullable(),
-  destination_distance_m: z.number().nullable(),
-  route_ids: z.array(z.uuid()),
-  answer_count: z.number().int(),
-});
-
-export const ThreadSearchResponseSchema = z.object({
-  results: z.array(ThreadSearchResultSchema),
-});
-
-export type ThreadSearchRequest = z.infer<typeof ThreadSearchRequestSchema>;
-export type ThreadMatch = z.infer<typeof ThreadMatchSchema>;
-export type ThreadSearchResult = z.infer<typeof ThreadSearchResultSchema>;
-export type ThreadSearchResponse = z.infer<typeof ThreadSearchResponseSchema>;
 
 export type ThreadCategory = z.infer<typeof ThreadCategorySchema>;
 export type Profile = z.infer<typeof ProfileSchema>;
@@ -188,6 +155,5 @@ export type RoutePlanResponse = z.infer<typeof RoutePlanResponseSchema>;
 export type ComposeRequest = z.infer<typeof ComposeRequestSchema>;
 export type ComposeStep = z.infer<typeof ComposeStepSchema>;
 export type ComposeResponse = z.infer<typeof ComposeResponseSchema>;
-export type AiSearchTurn = z.infer<typeof AiSearchTurnSchema>;
-export type AiSearchRequest = z.infer<typeof AiSearchRequestSchema>;
-export type AiSearchResponse = z.infer<typeof AiSearchResponseSchema>;
+export type RouteExplainRequest = z.infer<typeof RouteExplainRequestSchema>;
+export type RouteExplainResponse = z.infer<typeof RouteExplainResponseSchema>;

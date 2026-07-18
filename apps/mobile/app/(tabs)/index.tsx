@@ -2,15 +2,12 @@ import { useRouter } from "expo-router";
 import {
   Circle,
   Clock,
-  LocateFixed,
+  ChevronRight,
   MapPin,
-  MessageCirclePlus,
   Navigation,
-  Search,
   Star,
-  TriangleAlert,
 } from "lucide-react-native";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -20,140 +17,44 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { KomyutMap } from "../../src/components/KomyutMap";
+import { AlitaptapMap } from "../../src/components/AlitaptapMap";
 import { Button } from "../../src/components/ui/Button";
-import {
-  PLACES,
-  resolvePlace,
-  searchPlaces,
-  type Place,
-} from "../../src/lib/places";
+import { DEFAULT_DESTINATION, MOCK_ORIGIN } from "../../src/lib/mockRoutes";
 import { color, font, radius, shadow, text } from "../../src/lib/theme";
 
-/**
- * Every place the UI offers must come from the gazetteer, because the results
- * screen is given coordinates, not a name. Free text that does not resolve is
- * a dead end by design - we offer to ask the community instead of guessing.
- */
-
-/** The corridor our seeded community data actually covers. */
-const DEFAULT_ORIGIN: Place =
-  resolvePlace("Ateneo Gate 3, Katipunan") ?? PLACES[0];
-
-/** Resolve a list of names at module load so no shortcut can be unresolvable. */
-function gazetteerList(names: string[]): Place[] {
-  return names
-    .map((name) => resolvePlace(name))
-    .filter((place): place is Place => place !== null);
-}
-
-const SAVED_PLACES = gazetteerList([
-  "Ayala Avenue, Makati",
-  "SM North EDSA",
-  "Araneta Center-Cubao LRT-2",
-]);
-
-const RECENTS = gazetteerList([
-  "Ortigas MRT-3 Station",
-  "SM Mall of Asia",
-  "Antipolo LRT-2",
-]);
-
-const SUGGESTION_LIMIT = 6;
-
-type Field = "origin" | "dest";
+const savedPlace = ["Home", "Work", "Gateway Mall"];
+const recentPlace = ["Ortigas Center", "BGC Bus Stop"];
 
 export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const [destination, setDestination] = useState("");
 
-  const [origin, setOrigin] = useState<Place>(DEFAULT_ORIGIN);
-  const [originText, setOriginText] = useState(DEFAULT_ORIGIN.name);
-  const [destText, setDestText] = useState("");
-  // Set only when the user picks a suggestion; typing clears it again.
-  const [destPick, setDestPick] = useState<Place | null>(null);
-  const [active, setActive] = useState<Field | null>(null);
-
-  // A typed destination still counts if it resolves outright ("ayala"), so the
-  // user is not forced to tap a suggestion.
-  const dest = useMemo(
-    () => destPick ?? resolvePlace(destText),
-    [destPick, destText],
-  );
-
-  const suggestions = useMemo(() => {
-    if (active === "origin") {
-      return originText.trim() === "" || originText === origin.name
-        ? []
-        : searchPlaces(originText, SUGGESTION_LIMIT);
-    }
-    if (active === "dest") {
-      return destText.trim() === "" || destText === destPick?.name
-        ? []
-        : searchPlaces(destText, SUGGESTION_LIMIT);
-    }
-    return [];
-  }, [active, originText, origin.name, destText, destPick]);
-
-  const destUnknown = destText.trim() !== "" && dest === null;
-
-  const go = (destination: Place) => {
-    router.push({
-      pathname: "/results",
-      params: {
-        originName: origin.name,
-        destName: destination.name,
-        oLat: String(origin.lat),
-        oLng: String(origin.lng),
-        dLat: String(destination.lat),
-        dLng: String(destination.lng),
-      },
-    });
-  };
-
-  const search = () => {
-    // Never navigate without coordinates - that is what produces NaN downstream.
-    if (!dest) return;
-    setActive(null);
-    go(dest);
-  };
-
-  const askCommunity = () => {
-    router.push({ pathname: "/ask", params: { destName: destText.trim() } });
-  };
-
-  const pickSuggestion = (place: Place) => {
-    if (active === "origin") {
-      setOrigin(place);
-      setOriginText(place.name);
-    } else {
-      setDestPick(place);
-      setDestText(place.name);
-    }
-    setActive(null);
-  };
-
-  const shortcut = (place: Place) => {
-    setDestPick(place);
-    setDestText(place.name);
-    go(place);
-  };
+  const openRoute = (place: string) =>
+    router.push({ pathname: "/results", params: { dest: place } });
 
   return (
     <View style={styles.container}>
       <View style={styles.mapBlock}>
-        <KomyutMap />
+        <AlitaptapMap />
+        <View style={styles.mapWash} />
+        <View style={styles.mapScrim} />
         <View style={[styles.mapHeader, { top: insets.top + 10 }]}>
           <View>
+            <Text style={styles.brandName}>Alitaptap · Metro Manila</Text>
             <Text style={styles.greeting}>Good morning</Text>
             <Text style={styles.headline}>Where to today?</Text>
           </View>
-          <View style={styles.avatar}>
+          <Pressable
+            accessibilityLabel="Open profile"
+            onPress={() => router.push("/profile")}
+            style={({ pressed }) => [
+              styles.avatar,
+              pressed && styles.pressed,
+            ]}
+          >
             <Text style={styles.avatarText}>A</Text>
-          </View>
-        </View>
-        <View style={styles.locateBtn}>
-          <LocateFixed size={20} color={color.p500} />
+          </Pressable>
         </View>
       </View>
 
@@ -161,127 +62,91 @@ export default function HomeScreen() {
         style={styles.sheet}
         contentContainerStyle={styles.sheetContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.searchCard}>
-          <View style={styles.originRow}>
-            <Circle size={12} color={color.good} fill={color.good} />
-            <TextInput
-              value={originText}
-              onChangeText={setOriginText}
-              onFocus={() => setActive("origin")}
-              // Keep the origin valid at all times: commit the draft if it
-              // resolves, otherwise snap back to the last real place. Resolving
-              // from the text (not from `origin`) also makes this safe when
-              // blur fires right after a suggestion tap.
-              onBlur={() => {
-                const match = resolvePlace(originText);
-                if (match) {
-                  setOrigin(match);
-                  setOriginText(match.name);
-                } else {
-                  setOriginText(origin.name);
-                }
-              }}
-              placeholder="Starting point"
-              placeholderTextColor={color.textMuted}
-              style={styles.fieldInput}
-              returnKeyType="done"
-            />
-          </View>
-
-          <View style={styles.destRow}>
-            <MapPin size={16} color={color.p500} />
-            <TextInput
-              value={destText}
-              onChangeText={(value) => {
-                setDestText(value);
-                setDestPick(null);
-              }}
-              onFocus={() => setActive("dest")}
-              placeholder="Where to?"
-              placeholderTextColor={color.textMuted}
-              style={styles.fieldInput}
-              returnKeyType="search"
-              onSubmitEditing={search}
-            />
-          </View>
-
-          {suggestions.length > 0 && (
-            <View style={styles.suggestions}>
-              {suggestions.map((place) => (
-                <Pressable
-                  key={place.name}
-                  onPress={() => pickSuggestion(place)}
-                  style={({ pressed }) => [
-                    styles.suggestionRow,
-                    pressed && styles.pressed,
-                  ]}
-                >
-                  <Search size={15} color={color.textMuted} />
-                  <Text style={styles.suggestionText}>{place.name}</Text>
-                </Pressable>
-              ))}
-            </View>
-          )}
-
-          {destUnknown && (
-            <View style={styles.unknownBox}>
-              <View style={styles.unknownHead}>
-                <TriangleAlert size={16} color={color.warnFg} />
-                <Text style={styles.unknownTitle}>
-                  We don&apos;t know that place yet
-                </Text>
+        <View style={styles.journeyPanel}>
+          <View style={styles.locationStack}>
+            <View style={styles.originRow}>
+              <View style={styles.locationMark}>
+                <Circle size={11} color={color.good} fill={color.good} />
               </View>
-              <Text style={styles.unknownBody}>
-                &ldquo;{destText.trim()}&rdquo; isn&apos;t in our map yet, so we
-                can&apos;t plan a trip to it. Ask the community and someone who
-                knows the way can answer.
-              </Text>
-              <Button
-                variant="outline"
-                full
-                icon={<MessageCirclePlus size={17} color={color.textStrong} />}
-                onPress={askCommunity}
-              >
-                Ask the community
-              </Button>
+              <View style={styles.locationCopy}>
+                <Text style={styles.locationLabel}>Starting from</Text>
+                <Text style={styles.originText}>{MOCK_ORIGIN}</Text>
+              </View>
             </View>
-          )}
-
+            <View style={styles.locationDivider} />
+            <View style={styles.destRow}>
+              <View style={styles.locationMark}>
+                <MapPin size={17} color={color.p500} />
+              </View>
+              <TextInput
+                accessibilityLabel="Destination"
+                value={destination}
+                onChangeText={setDestination}
+                placeholder="Where do you want to go?"
+                placeholderTextColor={color.textMuted}
+                style={styles.destInput}
+                returnKeyType="search"
+                onSubmitEditing={() =>
+                  openRoute(destination || DEFAULT_DESTINATION)
+                }
+              />
+            </View>
+          </View>
           <Button
             size="lg"
             full
-            disabled={dest === null}
             icon={<Navigation size={18} color={color.textOnPrimary} />}
-            onPress={search}
+            onPress={() => openRoute(destination || DEFAULT_DESTINATION)}
           >
             Find routes
           </Button>
         </View>
 
-        <View style={styles.chipRow}>
-          {SAVED_PLACES.map((place) => (
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Quick places</Text>
+          <Text style={styles.sectionHint}>One tap away</Text>
+        </View>
+        <View style={styles.shortcutRow}>
+          {savedPlace.map((place) => (
             <Pressable
-              key={place.name}
-              onPress={() => shortcut(place)}
-              style={({ pressed }) => [styles.chip, pressed && styles.pressed]}
+              key={place}
+              accessibilityLabel={`Find routes to ${place}`}
+              onPress={() => openRoute(place)}
+              style={({ pressed }) => [
+                styles.shortcut,
+                pressed && styles.pressed,
+              ]}
             >
-              <Star size={13} color={color.warn} fill={color.warn} />
-              <Text style={styles.chipText}>{place.name}</Text>
+              <View style={styles.shortcutIcon}>
+                <Star size={15} color={color.warnFg} fill={color.warn} />
+              </View>
+              <Text numberOfLines={2} style={styles.shortcutText}>
+                {place}
+              </Text>
             </Pressable>
           ))}
         </View>
 
-        <Text style={styles.sectionLabel}>Recent</Text>
-        {RECENTS.map((place) => (
+        <View style={[styles.sectionHeader, styles.recentHeader]}>
+          <Text style={styles.sectionTitle}>Recent</Text>
+        </View>
+        {recentPlace.map((place, index) => (
           <Pressable
-            key={place.name}
-            onPress={() => shortcut(place)}
-            style={({ pressed }) => [styles.recentRow, pressed && styles.pressed]}
+            key={place}
+            accessibilityLabel={`Find routes to ${place}`}
+            onPress={() => openRoute(place)}
+            style={({ pressed }) => [
+              styles.recentRow,
+              index < recentPlace.length - 1 && styles.recentDivider,
+              pressed && styles.pressed,
+            ]}
           >
-            <Clock size={16} color={color.textMuted} />
-            <Text style={styles.recentText}>{place.name}</Text>
+            <View style={styles.recentIcon}>
+              <Clock size={16} color={color.p600} />
+            </View>
+            <Text style={styles.recentText}>{place}</Text>
+            <ChevronRight size={18} color={color.n400} />
           </Pressable>
         ))}
       </ScrollView>
@@ -292,6 +157,24 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: color.bgApp },
   mapBlock: { height: 340 },
+  mapWash: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    pointerEvents: "none",
+    backgroundColor: "rgba(229, 248, 250, 0.24)",
+  },
+  mapScrim: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 118,
+    pointerEvents: "none",
+    backgroundColor: "rgba(247, 251, 252, 0.78)",
+  },
   mapHeader: {
     position: "absolute",
     left: 14,
@@ -304,6 +187,14 @@ const styles = StyleSheet.create({
     fontSize: text.sm,
     color: color.textMuted,
     fontFamily: font.sansSemiBold,
+  },
+  brandName: {
+    fontSize: text.xs,
+    color: color.brandTeal,
+    fontFamily: font.sansExtraBold,
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+    marginBottom: 2,
   },
   headline: {
     fontSize: text.h2,
@@ -323,129 +214,120 @@ const styles = StyleSheet.create({
     ...shadow.xs,
   },
   avatarText: { fontFamily: font.sansBold, color: color.p600 },
-  locateBtn: {
-    position: "absolute",
-    bottom: 64,
-    right: 14,
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: color.card,
-    alignItems: "center",
-    justifyContent: "center",
-    ...shadow.sm,
-  },
   sheet: { flex: 1, marginTop: -40 },
-  sheetContent: { padding: 16, gap: 12 },
-  searchCard: {
+  sheetContent: { padding: 16, paddingBottom: 32, gap: 12 },
+  journeyPanel: {
     backgroundColor: color.card,
     borderRadius: radius.xl,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    padding: 14,
-    gap: 10,
+    padding: 16,
+    gap: 12,
     ...shadow.lifted,
+  },
+  locationStack: {
+    borderRadius: radius.lg,
+    backgroundColor: color.sunken,
+    overflow: "hidden",
   },
   originRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    height: 48,
-    paddingHorizontal: 12,
-    borderRadius: radius.md,
-    backgroundColor: color.sunken,
+    minHeight: 58,
+    paddingHorizontal: 14,
+  },
+  locationMark: { width: 28, alignItems: "flex-start" },
+  locationCopy: { flex: 1, gap: 2 },
+  locationLabel: {
+    fontSize: text.xs,
+    fontFamily: font.sansBold,
+    color: color.textMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.44,
+  },
+  originText: {
+    fontSize: text.bodyMd,
+    fontFamily: font.sansSemiBold,
+    color: color.textStrong,
+  },
+  locationDivider: {
+    height: 1,
+    marginLeft: 42,
+    backgroundColor: color.borderSubtle,
   },
   destRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    height: 48,
-    paddingHorizontal: 12,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: color.borderStrong,
+    minHeight: 58,
+    paddingHorizontal: 14,
   },
-  fieldInput: {
+  destInput: {
     flex: 1,
     fontSize: text.bodyMd,
     fontFamily: font.sansMedium,
     color: color.textStrong,
     paddingVertical: 0,
   },
-  suggestions: {
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    backgroundColor: color.card,
-    overflow: "hidden",
-  },
-  suggestionRow: {
+  sectionHeader: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingVertical: 11,
-    paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: color.borderSubtle,
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    marginTop: 6,
   },
-  suggestionText: {
-    flex: 1,
-    fontSize: text.bodyMd,
-    fontFamily: font.sansMedium,
-    color: color.textBody,
-  },
-  unknownBox: {
-    borderRadius: radius.md,
-    backgroundColor: color.warnBg,
-    padding: 12,
-    gap: 8,
-  },
-  unknownHead: { flexDirection: "row", alignItems: "center", gap: 8 },
-  unknownTitle: {
-    fontSize: text.bodyMd,
+  sectionTitle: {
+    fontSize: text.bodyLg,
     fontFamily: font.sansBold,
-    color: color.warnFg,
+    color: color.textStrong,
   },
-  unknownBody: {
+  sectionHint: {
     fontSize: text.sm,
-    fontFamily: font.sans,
-    lineHeight: text.sm * 1.5,
-    color: color.warnFg,
+    fontFamily: font.sansMedium,
+    color: color.textMuted,
   },
-  chipRow: { flexDirection: "row", gap: 10, flexWrap: "wrap" },
-  chip: {
-    flexDirection: "row",
+  shortcutRow: { flexDirection: "row", gap: 8 },
+  shortcut: {
+    flex: 1,
+    minWidth: 0,
     alignItems: "center",
-    gap: 6,
-    paddingVertical: 9,
-    paddingHorizontal: 14,
-    borderRadius: radius.pill,
-    backgroundColor: color.card,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    ...shadow.xs,
+    gap: 7,
+    paddingVertical: 6,
   },
-  chipText: {
+  shortcutIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: color.warnBg,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  shortcutText: {
+    minHeight: 34,
+    textAlign: "center",
     fontSize: text.sm,
+    lineHeight: text.sm * 1.3,
     fontFamily: font.sansSemiBold,
     color: color.textBody,
   },
-  sectionLabel: {
-    fontSize: text.xs,
-    fontFamily: font.sansBold,
-    textTransform: "uppercase",
-    letterSpacing: 0.44,
-    color: color.textMuted,
-    marginTop: 4,
-  },
+  recentHeader: { marginTop: 8 },
   recentRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 4,
+    minHeight: 54,
+    paddingHorizontal: 2,
+  },
+  recentDivider: {
+    borderBottomWidth: 1,
+    borderBottomColor: color.borderSubtle,
+  },
+  recentIcon: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: color.primarySoft,
+    alignItems: "center",
+    justifyContent: "center",
   },
   recentText: {
+    flex: 1,
     fontSize: text.bodyMd,
     fontFamily: font.sansMedium,
     color: color.textBody,

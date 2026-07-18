@@ -15,6 +15,9 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - run: npm run build
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test
+      - name: Verify web route flow at 390px
+        run: node script/route-flow.mjs

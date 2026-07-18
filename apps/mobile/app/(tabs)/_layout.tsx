@@ -1,14 +1,20 @@
 import { Tabs } from "expo-router";
 import { CircleUser, MessagesSquare, Navigation } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { color, font } from "../../src/lib/theme";
 
 export default function TabLayout() {
+  const inset = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: color.p600,
         tabBarInactiveTintColor: color.textMuted,
         tabBarStyle: {
+          height: 56 + inset.bottom,
+          paddingTop: 5,
+          paddingBottom: Math.max(inset.bottom, 5),
           backgroundColor: color.card,
           borderTopColor: color.borderSubtle,
         },
@@ -22,7 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Go",
+          title: "Plan",
           headerShown: false,
           tabBarIcon: ({ color: tint, size }) => (
             <Navigation color={tint} size={size} />
@@ -32,7 +38,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="community"
         options={{
-          title: "Community",
+          title: "Updates",
+          headerTitle: "Alitaptap · Updates",
           tabBarIcon: ({ color: tint, size }) => (
             <MessagesSquare color={tint} size={size} />
           ),
@@ -41,7 +48,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "You",
+          headerTitle: "Alitaptap · You",
           tabBarIcon: ({ color: tint, size }) => (
             <CircleUser color={tint} size={size} />
           ),

@@ -1,6 +1,5 @@
-import type { Thread } from "@komyut/shared";
-import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
+import type { Thread } from "@alitaptap/shared";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { color, font, radius, shadow, text } from "../lib/theme";
 import { Pill } from "./ui/Pill";
 
@@ -27,7 +26,7 @@ export function ThreadCard({ thread }: { thread: Thread }) {
         <Image
           source={{ uri: thread.image_url }}
           style={styles.image}
-          contentFit="cover"
+          resizeMode="cover"
         />
       )}
     </View>

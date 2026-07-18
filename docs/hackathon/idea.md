@@ -1,18 +1,20 @@
 # Idea
 
-Raw and unresearched concepts live in [`inbox.md`](inbox.md). This file contains promoted candidates only. The July 14 TunnelMind, Easyresume, and AppBuildersPH audit reopened the earlier Tumpak lock; no product is selected until a finalist passes every decision gate.
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
+Raw and unresearched concepts live in [`inbox.md`](inbox.md). Project Daan was selected July 18. The July 14 finalist board below is historical decision evidence, not an active selection state.
 
 ## SELECTED — July 18 (team decision, revised late morning)
 
-**Project Daan — modular commuter-intelligence platform, v0 platform build.** The morning selection ("How Walkable?" standalone, working name Lakad) was broadened by team decision to a platform build: M1 Walkability as the never-cut spine, plus M2 Report + Karma, M3 Bottleneck (report kind), M4 Miles (client-side), with a hard amputation order (M4 → M3 → M2) at the 2:00 PM checkpoint. Full spec: [prd.md](prd.md); module registry and platform architecture: [roadmap.md](roadmap.md). This is a team-vote selection, not a state-board winner; the probed finalists below remain the documented alternative and Build Receipt remains the fallback.
+**Project Daan — modular commuter-intelligence platform.** The morning selection ("How Walkable?" standalone, working name Lakad) broadened into an event-day platform target: M1 Walkability, M2 Report + Karma, M3 Bottleneck, and M4 Miles, with an amputation order at the 2:00 PM checkpoint. The implemented outcome is the smaller fixture-bounded loop recorded below and in [README.md](README.md). Full target spec: [prd.md](prd.md); current/future module registry: [roadmap.md](roadmap.md). This is a team-vote selection, not a state-board winner; the probed finalists below remain documented alternatives, not current pivots.
 
-The sections below describe the M1 spine and remain accurate for it; the platform additions live in prd.md. Where they conflict, prd.md wins.
+The sections below preserve the intended event-day M1/platform target. The runnable result is fixture-bounded and smaller: local Katipunan route/profile logic, score/coverage/segment receipt, and local community interaction shipped; live routing/weather, shared backend, GPT explanation, Miles, and partner intelligence did not. [README.md](README.md) and [pitch.md](pitch.md) are the judge-facing state of record.
 
 ### Product sentence
 
-> Given a start and a destination, Daan's M1 rates how walkable that route is right now — weather at walk time, sidewalk and crossing evidence per segment, distance — and shows the receipt for every score line, including what the data does not cover.
+> Given a start and destination in the bounded Katipunan fixture, Daan compares route choices, scores the selected path, and shows the receipt for every score line, including what the evidence does not cover.
 
-### Demo atom
+### Historical intended demo atom (do not present)
 
 > "Google says Gate 3 to Katipunan station is a 22-minute walk. Daan says: apparent temperature 41 at 2 PM, no sidewalk tag on 480 m of the service road, two unlit crossings — low walkability now, and here is the per-segment receipt. The judge changes departure time to 6 AM and watches the score change for an inspectable reason. A community report from the audience lands on the same receipt, karma-weighted."
 

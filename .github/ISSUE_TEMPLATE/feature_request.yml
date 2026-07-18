@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a bounded improvement to Alitaptap.
+title: "feature: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Commuter problem
+      description: Describe the decision or maintenance problem before proposing a solution.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: State what becomes easier, safer, clearer, or more trustworthy.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Evidence and boundary
+      description: Name the data source, fixture/live status, privacy constraint, and how unknown data remains visible.
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Acceptance proof
+      description: Give the smallest test or user flow that would establish completion.
+    validations:
+      required: true

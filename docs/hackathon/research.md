@@ -1,14 +1,16 @@
 # Research
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Cutoff: July 14, 2026, Asia/Manila
 
 Decision scope: OpenAI Build Week Community Buildathon — Manila, July 18, 2026
 
 Team: Gelo and Rafaello Sibayan
 
-Status: decision reopened after repo-portfolio and current-prior-art audit; three live-gated finalists remain; bounded technical probes passed July 14
+Status: **historical pre-selection research**. Project Daan was selected July 18; this document preserves the alternatives and evidence that preceded that decision.
 
-## Answer first
+## Historical answer at the July 14 cutoff
 
 Do not lock Tumpak yet. Run a bounded live decision between three materially different products:
 
@@ -371,3 +373,19 @@ An idea that fails one gate is rejected or held. A mechanism that strengthens th
 - [OpenAI Open Model Hackathon winner report](https://openai.devpost.com/updates/37529-and-the-winners-are) — unstable official Devpost update; direct URL returned `404` during the July 14 link audit, while the official search index still exposed the reviewed text
 
 The full claim boundary and additional adjacent product are maintained in [`source.md`](source.md).
+
+## Commuter cost, fare inflation, toll, and speed synthesis — July 18
+
+The current evidence does not support one national “fare per kilometer” or one “standard km/h” for public transport. Each measure needs a mode and authority boundary:
+
+- LTFRB's effective matrices still put traditional PUJ at PHP 13 for the first 4 km plus PHP 1.80/succeeding km; modern PUJ at PHP 15 for 4 km plus PHP 1.80 non-air-conditioned or PHP 2.20 air-conditioned; city bus at PHP 13 ordinary or PHP 15 air-conditioned for the first 5 km plus its class add-on; and UV Express at PHP 2.40/km traditional or PHP 2.50/km modern.
+- The broad March 17, 2026 PUV fare increases were suspended on March 18. They are historical approved-but-not-current rates, not the application default.
+- Regular taxi combines a PHP 50 flagdown with PHP 13.50/km and PHP 2/minute. TNVS combines class flagdown, distance, time, and potentially dynamic pricing. An app quote is therefore an observed quote, not a fixed national matrix result.
+- Tricycle fare is locally governed. Davao's June 2026 advisory uses PHP 10 for the first 4 km plus PHP 1/km; Quezon City's documented ordinance uses PHP 9/person regular, PHP 18 special trip, and PHP 1/succeeding km. Neither can be projected to another LGU.
+- LRT-2 and MRT-3 have had an across-the-board 50% discount since March 23, 2026. LRT-1 is not included in that universal program. NCR PNR commuter operation remains suspended.
+- June 2026 national transport inflation was 12.8% year on year versus 6.4% all-item inflation; the national transport index rose 29.81% from June 2021 to June 2026. CPI is broader than fare and must not be applied as a direct fare multiplier.
+- Actual regulated component changes differ: the Oct. 2023 traditional-PUJ base rose 8.33%, the Mar. 2024 regular-taxi flagdown rose 11.11%, and the Jul. 2026 SLEX Alabang–Calamba Class 1 toll rose 8.73%. Each applies only to the named component and effective adjustment.
+- RA 4136 default maximum speed for bus/truck is 50 km/h on qualifying open-country road, 30 km/h on through or ordinary city street, and 20 km/h in crowded/dangerous conditions. A legal maximum is not an observed commute speed or an arrival-time estimate.
+- Toll is a gate-pair, expressway, and vehicle-class cost to the vehicle/operator. It may affect a commuter's route quote, but it is not a universal regulated per-passenger surcharge.
+
+The complete matrix, calculation, change timeline, evidence boundary, and gap register are in [`transport-cost.md`](transport-cost.md). This research adds a future cost-receipt option; it does not change the current walkability score or pretend the fixture-backed application has live fare data.

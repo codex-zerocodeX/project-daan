@@ -1,0 +1,17 @@
+{
+  "name": "Alitaptap — How Walkable?",
+  "short_name": "Alitaptap",
+  "description": "A fixture-bounded route receipt that shows the evidence and gaps behind a Metro Manila walking decision.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ee",
+  "theme_color": "#082237",
+  "icons": [
+    {
+      "src": "/asset/alitaptap-mark.webp",
+      "sizes": "768x768",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}

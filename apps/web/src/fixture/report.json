@@ -1,0 +1,50 @@
+[
+  {
+    "report_id": "r-seed-1",
+    "device_id": "demo-device-a",
+    "segment_ref": "s1",
+    "kind": "blocked",
+    "note": "Construction fencing pushes people toward the road.",
+    "lat": 14.6381,
+    "lng": 121.0735,
+    "accept_count": 4,
+    "dispute_count": 1,
+    "created_at": "2026-07-18T09:40:00+08:00"
+  },
+  {
+    "report_id": "r-seed-2",
+    "device_id": "demo-device-b",
+    "segment_ref": "s4",
+    "kind": "queue",
+    "note": "Passengers are queuing beside the narrow approach.",
+    "lat": 14.634,
+    "lng": 121.0715,
+    "accept_count": 2,
+    "dispute_count": 0,
+    "created_at": "2026-07-18T13:28:00+08:00"
+  },
+  {
+    "report_id": "r-seed-3",
+    "device_id": "demo-device-c",
+    "segment_ref": "s3",
+    "kind": "unlit",
+    "note": "The corner is dim after sunset.",
+    "lat": 14.6351,
+    "lng": 121.0721,
+    "accept_count": 3,
+    "dispute_count": 1,
+    "created_at": "2026-07-17T21:12:00+08:00"
+  },
+  {
+    "report_id": "r-seed-4",
+    "device_id": "demo-device-d",
+    "segment_ref": "s5",
+    "kind": "flooded",
+    "note": "Water pools by the station entrance after heavy rain.",
+    "lat": 14.6324,
+    "lng": 121.0707,
+    "accept_count": 1,
+    "dispute_count": 2,
+    "created_at": "2026-07-16T18:05:00+08:00"
+  }
+]

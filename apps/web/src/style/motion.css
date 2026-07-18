@@ -1,0 +1,170 @@
+:root {
+  --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/*
+ * Motion is intentionally isolated from the layout layer so the parallel
+ * redesign can keep changing structure without coupling presentation to state.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .alitaptap-header {
+    animation: alitaptap-enter 200ms var(--motion-ease-out) both;
+  }
+
+  .alitaptap-map-shell {
+    animation: alitaptap-enter 220ms 35ms var(--motion-ease-out) both;
+  }
+
+  .alitaptap-map-intro {
+    animation: alitaptap-enter 220ms 70ms var(--motion-ease-out) both;
+  }
+
+  .alitaptap-route-sheet {
+    animation: alitaptap-sheet-enter 260ms 70ms var(--motion-ease-out) both;
+  }
+
+  .route-result-summary {
+    animation: alitaptap-state-enter 200ms var(--motion-ease-out) both;
+  }
+
+  .score-transition {
+    animation: score-reveal 240ms var(--motion-ease-out) both;
+  }
+
+  .route-place-field [role="listbox"] {
+    animation: alitaptap-popover-enter 160ms var(--motion-ease-out) both;
+    transform-origin: top center;
+  }
+
+  .route-submit,
+  .route-alternative-button,
+  .checkpoint-button,
+  .departure-control button,
+  .route-swap,
+  .maplibregl-ctrl-group button {
+    transition: transform 140ms var(--motion-ease-out);
+  }
+
+  .route-swap svg,
+  .alitaptap-disclosure-summary svg {
+    transition: transform 180ms var(--motion-ease-in-out);
+  }
+
+  .route-submit:active,
+  .checkpoint-button:active,
+  .departure-control button:active,
+  .maplibregl-ctrl-group button:active {
+    transform: scale(0.97);
+  }
+
+  .route-alternative-button:active {
+    transform: scale(0.98);
+  }
+
+  .route-swap:active {
+    transform: translateY(-50%) scale(0.94);
+  }
+
+  .route-swap:active svg {
+    transform: rotate(12deg);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .route-submit:hover,
+    .route-alternative-button:hover,
+    .checkpoint-button:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .route-submit:hover,
+    .route-alternative-button:hover,
+    .checkpoint-button:hover {
+      transform: none;
+    }
+  }
+}
+
+@keyframes alitaptap-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes alitaptap-sheet-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alitaptap-state-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes alitaptap-popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes alitaptap-fade-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alitaptap-header,
+  .alitaptap-map-shell,
+  .alitaptap-map-intro,
+  .alitaptap-route-sheet,
+  .route-result-summary,
+  .score-transition,
+  .route-place-field [role="listbox"] {
+    animation: alitaptap-fade-enter 160ms var(--motion-ease-out) both !important;
+    transform: none !important;
+  }
+
+  .route-submit,
+  .route-alternative-button,
+  .checkpoint-button,
+  .departure-control button,
+  .route-swap,
+  .maplibregl-ctrl-group button,
+  .route-swap svg,
+  .alitaptap-disclosure-summary svg {
+    transition: opacity 140ms var(--motion-ease-out) !important;
+  }
+}

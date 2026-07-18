@@ -1,10 +1,16 @@
 # PRD — Project Daan v0: platform build (event day, July 18 — revised scope)
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Daan is a modular commuter-intelligence platform ([roadmap.md](roadmap.md)). Team decision (late morning, event day): v0 builds the **platform**, not one module — M1 Walkability as the anchor spine, M2 Report + Karma, M3 Bottleneck (a report kind), and M4 Miles, all riding one receipt engine and one `evidence` schema. M5 Traffic Intelligence stays a slide (no lawful data source today).
 
 **Amputation order, decided now:** M4 dies first, then M3, then M2. M1 + the receipt engine are never cut. Anything not merged and working on the deployed URL by 2:00 PM is cut by the integrator without a meeting.
 
-One-day scope. Judged on working build quality, usefulness, visible Codex impact. Submission cutoff 3:00 PM. This PRD encodes the verdicts of three convergent deep-research reports (July 18): no identical product found in bounded search; score must be road-class-first; PAGASA integration and all Google-derived data are killed.
+One-day scope. The official local rubric is Codex Craft, Product Judgment, and Problem & Insight, after Clean Start, Runs Live, and Claims Have Evidence eligibility gates. Submission cutoff 3:00 PM. This PRD encodes the verdicts of three convergent deep-research reports (July 18): no identical product found in bounded search; score must be road-class-first; PAGASA integration and all Google-derived data are killed.
+
+## Current implementation boundary
+
+The requirement below is the intended event-day product contract, not a blanket shipped-feature claim. The current runnable build uses a deterministic Katipunan graph and disclosed route, weather, evidence, question, and review fixtures. It ships route search, time/profile comparison, route alternatives, an inspectable score and receipt, visible unknown coverage, route-bound community discussion, voting, reply, review matching, local karma, restorable URL state, and localStorage persistence. The URL receipt preserves origin, destination, departure time, route, segment, and opened community context; draft endpoint edits invalidate the old visible receipt. The monorepo has Supabase-backed API seams and an optional server-side AI explanation endpoint, but the judging web experience does **not** consume them. It does not ship live geocoding, live routing, live weather, cross-device report sync, Miles, or partner traffic intelligence. [README.md](README.md) and [pitch.md](pitch.md) are the judge-facing state of record.
 
 ## Problem
 
@@ -23,6 +29,8 @@ One problem, three faces: the individual lacks a trustworthy answer, the communi
 > In a bounded search, no existing product scores a specific Metro Manila walking route by combining the current apparent temperature and rain with per-segment infrastructure evidence — and shows its work, including where the data is missing. Closest: Walk Score (address, US-only), Cool Walks (Barcelona, shade-only prototype), AccessMap (US-only, weather-blind), Google (time/distance; shade toggle is an unreleased teardown string).
 
 We are an **honest walkability evaluator**, not a better router. Cite, never claim: Frank walkability index, Krambeck GWI (field-tested in Manila, 2006), PET/UTCI thermal-comfort routing, CoolWalks, Tile2Net, Project Sidewalk.
+
+Route-choice contract: show `shortest_time` and `comfort_balance` only when their independently optimized path differs. The comfort choice uses an inspectable time-and-score tradeoff and must never be labeled “calmest” or “best.” If both profiles choose the same path, show one combined choice. See [routing architecture](../routing-architecture.md).
 
 ## Functional requirement
 
@@ -203,11 +211,13 @@ Input: the full `route_result` minus `explanation` fields. Instruction: explain 
 
 Route results: none — share link encodes the five query params; `route_result` is recomputed on open. Demo corridors additionally shipped as static fixture JSON (also the F11 fallback). Community reports: the single Supabase `report` table above (seeded per F17; if Supabase is unreachable at demo time, the seeded rows ship as a fixture too and the FallbackBanner discloses it). Miles: localStorage only.
 
-## Pre-demo evidence task (from research, non-negotiable)
+## Historical event-day live-data gate (superseded)
 
-Run the Overpass coverage query on the chosen demo corridors before presenting and put the real number in the pitch ("infrastructure tags cover N% of this route") — never hand-wave Manila OSM coverage. If sidewalk tags are near-zero on all corridors: score stands on road class + weather (design already survives this), and the pitch labels sidewalks a "community-mappable gap".
+The event-day plan required an Overpass coverage query before any live-data claim. That adapter did not ship. The current pitch therefore identifies the Katipunan evidence and weather as fixtures and makes no live-coverage claim. Restore this gate before enabling a production adapter.
 
-## Milestone vs. clock (platform build)
+## Historical milestone vs. clock (superseded)
+
+The table preserves the intended event-day build sequence. It is not current readiness state and must not be used as the demo script.
 
 | Time | Gate |
 |---|---|
@@ -219,7 +229,7 @@ Run the Overpass coverage query on the chosen demo corridors before presenting a
 | 2:15 | Freeze. Rehearse 3/3 including the live-report beat (with the fixture fallback rehearsed too) |
 | 2:45 | Submitted: link, repo, problem statement, Codex evidence |
 
-## Demo script (2 min, platform)
+## Historical intended demo (do not present)
 
 1. "This is the walk from [corridor A] at 2 PM today." → score 34, harsh, receipt scrolls. *(M1)*
 2. Click a red segment → evidence pills → open the actual OSM way. "Not our opinion — here's the tag, here's the gap." *(M1)*
@@ -227,4 +237,4 @@ Run the Overpass coverage query on the chosen demo corridors before presenting a
 4. Flip departure to 6 AM → score climbs, weather multiplier visibly updates. Miles counter ticks on route completion. *(M1/M4)*
 5. Coverage bar + vision sentence from roadmap.md: "one engine, four evidence sources today, module registry for the rest." Done.
 
-If M2 was amputated, the script collapses back to the 90-second M1 version (beat 3 removed) — rehearse both.
+The live-report, live-data, GPT, and Miles beats above did not ship. Use [pitch.md](pitch.md), which is constrained to the runnable checkout.
