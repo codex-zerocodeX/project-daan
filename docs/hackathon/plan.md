@@ -1,8 +1,21 @@
-# Plan
+# Plan — historical decision-stage record
 
-> **Decision-stage plan.** Candidate probes are runnable in this repository. The earlier Tumpak P1–P3 snapshot remains inactive until the reopened finalist decision in [`idea.md`](idea.md) is locked and replaced by the selected product's plan. Host clarification, quota, and reusable-boundary work remain active because they apply to every candidate.
+> **Historical record.** This July 16 candidate/Tumpak plan was superseded when the team selected and built Project Daan on July 18. Command names and receipt gates below belong to the earlier repository state and are not current package scripts. Preserve them as decision history; use the current readiness table below, [README.md](README.md), [prd.md](prd.md), and [pitch.md](pitch.md) for the runnable product.
 
 Edited honestly on July 16, 2026. A gap is a gap, not an opportunity. No item is complete without its acceptance test.
+
+## Current Daan judge readiness — July 18
+
+| Item | Acceptance evidence | State |
+|---|---|---|
+| Official rubric sync | Clean Start, Runs Live, Claims Have Evidence; Codex Craft, Product Judgment, Problem & Insight; 10/8/7/5 scoring | Documented in `context.md` |
+| Shipped-state sync | README, PRD boundary, roadmap, and pitch identify fixtures/localStorage and unbuilt live adapters | Documented; verify with repository checks |
+| Prepared demo | Route selection → profile/receipt → unknown segment → time switch → route-bound community context | Implemented; timed rehearsal pending |
+| Codex material-improvement proof | One real task/diff/test artifact with before → steering → after | Pending; bracket remains in `pitch.md` |
+| Clean Start and task identifier | Timestamped event-day boundary plus actual main task identifier | Pending; do not fabricate |
+| Submission consistency | Submitted URL, description, video, and spoken pitch match the documented boundary | Pending external verification |
+
+## Archived July 16 plan
 
 ## Decision gate before product execution
 
@@ -90,15 +103,15 @@ The rows below are historical design input, not active work. Replace them with t
 - Claim patentability, freedom to operate, legal advice, or universal novelty.
 - Publish private `/blead` data, personal contact detail, or credential.
 - Add auth, billing, collaboration, arbitrary provider support, arbitrary connector, or custom case authoring before judging.
-- Infer the local panel from the global judge list.
+- Infer the local panel from the global judge list or present the onsite report as a public organizer announcement.
 - Optimize for a biography instead of the published rubric.
 
 ## Triage
 
 | Item | What is needed to decide |
 |---|---|
-| Local on-site build boundary | Written host answer |
-| Local judge identity | Host announcement; do not speculate |
+| Local on-site build boundary | Resolved by official judging page: clean start at the event |
+| Local judge identity | Onsite report is usable for preparation; exact public announcement and two identities remain open |
 | Exact local demo duration | Host answer or kickoff instruction |
 | Public fixture license | Source-by-source review before repository publication |
 | GPT-5.6 capacity at venue | Test account, API quota, and network before Saturday |

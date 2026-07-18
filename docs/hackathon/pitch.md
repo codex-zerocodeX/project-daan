@@ -1,93 +1,129 @@
 # Pitch — Project Daan
 
-Active event narrative (July 18). Two scripts: the platform script if M2 survives the 2:00 amputation checkpoint, the M1 fallback if not. The pitch lane rehearses both, 3/3, before freeze. The Tumpak pitch this file previously held is superseded; recover it from git history if ever needed.
+Active judge-facing narrative, July 18, 2026. This script follows the runnable checkout: a disclosed Katipunan fixture, deterministic route/profile logic, inspectable scoring, visible unknowns, and local community interaction. Live citywide routing, live weather, a shared backend, GPT explanation, Miles, and partner feeds are roadmap items—not demo claims.
 
 ## One sentence
 
-> Daan turns public and community evidence into a scored, auditable receipt for moving through Metro Manila — starting with the question every commuter asks and no app answers: how walkable is this route, right now?
+> Google tells a commuter how long a walk takes. Daan helps them decide whether that walk is reasonable—and shows the evidence and the gaps behind the answer.
 
 ## Demo atom
 
-One route → per-segment evidence receipt (OSM + live weather) → a report from this room lands on the same receipt, karma-weighted → departure-time flip changes the score for an inspectable reason → gaps disclosed, never invented.
+Choose A → B → compare the available route choices → open the score and coverage receipt → inspect the harshest or least-known segment → switch 2 PM to 6 AM → open one route-bound community answer.
 
-## Platform script (~2 minutes)
+## Before the demo
 
-### 0–12 seconds — hook
+- Say **“disclosed Katipunan fixture”** before showing the score. Do not wait for a judge to infer it from the fallback banner.
+- Open the prepared A → B path and verify that the score, map, route choice, segment receipt, and community panel render.
+- Have one concrete Codex artifact ready: a task/diff showing a material improvement, the team's steering, and the resulting behavior.
+- Never say live OSM, live weather, real-time report, production backend, GPT explanation, citywide coverage, calibrated science, or institutional traction.
 
-> Google tells you this walk takes 22 minutes. It doesn't tell you there's no sidewalk on 480 meters of it, or that at 2 PM today the apparent temperature out there is 41 degrees. This is the walk from [corridor A] — and this is what it actually costs to walk it.
+## Primary script (~90 seconds)
 
-### 12–40 seconds — Module 1 live
+### 0–12 seconds — problem
 
-> This is Daan. It scores the route segment by segment: road class, sidewalk, crossings from OpenStreetMap; heat and rain from live weather at your departure time. Every score line is a receipt — click this red segment, that's the actual OSM way, that's the tag. And where the data doesn't exist, we say unknown. We score only what we can prove: [coverage]% of this route is covered, and the bar shows exactly where we're blind.
+> A Metro Manila commuter can know that a walk takes 22 minutes and still not know whether the walk is reasonable. Is the route exposed, hard to cross, or simply undocumented? Daan answers that decision—not just the ETA.
 
-### 40–70 seconds — the platform move (M2/M3, live report)
+### 12–25 seconds — boundary and working state
 
-> But official data is only half of what this city knows. [Teammate] is in the audience with a phone. — [Report submitted: "sidewalk blocked".] — There it is on the receipt: community evidence, dashed pill, weighted by the reporter's karma, clearly labeled as reported, not official. Same engine, second evidence source. Queue states at stations work the same way — a report kind, not a new app.
+> This build runs on a disclosed Katipunan fixture so you can inspect the complete product loop today. I choose an origin and destination, and Daan computes the available path choices on a local graph instead of showing a painted mockup.
 
-### 70–90 seconds — time flip + miles (M1/M4)
+### 25–50 seconds — receipt
 
-> Flip departure to 6 AM: apparent temperature drops, the multiplier updates on screen, the verdict changes — for a reason you can inspect, not a vibe. And completing a scored walk earns miles, on your device only. Nothing leaves your phone.
+> Here is the route score, but the number is not the product by itself. The coverage bar shows how much evidence is known. Each segment exposes the factor, source label, score effect, and unknown state. Missing evidence contributes zero; Daan does not quietly turn absence into safety.
 
-### 90–110 seconds — implementation honesty
+Open the harshest segment, then one unknown-heavy segment. Let the visual receipt carry the explanation.
 
-> Deterministic code owns every number — the model never grades itself; GPT explains the receipt and is bound to the evidence JSON, nothing else. Codex built this with us today — the task history is in the repo. Prior art exists and we cite it: Walk Score rates addresses in America; Barcelona's Cool Walks does shade in Barcelona; nothing we found scores a Manila route with live weather and an evidence receipt that admits its gaps.
+### 50–65 seconds — product judgment
 
-### 110–120 seconds — close
+> We built two route profiles only when they produce meaningfully different paths. That was a deliberate cut: prove one trustworthy decision loop before pretending to cover the whole city. The receipt contract stays the same when licensed live adapters replace the fixtures.
 
-> Daan is one receipt engine with pluggable evidence — official, community, and next: partners and institutions who need this evidence trail. Built today, working end to end. How walkable? Now the city can answer.
+### 65–78 seconds — time and community context
 
-## M1 fallback script (90 seconds, if M2 was amputated)
+> Switching from 2 PM to 6 AM changes the disclosed weather fixture and recomputes the result. Below it, commuter questions, answers, replies, votes, and place reviews stay attached to this exact path. Community evidence is visibly reported, never disguised as official.
 
-Beats 0–12, 12–40, 70–90 (drop miles line if M4 also cut), then:
+### 78–90 seconds — Codex proof and close
 
-> Deterministic code owns the score; GPT explains it and is bound to the evidence JSON. Codex built this with us today. This is Daan's first module — the same receipt engine takes community reports weighted by contributor karma, station queue states, and partner feeds next, without touching the engine. Today: one module, fully working, end to end.
+> Codex materially improved [name one concrete behavior] today: we gave it [constraint or failing case], reviewed [artifact], and the shipped result is [visible outcome]. Daan's proof today is bounded but complete: a commuter can make a route decision, inspect why, and see what the product still does not know.
 
-## Likely judge answer
+## Panel-aware question preparation
 
-### "Google already does this."
+These are communication lenses from the team's onsite panel report, not private scoring criteria.
 
-Google gives walking time and distance — its own docs warn walking routes "might sometimes be missing clear sidewalks," and its shade feature exists only as unreleased strings in an APK teardown. It does not expose route quality, live heat, or any evidence receipt. Honest concession: users approximate this today by combining Google Maps with weather and asking Reddit — that manual workflow is precisely the gap.
+### App builder / Bryl Lim
 
-### "Walk Score?"
+**“What is technically real?”**
 
-Rates an address by amenity proximity, US/Canada/Australia, updates every six months, and by its own documentation ignores sidewalks and weather. It cannot answer "is this route walkable right now" anywhere, let alone in Manila.
+The A → B search, heap-backed Dijkstra profiles, route identity, alternative selection, score/coverage rendering, segment interaction, URL state, community domain logic, voting, nested reply, review matching, and local persistence run in the current app. The graph and evidence are fixtures. The architecture seam is the stable route/receipt contract; live adapters remain unbuilt.
 
-### "OSM Manila data is too sparse for this to be real."
+**“Why not just Google Maps?”**
 
-Partly true, and the product is built on that truth. Road-class coverage in dense cities is strong (~83% globally, dense cities best-mapped) and carries the base score; sidewalk/crossing/lit tags are bonus evidence when present; when absent, the receipt says unknown and the coverage bar shows it. We measured our demo corridor this morning: [N]% tag coverage — real number, not a hand-wave. The gap is also the flywheel: it's exactly what community reports fill.
+Google solves navigation and ETA. Daan's narrow job is route-quality judgment with an inspectable receipt and explicit unknowns. Today we prove that interaction on a bounded fixture; we do not claim a production competitor to Google Maps.
 
-### "Why GPT-5.6 — isn't this just data plumbing?"
+**“What did you cut?”**
 
-The model does one job code does badly: turning a segment's evidence bundle into a plain-language explanation a commuter trusts, bound to the evidence JSON with a validation pass that rejects any claim not in the data. The score itself is deterministic — the model never grades itself. Codex is the second model story: it built the product today, and the task history proves it.
+We cut live geocoding/routing/weather, shared backend sync, GPT narration, Miles, and partner intelligence from the judged claim. Shipping a coherent fixture-backed loop scores Product Judgment more honestly than presenting disconnected integrations as complete.
 
-### "Karma is trivially gamed."
+### Journalist / fact-checking lens
 
-Today's karma is v0 credibility weighting on a seeded demo — we claim the mechanic, not abuse resistance. The written gate before real scale is an abuse review (fake reports, location spoofing, brigading) and 20 recurring unpaid contributors. Community evidence is capped by weight and always labeled — it can color a receipt, never silently own it.
+**“Why should anyone trust the score?”**
 
-### "Cold start — who reports?"
+They should not trust a naked score. Every segment shows the evidence state and effect; unknown stays unknown, and reported community context is visually distinct from official or fixture evidence. The weights are version-zero heuristics, not calibrated science.
 
-The behavior already exists unpaid: r/HowToGetTherePH answers "are there sidewalks, is it safe at midnight" every day in comment threads that evaporate. Daan gives those same people structure, credit, and permanence. That's a bet, stated as one — the receipts are useful with zero community input, which is why M1 stands alone.
+**“Could a community report be wrong?”**
 
-### "How is this not sakay.ph?"
+Yes. The current build demonstrates labeling, route binding, voting, and credibility weighting—not abuse resistance. A production release requires identity/Sybil controls, moderation, recency rules, and field validation. We do not let a report silently become official fact.
 
-Sakay routes transit and assumes the walking legs are fine. We score the walking leg it assumes. Complementary, not competitive — transit legs via GTFS are on the roadmap as a partner path, not a clone path.
+**“Is the weather or OSM data live?”**
 
-### "Business model?"
+No. The running build uses disclosed fixtures shaped like the intended adapters. That boundary is visible in the interface and stated in the pitch.
 
-Free for commuters, always. The thesis — unvalidated, stated as thesis — is institutional: LGU/DPWH dashboards of worst-scored school routes and before/after receipts for sidewalk projects, and partner-sponsored incentives. They'd pay for the evidence trail the free tier generates. No signed partner yet; that's the roadmap gate, not a claim.
+### TBI/TTO / commercialization lens
 
-### "What does today's demo prove?"
+**“Who adopts this first?”**
 
-That the receipt engine works end to end on real public data with two evidence sources, on the corridors we prepared. It does not prove citywide coverage, calibrated weights, abuse resistance, or demand. Every weight is visible and version-zero.
+The first user is a commuter or student choosing whether to walk a familiar corridor. The first institutional hypothesis is a campus or LGU using aggregated route receipts to prioritize field validation. That is a hypothesis, not traction; the next gate is live licensed data plus 50 organic route checks.
+
+**“What is defensible?”**
+
+Not the score formula alone. The potential asset is a disciplined evidence contract plus route-bound local observations that remain attributable and uncertainty-aware. It becomes defensible only if contributors return and an institution validates the data's decision value.
+
+**“What must happen before commercialization?”**
+
+Benchmark live routing coverage, clear every data right, calibrate weights with field observation, complete privacy and abuse review, validate recurring commuter use, and secure one design partner. Do not quote a revenue forecast without those gates.
+
+### David Marquez / Codex lens
+
+**“Show one thing Codex materially improved today.”**
+
+Use this structure and replace every bracket before presenting:
+
+> We asked Codex to [specific task] under [specific constraint]. Its first result exposed [failure or trade-off]. We steered it with [test, evidence, or product decision], and this [diff/test/interaction] is the material improvement: [observable before → after].
+
+Strong candidates are route-profile correctness, deterministic community-state behavior, URL-state recovery, or the fixture-honesty correction—whichever has the clearest artifact. Do not answer with tool volume, token count, or “it wrote the app.”
+
+## Official-rubric self-check
+
+| Gate or criterion | Evidence to show | Claim to avoid |
+|---|---|---|
+| Clean Start | Event-day task/commit/diff boundary | Reusing pre-event application work |
+| Runs Live | Prepared path completes without narration covering a failure | “Production-ready” |
+| Claims Have Evidence | Fixture banner, receipt, tests, source ledger, Codex artifact | Upgrading a fixture or plan to live behavior |
+| Codex Craft | One material improvement plus visible steering/evaluation | “Codex built everything” |
+| Product Judgment | One complete loop; explicit cuts and next gate | Feature-count pitch |
+| Problem & Insight | The walk-or-ride decision and why ETA is insufficient | Unverified market size or universal novelty |
+
+## What today's demo proves
+
+It proves that a commuter can select a bounded route, compare computed choices, inspect a deterministic score and its evidence coverage, see unknowns, change a departure-time fixture, and use route-bound community discussion. It does not prove citywide data coverage, live conditions, scientific calibration, abuse resistance, institutional demand, or a production business.
 
 ## Failure recovery
 
-1. Retry the live request once.
-2. If it fails again, state the network failure plainly.
-3. Switch to the shipped fixture corridor — the FallbackBanner discloses it on screen; never present cached as live.
-4. If live report submission flakes: the seeded reports are already on the receipt — point at one, say "submitted earlier today," continue.
-5. Continue with the deterministic receipt and the architecture explanation; the receipt is the product even when the network isn't.
+1. If place selection fails, reset to the prepared Katipunan origin and destination.
+2. If the selected route state is stale, use the visible route choice rather than debugging the URL on stage.
+3. If the map tile fails, continue with the score, coverage bar, and segment receipt; state that the base-map canvas failed while route logic remains local.
+4. If local community state is polluted, open a private browser or clear only the app's versioned local state before the judging session—not during the pitch.
+5. Never switch the narration to an unbuilt live-data story to cover a visual failure.
 
 ## Freeze rule
 
-After 2:15 PM, change only a defect that blocks the prepared path, submission, or fallback. No new feature enters the pitch. The amputation decision at 2:00 belongs to the integrator; whichever script survives is the one rehearsed 3/3 — with beat 3's fallback (seeded report) rehearsed explicitly.
+After rehearsal begins, change only a defect that blocks the prepared path, official submission, or Codex proof artifact. The same fixture-honest wording must appear in the spoken pitch, README, submission description, and any demo video.

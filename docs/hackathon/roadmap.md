@@ -30,13 +30,15 @@ The `evidence` object (kind, value, state, delta, source_url) defined in [prd.md
 
 | Module | What it is | Evidence source | Status | Gate |
 |---|---|---|---|---|
-| **M1 How Walkable?** | Route walkability receipt (weather + infrastructure + distance) | OSM/Overpass, Open-Meteo | **Building today — the spine, never cut** ([prd.md](prd.md)) | Submitted + 3/3 rehearsal |
-| **M2 Report + Karma** | Community confirms/disputes evidence ("sidewalk blocked here"); karma = contributor credibility weighting only — no tokens, no cash | Community report (Supabase `report` table, seeded; F13–F17 in prd.md), displayed as *reported* distinct from *official* | **Building today — third to amputate** | Working on deployed URL by 2:00 PM. Post-event scale gate: 20 recurring unpaid contributors + written abuse review (fake report, location spoof) |
-| **M3 Line & Bottleneck Tracker** | Queue/line/bottleneck state — implemented as a report `kind`, not a separate system | M2 report stream (`kind: "queue"`) | **Building today — second to amputate** | Working on deployed URL by 2:00 PM; requires M2 alive |
-| **M4 Miles** | v0: opt-in client-side walk counter (localStorage, no server, no location history). Partner rewards (toll/San Miguel "flight miles") remain the post-event extension | Completed scored route, client-only | **Building today — first to amputate** | Working by 2:00 PM. Partner-reward extension still gated on a signed partner + privacy audit |
+| **M1 How Walkable?** | Route walkability receipt (weather + infrastructure + distance) | Current: local graph and disclosed fixture. Target: OSM/Overpass, Open-Meteo | **Fixture-bounded loop implemented** | Live-adapter benchmark, licensed source, field calibration, and 50 organic route checks |
+| **M2 Report + Karma** | Community confirms/disputes evidence; karma is contributor credibility weighting only | Current: seeded fixture and localStorage. Target: shared report service | **Local interaction implemented; no cross-device sync** | Shared backend plus written abuse review covering fake report, location spoof, and brigading |
+| **M3 Line & Bottleneck Tracker** | Queue/line/bottleneck state as a report `kind`, not a separate system | Seeded queue evidence | **Fixture only** | Live, recent, attributable report source and M2 production gate |
+| **M4 Miles** | Opt-in client-side walk counter; partner reward is a later extension | Planned completed-route event | **Not shipped** | Privacy audit, completed-route truth, and signed partner before any reward claim |
 | **M5 Traffic Intelligence** | Route-condition prediction; collaborate with, not fight, Grab/Waze | Partner feed or public MMDA data — NEVER scraped/predicted from Google Maps output (license kill-switch stands, and "predicting Google's algorithm" from its responses violates the same terms) | Slide only today | A lawful data source that isn't a competitor's protected output |
 
-Module numbering is priority order and the reverse of the amputation order. M3 is M2's data worn a different way. The 2:00 PM amputation checkpoint belongs to the integrator alone — no meeting.
+Module numbering preserves event-day priority. M3 remains M2's data worn a different way.
+
+The runnable checkout does not have live geocoding/routing/weather, a shared Supabase backend, GPT explanation, Miles, or partner traffic intelligence. Judge-facing copy must use this boundary; see [README.md](README.md) and [pitch.md](pitch.md).
 
 ## Tech scope (decided July 18)
 
@@ -44,15 +46,17 @@ Module numbering is priority order and the reverse of the amputation order. M3 i
 |---|---|---|
 | Map canvas | **MapLibre GL JS** — open-source, no Google dependency, vector tiles. Style/tiles: OpenFreeMap (keyless) or MapTiler free tier; raster OSM tiles as zero-dependency fallback | **@maplibre/maplibre-react-native** — same style JSON, same source/layer definitions reuse across web and native |
 | App shell | React + Vite (today's build) | **React Native (Expo)** — new surface, same platform |
-| Shared core | `daan-core`: scoring, receipt type, evidence contract as a plain TypeScript package — UI-free so web and RN both import it | same package |
-| API | Stateless route endpoint ([prd.md](prd.md)); modules add collectors behind the same receipt shape | same API |
+| Shared core | Current `src/lib/` TypeScript functions; `daan-core` extraction is planned | Extracted UI-free package |
+| API | No current application API; fixture/localStorage repository behind local contracts | Stateless route and report adapter behind the same receipt shape |
 | Naming | Singular everywhere (`segment`, `evidence`, `module`) | same |
 
 Migration note: the UI prompt's map component targets MapLibre GL JS. Leaflet references are superseded. MapLibre gives the RN path for free; Leaflet does not.
 
+Routing decision: the current fixture uses heap-backed Dijkstra with separate `shortest_time` and `comfort_balance` profiles. MapLibre only renders the resulting GeoJSON. The production recommendation is Valhalla behind the stateless route API, gated by a Metro Manila extract benchmark; see [routing architecture](docs/routing-architecture.md).
+
 ## Sequencing
 
-- **Today, 3:00 PM** — Platform v0: M1 spine live end to end; M2 live report → receipt merge with karma weighting; M3 as queue-report kind; M4 client-side miles — each surviving the 2:00 amputation checkpoint. M5 as one honest slide. Vision sentence below.
+- **Event-day outcome** — Fixture-bounded M1 route/profile/receipt loop and local M2 community interaction implemented. Live adapters, shared report sync, GPT explanation, Miles, and M5 did not ship and remain outside the judging claim.
 - **Weeks 1–4** — Harden M1 (geocoding, any-route, Mapillary evidence, route alternatives). Extract `daan-core`. Write the M2 abuse review (fake report, location spoof, brigading) before promoting reports beyond demo scale. Gate: 50 organic route checks by strangers.
 - **Months 2–3** — M2/M3 to real community scale behind the abuse review. Expo RN shell begins, reusing `daan-core` + MapLibre style. The flywheel: receipts attract users, users contribute evidence, evidence improves receipts.
 - **Months 6+** — M4 partner rewards / M5 only on signed partner / lawful feed. LGU dashboard (worst school routes, before/after sidewalk receipts) as the institutional surface.
@@ -63,6 +67,6 @@ Scraping or reverse-engineering Google/Waze/Grab output (both a license kill and
 
 ## Pitch vision sentence
 
-> "Daan is one receipt engine with pluggable evidence. Today it's running with both official and community evidence: OpenStreetMap and live weather score the route, a report from this room — weighted by contributor karma — lands on the same receipt, and walking the route earns miles. The registry takes the next module without touching the engine. Working, end to end, built today."
+> "Daan helps a commuter decide whether a walk is reasonable, not merely how long it takes. Today the complete decision loop runs on a disclosed Katipunan fixture: compare a route, inspect the score and every segment, see what is known and unknown, and attach local commuter context to that exact path. The next gate is replacing each fixture adapter with licensed live data without changing the receipt contract."
 
-If amputation collapses the build back to M1, fall back to the module-1 sentence: "How Walkable? is Daan's first module — the receipt engine behind it takes community reports, bottleneck state, and partner feeds next. Today: one module, fully working, end to end."
+This sentence deliberately claims a working interaction contract, not live citywide evidence, institutional traction, or a production data pipeline.
