@@ -11,3 +11,6 @@ dist-check/
 /.claude/
 credentials.json
 credentials/
+
+# Supabase CLI local state
+/supabase/.temp/

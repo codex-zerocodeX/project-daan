@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a reproducible Daan defect.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping make Daan more reliable. Do not include secrets or precise personal travel history.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options: [Web, Mobile, API, Shared contract, Documentation]
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What happened?
+      description: Include the expected and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Give the smallest repeatable sequence, route fixture, viewport, and browser or device.
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Proof
+      description: Add a screenshot, console excerpt, or failing command with sensitive data removed.
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed credentials, tokens, and precise personal location history.
+          required: true
