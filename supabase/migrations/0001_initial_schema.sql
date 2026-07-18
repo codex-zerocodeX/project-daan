@@ -105,6 +105,9 @@ create policy "comments are readable by everyone"
 create policy "users create own comments"
   on public.comments for insert to authenticated
   with check ((select auth.uid()) = author_id);
+create policy "users update own comments"
+  on public.comments for update using ((select auth.uid()) = author_id)
+  with check ((select auth.uid()) = author_id);
 create policy "users delete own comments"
   on public.comments for delete using ((select auth.uid()) = author_id);
 
