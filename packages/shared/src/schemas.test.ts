@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  NodeSchema,
   RoutePlanRequestSchema,
+  RouteSchema,
   ThreadSchema,
   VoteSchema,
 } from "./schemas";
@@ -33,6 +35,35 @@ describe("VoteSchema", () => {
       user_id: validThread.author_id,
       value: 0,
       created_at: validThread.created_at,
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("RouteSchema", () => {
+  it("accepts a valid answer-route", () => {
+    const route = {
+      id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      thread_id: "5a2f8f3e-3b2a-4c58-9d7a-1e2f3a4b5c6d",
+      author_id: "5a2f8f3e-3b2a-4c58-9d7a-1e2f3a4b5c6d",
+      summary: "Jeep to Cubao, then walk.",
+      created_at: "2026-07-18T00:00:00+00:00",
+    };
+    expect(RouteSchema.parse(route)).toEqual(route);
+  });
+});
+
+describe("NodeSchema", () => {
+  it("rejects a negative seq", () => {
+    const result = NodeSchema.safeParse({
+      id: "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+      route_id: "5a2f8f3e-3b2a-4c58-9d7a-1e2f3a4b5c6d",
+      seq: -1,
+      lat: 14.6,
+      lng: 121.0,
+      label: "Board here",
+      image_url: null,
+      created_at: "2026-07-18T00:00:00+00:00",
     });
     expect(result.success).toBe(false);
   });

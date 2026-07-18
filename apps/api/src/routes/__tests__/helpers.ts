@@ -12,3 +12,12 @@ export function fakeSupabase(result: { data: unknown; error: unknown }): Supabas
     }),
   } as unknown as SupabaseClient;
 }
+
+/** Fake for an awaited select with no further chaining: from().select() */
+export function fakeSupabaseSelect(result: { data: unknown; error: unknown }): SupabaseClient {
+  return {
+    from: () => ({
+      select: async () => result,
+    }),
+  } as unknown as SupabaseClient;
+}

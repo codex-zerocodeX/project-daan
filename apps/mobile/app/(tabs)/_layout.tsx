@@ -1,28 +1,50 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { CircleUser, MessagesSquare, Navigation } from "lucide-react-native";
+import { color, font } from "../../src/lib/theme";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#0a7ea4", headerShown: true }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: color.p600,
+        tabBarInactiveTintColor: color.textMuted,
+        tabBarStyle: {
+          backgroundColor: color.card,
+          borderTopColor: color.borderSubtle,
+        },
+        tabBarLabelStyle: { fontFamily: font.sansSemiBold, fontSize: 11 },
+        headerShown: true,
+        headerTitleStyle: { fontFamily: font.sansBold, color: color.textStrong },
+        headerStyle: { backgroundColor: color.card },
+        headerShadowVisible: false,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Map",
-          tabBarIcon: ({ color, size }) => <Ionicons name="map" color={color} size={size} />,
+          title: "Go",
+          headerShown: false,
+          tabBarIcon: ({ color: tint, size }) => (
+            <Navigation color={tint} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="community"
         options={{
           title: "Community",
-          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubbles" color={color} size={size} />,
+          tabBarIcon: ({ color: tint, size }) => (
+            <MessagesSquare color={tint} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => <Ionicons name="person" color={color} size={size} />,
+          tabBarIcon: ({ color: tint, size }) => (
+            <CircleUser color={tint} size={size} />
+          ),
         }}
       />
     </Tabs>
