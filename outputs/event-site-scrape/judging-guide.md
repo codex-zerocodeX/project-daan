@@ -83,4 +83,3 @@ Judges are told not to reward presentation charisma, polished slide, team size, 
 - **Prepare one concrete Codex before/after proof.** The required question asks for one material improvement made today. A short artifact chain—problem, steering, failed attempt, correction, visible result—is stronger than a list of tools.
 - **Name the commuter and the pain.** Ground the route-receipt decision in the specific audience, evidence, and firsthand constraint already documented in the repo; avoid broad “everyone who commutes” language.
 - **Keep every claim demoable.** Fixture-backed behavior must be labeled as fixture-backed. Do not imply live routing, live reporting, account state, or rewards unless the running build proves them.
-

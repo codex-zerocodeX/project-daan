@@ -147,4 +147,3 @@ This ledger covers all 141 paths changed by the lane's six unique commits relati
 | `tsconfig.json` | Do not import | Obsolete standalone-root build/config would resurrect a duplicate application. |
 | `tsconfig.node.json` | Do not import | Obsolete standalone-root build/config would resurrect a duplicate application. |
 | `vite.config.ts` | Do not import | Obsolete standalone-root build/config would resurrect a duplicate application. |
-

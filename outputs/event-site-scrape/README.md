@@ -58,4 +58,3 @@ The raw HTML and asset URL are preserved exactly as served. To verify the archiv
 cd /Users/angelonrevelo/Antigravity/project-daan
 shasum -a 256 -c outputs/event-site-scrape/receipt.sha256
 ```
-
