@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server";
 import { createClient } from "@supabase/supabase-js";
 import { createApp } from "./app";
+import { openAiChat } from "./lib/openai";
 
 const url = process.env.SUPABASE_URL;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -9,7 +10,15 @@ if (!url || !key) {
   process.exit(1);
 }
 
-const app = createApp({ supabase: createClient(url, key) });
+const openAiKey = process.env.OPENAI_API_KEY;
+if (!openAiKey) {
+  console.warn("No OPENAI_API_KEY set - AI thread search will return 503.");
+}
+
+const app = createApp({
+  supabase: createClient(url, key),
+  chat: openAiKey ? openAiChat(openAiKey) : undefined,
+});
 const port = Number(process.env.PORT ?? 8787);
 
 serve({ fetch: app.fetch, port }, () => {

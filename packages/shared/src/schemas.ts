@@ -126,6 +126,17 @@ export const ComposeResponseSchema = z.object({
   }),
 });
 
+// AI thread search: a natural-language question answered from existing threads.
+export const AiSearchRequestSchema = z.object({
+  query: z.string().min(3).max(200),
+});
+
+export const AiSearchResponseSchema = z.object({
+  answer: z.string(),
+  // threads the answer drew on, most relevant first
+  thread_ids: z.array(z.uuid()).max(5),
+});
+
 export type ThreadCategory = z.infer<typeof ThreadCategorySchema>;
 export type Profile = z.infer<typeof ProfileSchema>;
 export type Thread = z.infer<typeof ThreadSchema>;
@@ -140,3 +151,5 @@ export type RoutePlanResponse = z.infer<typeof RoutePlanResponseSchema>;
 export type ComposeRequest = z.infer<typeof ComposeRequestSchema>;
 export type ComposeStep = z.infer<typeof ComposeStepSchema>;
 export type ComposeResponse = z.infer<typeof ComposeResponseSchema>;
+export type AiSearchRequest = z.infer<typeof AiSearchRequestSchema>;
+export type AiSearchResponse = z.infer<typeof AiSearchResponseSchema>;

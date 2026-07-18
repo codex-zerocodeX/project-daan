@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  AiSearchRequestSchema,
+  AiSearchResponseSchema,
   NodeSchema,
   RoutePlanRequestSchema,
   RouteSchema,
@@ -74,6 +76,30 @@ describe("RoutePlanRequestSchema", () => {
     const result = RoutePlanRequestSchema.safeParse({
       origin: { lat: 999, lng: 121.0 },
       destination: { lat: 14.6, lng: 121.0 },
+    });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("AiSearchRequestSchema", () => {
+  it("rejects a query that is too short to be meaningful", () => {
+    expect(AiSearchRequestSchema.safeParse({ query: "hi" }).success).toBe(false);
+  });
+});
+
+describe("AiSearchResponseSchema", () => {
+  it("round-trips an answer with thread citations", () => {
+    const res = {
+      answer: "Take the Cubao-bound jeep from Katipunan.",
+      thread_ids: ["9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"],
+    };
+    expect(AiSearchResponseSchema.parse(res)).toEqual(res);
+  });
+
+  it("rejects a non-uuid thread id", () => {
+    const result = AiSearchResponseSchema.safeParse({
+      answer: "…",
+      thread_ids: ["not-a-uuid"],
     });
     expect(result.success).toBe(false);
   });
