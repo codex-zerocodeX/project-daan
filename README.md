@@ -90,5 +90,6 @@ The web workspace reads no environment variable.
 - [Routing decision](docs/routing-architecture.md)
 - [Visual QA record](docs/brand-qa.md)
 - [Hackathon product record](docs/hackathon/README.md)
+- [Codex contribution receipt](CODEX_CONTRIBUTION.md)
 - [Contribution guide](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
