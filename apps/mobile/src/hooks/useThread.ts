@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 
 /**
  * One thread plus its community answers, read straight from Supabase under RLS
- * (CRUD does not go through apps/api - see CLAUDE.md).
+ * (CRUD does not go through apps/api - see AGENTS.md).
  *
  * The embed below is disambiguated on purpose. Both `threads` and `routes`
  * reach `profiles` by two different paths: the author foreign key, and the

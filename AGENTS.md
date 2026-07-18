@@ -1,4 +1,4 @@
-# CLAUDE.md - AI assistant reference for Komyut
+# AGENTS.md - AI assistant reference for Komyut
 
 Komyut is a community-based commuting platform (Philippines). Mobile app +
 API + Supabase. This file is the map; follow it before exploring.

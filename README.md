@@ -43,4 +43,4 @@ Full onboarding (Supabase project, EAS dev build, troubleshooting):
 - [Setup / onboarding](docs/setup.md)
 - [Architecture](docs/architecture.md)
 - [Conventions](docs/conventions.md)
-- [CLAUDE.md](CLAUDE.md) - reference for AI coding assistants
+- [AGENTS.md](AGENTS.md) - reference for AI coding assistants
