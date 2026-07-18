@@ -1,6 +1,6 @@
-# Contributing to Daan
+# Contributing to Alitaptap
 
-Keep each change narrow, fixture-honest, and verifiable. Daan must show what it knows, what it does not know, and which surface owns each contract.
+Keep each change narrow, fixture-honest, and verifiable. Alitaptap must show what it knows, what it does not know, and which surface owns each contract.
 
 ## Set up
 

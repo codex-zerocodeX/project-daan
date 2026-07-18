@@ -1,5 +1,5 @@
-// Daan mobile tokens. The component structure began with the Lakbay design
-// reference, but Daan is the only current-facing product identity.
+// Alitaptap mobile tokens. The component structure began with the Lakbay design
+// reference, but Alitaptap is the only current-facing product identity.
 
 const brand = {
   paper: "#f8f5ee",

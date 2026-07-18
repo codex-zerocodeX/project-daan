@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { RoutePlanRequestSchema, RoutePlanResponseSchema } from "@daan/shared";
+import { RoutePlanRequestSchema, RoutePlanResponseSchema } from "@alitaptap/shared";
 
 export function routePlanRoute() {
   const route = new Hono();

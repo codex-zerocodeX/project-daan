@@ -1,5 +1,7 @@
 # Philippine commuter transport cost, inflation, toll, and speed baseline
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Research cutoff: **July 18, 2026 (Asia/Manila)**
 
 This document is the evidence baseline for commuter cost in Project Daan. It covers national public-utility-vehicle fare, selected local tricycle fare, active Metro Manila rail fare, representative toll-gate charge, transport inflation, and legal road-speed limits. It is not a live fare calculator: a posted fare matrix, station matrix, LGU ordinance, operator quote, or toll-plaza display can be more specific and more recent.

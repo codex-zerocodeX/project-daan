@@ -144,7 +144,7 @@
           "reported_at": null
         }
       ],
-      "explanation": "Infrastructure tags are missing here, so Daan leaves the condition unknown instead of guessing."
+      "explanation": "Infrastructure tags are missing here, so Alitaptap leaves the condition unknown instead of guessing."
     },
     {
       "segment_id": "s4",

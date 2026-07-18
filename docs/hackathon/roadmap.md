@@ -1,5 +1,7 @@
 # Project Daan — platform roadmap (v1, July 18)
 
+> **Historical naming note.** This July 2026 roadmap uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Team decision, event day: Daan is not a walkability app. It is a **modular commuter-intelligence platform**; "How Walkable?" is Module 1, the first live module. This file defines the platform architecture, the module registry, the tech scope, and the gate each module must pass to go live.
 
 ## Platform sentence

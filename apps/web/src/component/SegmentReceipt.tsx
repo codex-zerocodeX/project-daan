@@ -54,7 +54,7 @@ export function SegmentReceipt({ segment, selectedSegmentId, communityProjection
         <div>
           <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink-soft">Evidence receipt</p>
           <h2 id="receipt-heading" className="mt-0.5 text-xl font-bold tracking-[-0.025em]">
-            Daan shows its work
+            Alitaptap shows its work
           </h2>
         </div>
         <span className="font-mono text-[11px] font-bold text-ink-soft">{segment.length} segment</span>

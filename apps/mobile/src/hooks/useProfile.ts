@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ProfileSchema } from "@daan/shared";
+import { ProfileSchema } from "@alitaptap/shared";
 import { supabase } from "../lib/supabase";
 
 export function useProfile(userId: string | undefined) {

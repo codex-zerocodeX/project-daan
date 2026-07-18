@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { mergeCommunitySeed, seedCommunityState } from "./seed";
-import { communityStateKey, createMemoryStorage, loadCommunityIdentity, loadCommunityState } from "./storage";
+import {
+  communityIdentityKey,
+  communityIdentityLegacyKey,
+  communityStateKey,
+  communityStateLegacyKey,
+  createMemoryStorage,
+  loadCommunityIdentity,
+  loadCommunityState,
+} from "./storage";
 
 describe("community storage", () => {
   it("seeds deterministically and merges repeatedly without reordering", () => {
@@ -30,5 +38,32 @@ describe("community storage", () => {
     const second = loadCommunityIdentity(storage, () => "different");
     expect(first).toEqual({ contributorId: "community-fixed" });
     expect(second).toEqual(first);
+  });
+
+  it("copies legacy state forward without deleting it", () => {
+    const legacyValue = JSON.stringify(seedCommunityState());
+    const storage = createMemoryStorage({ [communityStateLegacyKey]: legacyValue });
+
+    loadCommunityState(storage);
+
+    expect(storage.getItem(communityStateLegacyKey)).toBe(legacyValue);
+    expect(storage.getItem(communityStateKey)).not.toBeNull();
+  });
+
+  it("prefers the canonical identity and writes new identity only to the canonical key", () => {
+    const legacyValue = JSON.stringify({ contributorId: "legacy" });
+    const canonicalValue = JSON.stringify({ contributorId: "canonical" });
+    const storage = createMemoryStorage({
+      [communityIdentityLegacyKey]: legacyValue,
+      [communityIdentityKey]: canonicalValue,
+    });
+
+    expect(loadCommunityIdentity(storage, () => "new")).toEqual({ contributorId: "canonical" });
+    expect(storage.getItem(communityIdentityLegacyKey)).toBe(legacyValue);
+
+    const freshStorage = createMemoryStorage();
+    expect(loadCommunityIdentity(freshStorage, () => "new")).toEqual({ contributorId: "community-new" });
+    expect(freshStorage.getItem(communityIdentityKey)).toBe(JSON.stringify({ contributorId: "community-new" }));
+    expect(freshStorage.getItem(communityIdentityLegacyKey)).toBeNull();
   });
 });

@@ -8,24 +8,24 @@
  * redesign can keep changing structure without coupling presentation to state.
  */
 @media (prefers-reduced-motion: no-preference) {
-  .daan-header {
-    animation: daan-enter 200ms var(--motion-ease-out) both;
+  .alitaptap-header {
+    animation: alitaptap-enter 200ms var(--motion-ease-out) both;
   }
 
-  .daan-map-shell {
-    animation: daan-enter 220ms 35ms var(--motion-ease-out) both;
+  .alitaptap-map-shell {
+    animation: alitaptap-enter 220ms 35ms var(--motion-ease-out) both;
   }
 
-  .daan-map-intro {
-    animation: daan-enter 220ms 70ms var(--motion-ease-out) both;
+  .alitaptap-map-intro {
+    animation: alitaptap-enter 220ms 70ms var(--motion-ease-out) both;
   }
 
-  .daan-route-sheet {
-    animation: daan-sheet-enter 260ms 70ms var(--motion-ease-out) both;
+  .alitaptap-route-sheet {
+    animation: alitaptap-sheet-enter 260ms 70ms var(--motion-ease-out) both;
   }
 
   .route-result-summary {
-    animation: daan-state-enter 200ms var(--motion-ease-out) both;
+    animation: alitaptap-state-enter 200ms var(--motion-ease-out) both;
   }
 
   .score-transition {
@@ -33,7 +33,7 @@
   }
 
   .route-place-field [role="listbox"] {
-    animation: daan-popover-enter 160ms var(--motion-ease-out) both;
+    animation: alitaptap-popover-enter 160ms var(--motion-ease-out) both;
     transform-origin: top center;
   }
 
@@ -47,7 +47,7 @@
   }
 
   .route-swap svg,
-  .daan-disclosure-summary svg {
+  .alitaptap-disclosure-summary svg {
     transition: transform 180ms var(--motion-ease-in-out);
   }
 
@@ -87,7 +87,7 @@
   }
 }
 
-@keyframes daan-enter {
+@keyframes alitaptap-enter {
   from {
     opacity: 0;
     transform: translateY(6px);
@@ -99,7 +99,7 @@
   }
 }
 
-@keyframes daan-sheet-enter {
+@keyframes alitaptap-sheet-enter {
   from {
     opacity: 0;
     transform: translateY(12px) scale(0.99);
@@ -111,7 +111,7 @@
   }
 }
 
-@keyframes daan-state-enter {
+@keyframes alitaptap-state-enter {
   from {
     opacity: 0;
     transform: translateY(5px);
@@ -123,7 +123,7 @@
   }
 }
 
-@keyframes daan-popover-enter {
+@keyframes alitaptap-popover-enter {
   from {
     opacity: 0;
     transform: translateY(-4px) scale(0.98);
@@ -135,7 +135,7 @@
   }
 }
 
-@keyframes daan-fade-enter {
+@keyframes alitaptap-fade-enter {
   from {
     opacity: 0;
   }
@@ -146,14 +146,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .daan-header,
-  .daan-map-shell,
-  .daan-map-intro,
-  .daan-route-sheet,
+  .alitaptap-header,
+  .alitaptap-map-shell,
+  .alitaptap-map-intro,
+  .alitaptap-route-sheet,
   .route-result-summary,
   .score-transition,
   .route-place-field [role="listbox"] {
-    animation: daan-fade-enter 160ms var(--motion-ease-out) both !important;
+    animation: alitaptap-fade-enter 160ms var(--motion-ease-out) both !important;
     transform: none !important;
   }
 
@@ -164,7 +164,7 @@
   .route-swap,
   .maplibregl-ctrl-group button,
   .route-swap svg,
-  .daan-disclosure-summary svg {
+  .alitaptap-disclosure-summary svg {
     transition: opacity 140ms var(--motion-ease-out) !important;
   }
 }

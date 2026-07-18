@@ -1,9 +1,9 @@
 import { Hono } from "hono";
-import { RouteExplainRequestSchema, RouteExplainResponseSchema } from "@daan/shared";
+import { RouteExplainRequestSchema, RouteExplainResponseSchema } from "@alitaptap/shared";
 import { zodTextFormat } from "openai/helpers/zod";
 import type { AppDeps } from "../app";
 
-const instruction = `Explain a route that Daan has already computed.
+const instruction = `Explain a route that Alitaptap has already computed.
 
 Use only facts in the supplied route receipt and commuter preference. Never invent a fare, travel time, safety claim, landmark, road condition, or transport step. Keep the language practical for a commuter in the Philippines. If the receipt does not support a caution, return an empty caution list.`;
 

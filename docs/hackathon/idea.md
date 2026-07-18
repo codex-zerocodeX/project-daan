@@ -1,5 +1,7 @@
 # Idea
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Raw and unresearched concepts live in [`inbox.md`](inbox.md). Project Daan was selected July 18. The July 14 finalist board below is historical decision evidence, not an active selection state.
 
 ## SELECTED — July 18 (team decision, revised late morning)

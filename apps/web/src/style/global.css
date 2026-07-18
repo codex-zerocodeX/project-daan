@@ -77,26 +77,26 @@ summary:focus-visible {
   background: var(--color-brand-teal);
 }
 
-.daan-brand-mark {
+.alitaptap-brand-mark {
   background: var(--color-brand-navy);
   overflow: hidden;
 }
 
-.daan-brand-mark img {
+.alitaptap-brand-mark img {
   display: block;
   height: 100%;
   object-fit: contain;
   width: 100%;
 }
 
-.daan-spectrum {
+.alitaptap-spectrum {
   background-color: var(--color-brand-teal);
   background-image: url("/asset/daan-spectrum.webp");
   background-position: center;
   background-size: 100% 100%;
 }
 
-.daan-firefly-banner {
+.alitaptap-firefly-banner {
   background-color: var(--color-brand-navy);
   background-image: url("/asset/alitaptap-trail.webp");
   background-position: center;
@@ -109,13 +109,13 @@ summary:focus-visible {
   scrollbar-width: thin;
 }
 
-.daan-map {
+.alitaptap-map {
   height: clamp(430px, 56vh, 480px);
   min-height: 430px;
   width: 100%;
 }
 
-.daan-layout {
+.alitaptap-layout {
   display: grid;
   gap: 0;
   grid-template-columns: minmax(0, 1fr);
@@ -126,26 +126,26 @@ summary:focus-visible {
     "thread";
 }
 
-.daan-control {
+.alitaptap-control {
   grid-area: control;
 }
 
-.daan-map-stage {
+.alitaptap-map-stage {
   grid-area: map;
 }
 
-.daan-map-shell {
+.alitaptap-map-shell {
   border: 0;
   border-radius: 0;
   box-shadow: none;
 }
 
-.daan-map-hint {
+.alitaptap-map-hint {
   bottom: 7.5rem;
   right: 0.75rem;
 }
 
-.daan-map-intro {
+.alitaptap-map-intro {
   padding: 0.7rem 0.8rem;
   background: rgb(255 253 248 / 0.88);
   border: 1px solid rgb(255 255 255 / 0.72);
@@ -154,7 +154,7 @@ summary:focus-visible {
   backdrop-filter: blur(8px);
 }
 
-.daan-route-sheet {
+.alitaptap-route-sheet {
   position: relative;
   z-index: 20;
   display: grid;
@@ -233,21 +233,21 @@ summary:focus-visible {
   scroll-margin-top: 1rem;
 }
 
-.daan-detail,
-.daan-thread {
+.alitaptap-detail,
+.alitaptap-thread {
   grid-area: detail;
 }
 
-.daan-thread {
+.alitaptap-thread {
   grid-area: thread;
 }
 
-.daan-disclosure {
+.alitaptap-disclosure {
   margin: 0 0.75rem;
   border-top: 1px solid var(--color-line);
 }
 
-.daan-disclosure-summary {
+.alitaptap-disclosure-summary {
   display: flex;
   min-height: 4.25rem;
   cursor: pointer;
@@ -258,20 +258,20 @@ summary:focus-visible {
   padding: 1rem 0.25rem;
 }
 
-.daan-disclosure-summary::-webkit-details-marker {
+.alitaptap-disclosure-summary::-webkit-details-marker {
   display: none;
 }
 
-.daan-disclosure-summary svg {
+.alitaptap-disclosure-summary svg {
   flex: none;
   transition: transform 180ms ease;
 }
 
-.daan-disclosure[open] > .daan-disclosure-summary svg {
+.alitaptap-disclosure[open] > .alitaptap-disclosure-summary svg {
   transform: rotate(180deg);
 }
 
-.daan-disclosure-content {
+.alitaptap-disclosure-content {
   padding: 0 0 1rem;
 }
 
@@ -317,27 +317,27 @@ summary:focus-visible {
 }
 
 @media (min-width: 640px) {
-  .daan-layout {
+  .alitaptap-layout {
     gap: 1rem;
   }
 
-  .daan-map-shell {
+  .alitaptap-map-shell {
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-soft);
   }
 
-  .daan-route-sheet {
+  .alitaptap-route-sheet {
     margin: -5rem 1rem 0;
   }
 
-  .daan-disclosure {
+  .alitaptap-disclosure {
     margin: 0 1rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .daan-layout {
+  .alitaptap-layout {
     align-items: start;
     grid-template-areas:
       "control map"
@@ -346,7 +346,7 @@ summary:focus-visible {
     grid-template-columns: minmax(410px, 0.8fr) minmax(580px, 1.2fr);
   }
 
-  .daan-route-sheet {
+  .alitaptap-route-sheet {
     width: auto;
     margin: 0;
     padding: 1rem;
@@ -365,31 +365,31 @@ summary:focus-visible {
     white-space: normal;
   }
 
-  .daan-disclosure {
+  .alitaptap-disclosure {
     margin: 0;
     border-top: 0;
   }
 
-  .daan-disclosure > .daan-disclosure-summary {
+  .alitaptap-disclosure > .alitaptap-disclosure-summary {
     display: none;
   }
 
-  .daan-disclosure:not([open]) > .daan-disclosure-content,
-  .daan-disclosure > .daan-disclosure-content {
+  .alitaptap-disclosure:not([open]) > .alitaptap-disclosure-content,
+  .alitaptap-disclosure > .alitaptap-disclosure-content {
     display: grid;
     padding: 0;
   }
 
-  .daan-thread .daan-disclosure-content {
+  .alitaptap-thread .alitaptap-disclosure-content {
     display: block;
   }
 
-  .daan-map {
+  .alitaptap-map {
     height: min(58vh, 590px);
     min-height: 340px;
   }
 
-  .daan-map-hint {
+  .alitaptap-map-hint {
     top: 0.75rem;
     right: auto;
     bottom: auto;

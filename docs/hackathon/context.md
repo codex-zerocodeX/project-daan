@@ -1,5 +1,7 @@
 # Context
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Last verified: July 18, 2026, Asia/Manila
 
 New primary source since July 14: [official event microsite](https://build-week-manila-ateneo-2026.dayvough.chatgpt.site/) ("OpenAI Community Buildathon Manila").

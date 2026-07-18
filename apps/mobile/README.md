@@ -1,6 +1,6 @@
-# @daan/mobile
+# @alitaptap/mobile
 
-The Daan Expo client. This workspace is managed from the repository root; do not run a separate install or create a nested lockfile.
+The Alitaptap Expo client. This workspace is managed from the repository root; do not run a separate install or create a nested lockfile.
 
 - Development setup and EAS compatibility identifier: [team setup](../../docs/setup.md)
 - Product and package identity: [brand contract](../../docs/brand.md)

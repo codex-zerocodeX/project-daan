@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { z } from "zod";
-import { ThreadSchema } from "@daan/shared";
+import { ThreadSchema } from "@alitaptap/shared";
 import type { AppDeps } from "../app";
 
 export function threadsRoute({ supabase }: AppDeps) {

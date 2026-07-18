@@ -1,5 +1,7 @@
 # Plan — historical decision-stage record
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 > **Historical record.** This July 16 candidate/Tumpak plan was superseded when the team selected and built Project Daan on July 18. Command names and receipt gates below belong to the earlier repository state and are not current package scripts. Preserve them as decision history; use the current readiness table below, [README.md](README.md), [prd.md](prd.md), and [pitch.md](pitch.md) for the runnable product.
 
 Edited honestly on July 16, 2026. A gap is a gap, not an opportunity. No item is complete without its acceptance test.

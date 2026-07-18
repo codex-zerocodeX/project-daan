@@ -15,7 +15,7 @@
 - TypeScript identifier uses the surrounding code's camelCase; database column uses snake_case.
 - Boolean database column uses `is_`; count uses `_count`; measurement unit remains singular.
 - Primary key is `{table}_id`; foreign key matches the referenced key exactly.
-- Package scope is `@daan/*`.
+- Package scope is `@alitaptap/*`.
 - Historical migration, event, and design-source names are append-only provenance. Expo `komyut` technical identifiers are compatibility values, not naming precedent.
 
 ## Code

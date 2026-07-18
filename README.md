@@ -1,6 +1,8 @@
-# Daan
+# Alitaptap
 
-Daan is an evidence-first commuter-intelligence platform for the Philippines. It helps a commuter decide whether a route is reasonable, then shows the evidence and gaps behind that answer.
+Alitaptap is an evidence-first commuter-intelligence platform for the Philippines. It helps a commuter decide whether a route is reasonable, then shows the evidence and gaps behind that answer.
+
+The product and codebase were renamed from the internal codename **Project Daan**. The local directory and GitHub repository still use `project-daan` as a compatibility identifier until a separately coordinated repository migration.
 
 ## Quick start
 
@@ -70,10 +72,10 @@ The web workspace reads no environment variable.
 
 | Path | Responsibility |
 | --- | --- |
-| `apps/web` | Daan's fixture-bounded web receipt and community experience |
+| `apps/web` | Alitaptap's fixture-bounded web receipt and community experience |
 | `apps/mobile` | Expo client and native map experience |
 | `apps/api` | Hono service for algorithm and stored-community seams |
-| `packages/shared` | `@daan/shared` API and row contract |
+| `packages/shared` | `@alitaptap/shared` API and row contract |
 | `supabase/migrations` | Append-only PostgreSQL/PostGIS schema history |
 | `routing-engine` | Unwired pure routing prototype |
 | `script` | Repeatable local quality and browser-flow checks |

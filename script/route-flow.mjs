@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const chromeCandidate = [
+  process.env.ALITAPTAP_CHROME_PATH,
   process.env.DAAN_CHROME_PATH,
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "/usr/bin/google-chrome-stable",
@@ -134,10 +135,10 @@ async function connectCdp(url) {
 
 async function run() {
   const chromePath = chromeCandidate.find((candidate) => existsSync(candidate));
-  invariant(chromePath, "Chrome was not found. Set DAAN_CHROME_PATH.");
+  invariant(chromePath, "Chrome was not found. Set ALITAPTAP_CHROME_PATH (or legacy DAAN_CHROME_PATH).");
   const previewPort = await reservePort();
   const debugPort = await reservePort();
-  const profilePath = await mkdtemp(join(tmpdir(), "daan-route-flow-"));
+  const profilePath = await mkdtemp(join(tmpdir(), "alitaptap-route-flow-"));
   const previewUrl = `http://127.0.0.1:${previewPort}/`;
   let viteProcess;
   let chromeProcess;
@@ -200,7 +201,7 @@ async function run() {
     invariant(await evaluate("window.innerWidth === 390"), "Expected a 390px viewport.");
     invariant(await evaluate("document.documentElement.scrollWidth <= 390"), "The route view overflows the 390px viewport.");
 
-    await evaluate("document.querySelector('details.daan-detail > summary')?.click()");
+    await evaluate("document.querySelector('details.alitaptap-detail > summary')?.click()");
     await waitFor("[...document.querySelectorAll('button')].some((item) => item.textContent?.trim() === 'Copy route receipt')", "Copy action did not appear.");
     await evaluate("[...document.querySelectorAll('button')].find((item) => item.textContent?.trim() === 'Copy route receipt')?.click()");
     await waitFor("[...document.querySelectorAll('button')].some((item) => item.textContent?.trim() === 'Copied')", "Copy feedback did not appear.");
@@ -214,21 +215,21 @@ async function run() {
     await waitFor("Boolean(document.querySelector('#route-result-summary')) && location.search.includes('departureTime=06%3A00') && document.querySelector('button[aria-pressed=true]')?.textContent?.trim() === '6 AM'", "Receipt did not restore after reload.");
     invariant(await evaluate("document.documentElement.scrollWidth <= 390"), "The restored route view overflows the 390px viewport.");
 
-    await evaluate("document.querySelector('details.daan-detail > summary')?.click()");
-    await waitFor("document.querySelector('details.daan-detail')?.open === true", "Evidence disclosure did not reopen.");
-    await evaluate("[...document.querySelectorAll('details.daan-detail button')].find((item) => item.textContent?.trim() === 'Copy route receipt')?.focus()");
-    await waitFor("document.querySelector('details.daan-detail')?.contains(document.activeElement) && document.activeElement?.tagName === 'BUTTON'", "Evidence descendant did not receive focus.");
+    await evaluate("document.querySelector('details.alitaptap-detail > summary')?.click()");
+    await waitFor("document.querySelector('details.alitaptap-detail')?.open === true", "Evidence disclosure did not reopen.");
+    await evaluate("[...document.querySelectorAll('details.alitaptap-detail button')].find((item) => item.textContent?.trim() === 'Copy route receipt')?.focus()");
+    await waitFor("document.querySelector('details.alitaptap-detail')?.contains(document.activeElement) && document.activeElement?.tagName === 'BUTTON'", "Evidence descendant did not receive focus.");
     await pressEscape();
-    await waitFor("!document.querySelector('details.daan-detail')?.open && document.activeElement === document.querySelector('details.daan-detail > summary')", "Evidence Escape/focus failed.");
-    await evaluate("document.querySelector('details.daan-thread > summary')?.click()");
-    await waitFor("document.querySelector('details.daan-thread')?.open === true", "Community disclosure did not open.");
-    await evaluate("document.querySelector('details.daan-thread button')?.focus()");
-    await waitFor("document.querySelector('details.daan-thread')?.contains(document.activeElement) && document.activeElement?.tagName === 'BUTTON'", "Community descendant did not receive focus.");
+    await waitFor("!document.querySelector('details.alitaptap-detail')?.open && document.activeElement === document.querySelector('details.alitaptap-detail > summary')", "Evidence Escape/focus failed.");
+    await evaluate("document.querySelector('details.alitaptap-thread > summary')?.click()");
+    await waitFor("document.querySelector('details.alitaptap-thread')?.open === true", "Community disclosure did not open.");
+    await evaluate("document.querySelector('details.alitaptap-thread button')?.focus()");
+    await waitFor("document.querySelector('details.alitaptap-thread')?.contains(document.activeElement) && document.activeElement?.tagName === 'BUTTON'", "Community descendant did not receive focus.");
     await pressEscape();
     try {
-      await waitFor("!document.querySelector('details.daan-thread')?.open && document.activeElement === document.querySelector('details.daan-thread > summary')", "Community Escape/focus failed.");
+      await waitFor("!document.querySelector('details.alitaptap-thread')?.open && document.activeElement === document.querySelector('details.alitaptap-thread > summary')", "Community Escape/focus failed.");
     } catch (error) {
-      const disclosureState = await evaluate(`(() => ({ open: document.querySelector('details.daan-thread')?.open, activeTag: document.activeElement?.tagName, activeText: document.activeElement?.textContent?.trim(), summaryFocused: document.activeElement === document.querySelector('details.daan-thread > summary'), href: location.href }))()`);
+      const disclosureState = await evaluate(`(() => ({ open: document.querySelector('details.alitaptap-thread')?.open, activeTag: document.activeElement?.tagName, activeText: document.activeElement?.textContent?.trim(), summaryFocused: document.activeElement === document.querySelector('details.alitaptap-thread > summary'), href: location.href }))()`);
       error.message = `${error.message}\n${JSON.stringify(disclosureState)}`;
       throw error;
     }
@@ -236,7 +237,7 @@ async function run() {
     await evaluate(`(() => { const input = document.querySelector('input[placeholder="Where are you coming from?"]'); Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, 'Ateneo'); input.dispatchEvent(new Event('input', { bubbles: true })); })()`);
     await waitFor("!document.querySelector('#route-result-summary') && [...document.querySelectorAll('h2')].some((item) => item.textContent === 'Route needs an update')", "Stale receipt did not clear.");
     invariant(await evaluate("document.querySelector('button.route-submit')?.disabled === true"), "Draft route remained submittable.");
-    invariant(await evaluate("!document.querySelector('.daan-map-hint')"), "Stale map kept its checkpoint hint.");
+    invariant(await evaluate("!document.querySelector('.alitaptap-map-hint')"), "Stale map kept its checkpoint hint.");
     await evaluate("[...document.querySelectorAll('[role=option]')].find((item) => item.textContent?.includes('Ateneo Gate 2.5'))?.click()");
     await waitFor("document.querySelector('button.route-submit')?.disabled === false", "Valid place did not enable submit.");
     await evaluate("document.querySelector('button.route-submit')?.click()");

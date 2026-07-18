@@ -1,4 +1,4 @@
-# Daan architecture
+# Alitaptap architecture
 
 ```mermaid
 flowchart LR
@@ -6,7 +6,7 @@ flowchart LR
     M["apps/mobile\nExpo + MapLibre"] -->|"auth and CRUD under RLS"| S[("Supabase\nPostgres + PostGIS")]
     M -->|"algorithm request"| A["apps/api\nHono"]
     A -->|"service role"| S
-    M -.->|"validated contract"| SH["packages/shared\n@daan/shared"]
+    M -.->|"validated contract"| SH["packages/shared\n@alitaptap/shared"]
     A -.->|"validated contract"| SH
     R["routing-engine\npure prototype"] -.->|"not wired"| A
 ```
@@ -28,7 +28,7 @@ The integration seam is the receipt contract: route or place input → attributa
 - **Web route receipt:** local graph and fixture evidence; community write persists in versioned localStorage.
 - **Mobile CRUD:** mobile → Supabase under RLS.
 - **Server algorithm:** mobile → Hono API → Supabase with the service-role key where needed.
-- **Contract:** any mobile/API boundary payload is parsed by `@daan/shared`.
+- **Contract:** any mobile/API boundary payload is parsed by `@alitaptap/shared`.
 - **Map:** MapLibre renders geometry; it does not own route selection or evidence truth.
 
 ## Production gate

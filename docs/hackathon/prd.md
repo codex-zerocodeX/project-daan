@@ -1,5 +1,7 @@
 # PRD — Project Daan v0: platform build (event day, July 18 — revised scope)
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Daan is a modular commuter-intelligence platform ([roadmap.md](roadmap.md)). Team decision (late morning, event day): v0 builds the **platform**, not one module — M1 Walkability as the anchor spine, M2 Report + Karma, M3 Bottleneck (a report kind), and M4 Miles, all riding one receipt engine and one `evidence` schema. M5 Traffic Intelligence stays a slide (no lawful data source today).
 
 **Amputation order, decided now:** M4 dies first, then M3, then M2. M1 + the receipt engine are never cut. Anything not merged and working on the deployed URL by 2:00 PM is cut by the integrator without a meeting.

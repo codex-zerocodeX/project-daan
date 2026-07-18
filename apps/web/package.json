@@ -1,9 +1,9 @@
 {
-  "name": "@daan/web",
+  "name": "@alitaptap/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Daan's fixture-bounded web route-receipt and community experience.",
+  "description": "Alitaptap's fixture-bounded web route-receipt and community experience.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

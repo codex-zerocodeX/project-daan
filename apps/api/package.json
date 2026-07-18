@@ -1,7 +1,7 @@
 {
-  "name": "@daan/api",
+  "name": "@alitaptap/api",
   "version": "0.1.0",
-  "description": "Daan API service",
+  "description": "Alitaptap API service",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@daan/shared": "*",
+    "@alitaptap/shared": "*",
     "@hono/node-server": "^1.13.0",
     "@supabase/supabase-js": "^2.47.0",
     "hono": "^4.6.0",

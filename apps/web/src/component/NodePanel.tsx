@@ -13,7 +13,7 @@ interface NodePanelProps {
 export function NodePanel({ node, review, thread, onClose }: NodePanelProps) {
   if (!node) {
     return (
-      <section className="daan-firefly-banner min-h-[86px] rounded-card border border-brand-navy p-4 pl-28 shadow-[0_14px_34px_rgb(8_34_55/0.13)]" aria-label="Place details">
+      <section className="alitaptap-firefly-banner min-h-[86px] rounded-card border border-brand-navy p-4 pl-28 shadow-[0_14px_34px_rgb(8_34_55/0.13)]" aria-label="Place details">
         <div className="flex min-h-[52px] items-center">
           <div className="rounded-[8px] bg-brand-navy/95 px-2 py-1">
             <p className="text-sm font-extrabold text-surface">Select a place on the map</p>
@@ -56,7 +56,7 @@ export function NodePanel({ node, review, thread, onClose }: NodePanelProps) {
       )}
       <div className="mt-4 grid max-h-64 gap-2 overflow-y-auto pr-1">
         {scopedReview.length > 0 ? scopedReview.map((item) => <ReviewCard key={item.reviewId} review={item} />) : (
-          <p className="rounded-card bg-paper p-3 text-sm font-medium text-ink-soft">No one has reviewed this place yet. Daan leaves it unknown.</p>
+          <p className="rounded-card bg-paper p-3 text-sm font-medium text-ink-soft">No one has reviewed this place yet. Alitaptap leaves it unknown.</p>
         )}
       </div>
     </section>

@@ -1,4 +1,4 @@
-# Daan team setup
+# Alitaptap team setup
 
 ## Prerequisite
 
@@ -61,7 +61,7 @@ eas build --profile development --platform android
 
 Development signing uses local credential configuration. `credentials.json`, `credentials/`, native build output, and signing material must remain untracked.
 
-The display name is Daan, while the current slug, scheme, application ID, and EAS UUID remain compatibility identifiers. See the [brand contract](brand.md) before changing native identity.
+The display name is Alitaptap, while the current slug, scheme, application ID, and EAS UUID remain compatibility identifiers. See the [brand contract](brand.md) before changing native identity.
 
 ## Troubleshooting
 

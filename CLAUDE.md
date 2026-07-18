@@ -1,6 +1,6 @@
-# CLAUDE.md — Daan repository reference
+# CLAUDE.md — Alitaptap repository reference
 
-Daan is an evidence-first commuter-intelligence platform for the Philippines. Read the [brand contract](docs/brand.md), [architecture](docs/architecture.md), and [convention](docs/conventions.md) before changing a current-facing surface.
+Alitaptap is an evidence-first commuter-intelligence platform for the Philippines. Read the [brand contract](docs/brand.md), [architecture](docs/architecture.md), and [convention](docs/conventions.md) before changing a current-facing surface.
 
 ## Stack
 
@@ -8,7 +8,7 @@ Daan is an evidence-first commuter-intelligence platform for the Philippines. Re
 - `apps/web`: React, Vite, MapLibre GL JS, deterministic fixture receipt, browser-local community state
 - `apps/mobile`: Expo Router, MapLibre React Native, TanStack Query, Zustand, Supabase auth/data
 - `apps/api`: Hono service for algorithm-shaped and server-authorized work
-- `packages/shared` (`@daan/shared`): Zod v4 mobile/API contract
+- `packages/shared` (`@alitaptap/shared`): Zod v4 mobile/API contract
 - `supabase/migrations`: append-only PostgreSQL/PostGIS and RLS history
 - `routing-engine`: pure prototype, not yet integrated into workspace CI
 
@@ -30,9 +30,9 @@ Daan is an evidence-first commuter-intelligence platform for the Philippines. Re
 - Web score and evidence currently come from disclosed fixtures.
 - Mobile route card currently uses mock route/review data.
 - MapLibre renders geometry; it is not the routing or evidence engine.
-- API/mobile payload must cross `@daan/shared`.
+- API/mobile payload must cross `@alitaptap/shared`.
 - Supabase service-role key stays only in `apps/api/.env`.
-- Expo display name is Daan, but the linked `komyut` slug, scheme, application ID, and EAS UUID remain compatibility identifiers until a separately authorized native migration.
+- Expo display name is Alitaptap, but the linked `komyut` slug, scheme, application ID, and EAS UUID remain compatibility identifiers until a separately authorized native migration.
 - New identifier, collection, file, and schema name is singular.
 
 ## Recipe

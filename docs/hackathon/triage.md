@@ -1,5 +1,7 @@
 # Triage
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 ## Host question
 
 | Priority | Question | Owner | State | Decision affected |

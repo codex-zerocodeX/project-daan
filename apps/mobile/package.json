@@ -1,14 +1,14 @@
 {
-  "name": "@daan/mobile",
+  "name": "@alitaptap/mobile",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "description": "Daan Expo client",
+  "description": "Alitaptap Expo client",
   "dependencies": {
     "@expo-google-fonts/dm-mono": "^0.4.2",
     "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "@expo/ui": "~57.0.7",
     "@expo/vector-icons": "^15.1.1",
-    "@daan/shared": "*",
+    "@alitaptap/shared": "*",
     "@maplibre/maplibre-react-native": "^11.3.6",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.110.7",

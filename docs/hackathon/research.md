@@ -1,5 +1,7 @@
 # Research
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Cutoff: July 14, 2026, Asia/Manila
 
 Decision scope: OpenAI Build Week Community Buildathon — Manila, July 18, 2026

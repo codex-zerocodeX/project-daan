@@ -27,7 +27,7 @@ export function CoverageBar({ coveragePct }: CoverageBarProp) {
         role="img"
         aria-label={`${coveragePct}% of route length has structural infrastructure evidence; ${unknownPct}% is unknown`}
       >
-        <span className="daan-spectrum" style={{ width: `${coveragePct}%` }} />
+        <span className="alitaptap-spectrum" style={{ width: `${coveragePct}%` }} />
         <span className="coverage-unknown flex-1" />
       </div>
 

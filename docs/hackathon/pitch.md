@@ -1,5 +1,7 @@
 # Pitch — Project Daan
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Active judge-facing narrative, July 18, 2026. This script follows the runnable checkout: a disclosed Katipunan fixture, deterministic route/profile logic, inspectable scoring, visible unknowns, and local community interaction. Live citywide routing, live weather, a shared backend, GPT explanation, Miles, and partner feeds are roadmap items—not demo claims.
 
 ## One sentence

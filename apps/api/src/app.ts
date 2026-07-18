@@ -17,6 +17,7 @@ export function createApp(deps: AppDeps) {
   const app = new Hono();
   app.use("*", async (context, next) => {
     await next();
+    context.header("X-Alitaptap-Service", "api");
     context.header("X-Daan-Service", "api");
   });
   app.route("/health", healthRoute());

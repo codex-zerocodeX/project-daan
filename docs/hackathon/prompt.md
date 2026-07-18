@@ -1,5 +1,7 @@
 # Prompt
 
+> **Historical naming note.** These July 2026 prompts use **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 These prompts preserve repeatable thinking outside chat history. Replace bracketed fields before use. Each implementation prompt must contain an explicit stop point.
 
 ## Rule normalization

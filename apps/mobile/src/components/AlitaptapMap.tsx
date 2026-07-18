@@ -34,7 +34,7 @@ const routeLineStyle = {
   ],
 } as const;
 
-export function DaanMap() {
+export function AlitaptapMap() {
   useEffect(() => {
     Location.requestForegroundPermissionsAsync();
   }, []);

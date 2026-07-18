@@ -1,4 +1,4 @@
-import type { Thread } from "@daan/shared";
+import type { Thread } from "@alitaptap/shared";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { color, font, radius, shadow, text } from "../lib/theme";
 import { Pill } from "./ui/Pill";

@@ -39,7 +39,7 @@ export default function TabLayout() {
         name="community"
         options={{
           title: "Updates",
-          headerTitle: "Daan · Updates",
+          headerTitle: "Alitaptap · Updates",
           tabBarIcon: ({ color: tint, size }) => (
             <MessagesSquare color={tint} size={size} />
           ),
@@ -49,7 +49,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "You",
-          headerTitle: "Daan · You",
+          headerTitle: "Alitaptap · You",
           tabBarIcon: ({ color: tint, size }) => (
             <CircleUser color={tint} size={size} />
           ),

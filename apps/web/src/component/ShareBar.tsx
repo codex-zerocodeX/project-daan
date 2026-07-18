@@ -16,7 +16,7 @@ function ShareAction({ route }: ShareActionProp) {
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
 
   async function copySummary() {
-    const summary = `Daan: ${route.originLabel} to ${route.destinationLabel} scores ${route.score}/100 (${verdictMeta[route.verdict].label}) with ${route.coveragePct}% evidence coverage.`;
+    const summary = `Alitaptap: ${route.originLabel} to ${route.destinationLabel} scores ${route.score}/100 (${verdictMeta[route.verdict].label}) with ${route.coveragePct}% evidence coverage.`;
     try {
       await navigator.clipboard.writeText(`${summary} ${window.location.href}`);
       setCopyState("copied");

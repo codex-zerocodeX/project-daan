@@ -1,4 +1,4 @@
-@daan/routing dependency list
+@alitaptap/routing dependency list
 
 Runtime dependencies: NONE
 

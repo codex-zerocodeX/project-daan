@@ -1,10 +1,10 @@
 export const mapStyleUrl = "https://tiles.openfreemap.org/styles/liberty";
 
-export const routeSourceId = "daan-route";
-export const nodeSourceId = "daan-node";
-export const routeLayerId = "daan-route-line";
-export const nodeHaloLayerId = "daan-node-halo";
-export const nodeLayerId = "daan-node-point";
+export const routeSourceId = "alitaptap-route";
+export const nodeSourceId = "alitaptap-node";
+export const routeLayerId = "alitaptap-route-line";
+export const nodeHaloLayerId = "alitaptap-node-halo";
+export const nodeLayerId = "alitaptap-node-point";
 
 export const emptyFeatureCollection = {
   type: "FeatureCollection" as const,

@@ -1,11 +1,11 @@
 name: Bug report
-description: Report a reproducible Daan defect.
+description: Report a reproducible Alitaptap defect.
 title: "bug: "
 labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: Thank you for helping make Daan more reliable. Do not include secrets or precise personal travel history.
+      value: Thank you for helping make Alitaptap more reliable. Do not include secrets or precise personal travel history.
   - type: dropdown
     id: surface
     attributes:

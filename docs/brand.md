@@ -1,4 +1,4 @@
-# Daan brand contract
+# Alitaptap brand contract
 
 This is the single current-state source of truth for product identity, voice, visual token, and compatibility naming.
 
@@ -6,20 +6,19 @@ This is the single current-state source of truth for product identity, voice, vi
 
 | Name | Role | Usage |
 | --- | --- | --- |
-| **Project Daan** | Repository and program label | Use in event, team, and project-history context |
-| **Daan** | Product name and wordmark | Use in every current-facing interface, package description, and repository front door |
+| **Alitaptap** | Product name and wordmark | Use in every current-facing interface, package description, and repository front door |
+| **Project Daan** | Former internal codename | Use only in event, team, migration, and project-history context |
 | **How Walkable?** | Module 1 | Use for the route-quality and evidence-receipt experience |
-| **Alitaptap** | Firefly mascot and visual motif | Never present it as a second product name |
 | **Lakbay** | Historical source-design reference | May appear only in provenance comments or historical design records |
 | **Komyut** | Retired product label | May appear only in history or as a documented technical compatibility identifier |
 
 Canonical promise: **Evidence for the way ahead.**
 
-Functional promise: **Daan helps a commuter decide whether a route is reasonable, then shows the evidence and gaps behind the answer.**
+Functional promise: **Alitaptap helps a commuter decide whether a route is reasonable, then shows the evidence and gaps behind the answer.**
 
 ## Voice
 
-Daan is calm, civic, direct, and evidence-first. State the boundary before the claim. Prefer “reported,” “fixture,” “unknown,” and “not yet available” when those are the true states. Avoid superlatives, unexplained scores, generic AI language, or claims that turn a prototype adapter into live evidence.
+Alitaptap is calm, civic, direct, and evidence-first. State the boundary before the claim. Prefer “reported,” “fixture,” “unknown,” and “not yet available” when those are the true states. Avoid superlatives, unexplained scores, generic AI language, or claims that turn a prototype adapter into live evidence.
 
 ## Visual token
 
@@ -44,15 +43,15 @@ Geometry uses a 4 px spacing basis, 14 px web card radius, pill chips, and one s
 
 | Surface | Canonical value | Implementation source | Parity check |
 | --- | --- | --- | --- |
-| Web header | Daan · Evidence for the way ahead · How Walkable? | `apps/web/src/component/Header.tsx` | Render and text grep |
-| Mobile home header | Daan · Metro Manila | `apps/mobile/app/(tabs)/index.tsx` | Expo render and text grep |
-| Mobile native header | Daan · Updates / Daan · You | `apps/mobile/app/(tabs)/_layout.tsx` | Expo config/render inspection |
-| Web metadata | Daan — How Walkable? | `apps/web/index.html`, `apps/web/public/manifest.webmanifest` | Production build inspection |
-| Expo display name | Daan | `apps/mobile/app.config.ts` | `npx expo config --type public` |
+| Web header | Alitaptap · Evidence for the way ahead · How Walkable? | `apps/web/src/component/Header.tsx` | Render and text grep |
+| Mobile home header | Alitaptap · Metro Manila | `apps/mobile/app/(tabs)/index.tsx` | Expo render and text grep |
+| Mobile native header | Alitaptap · Updates / Alitaptap · You | `apps/mobile/app/(tabs)/_layout.tsx` | Expo config/render inspection |
+| Web metadata | Alitaptap — How Walkable? | `apps/web/index.html`, `apps/web/public/manifest.webmanifest` | Production build inspection |
+| Expo display name | Alitaptap | `apps/mobile/app.config.ts` | `npx expo config --type public` |
 | Expo icon and splash | Alitaptap mark | `apps/mobile/assets/images` | Expo config plus image inspection |
-| API identity | Daan API / `X-Daan-Service: api` | `apps/api/src/index.ts`, `apps/api/src/app.ts` | API unit test |
-| Package identity | `daan`, `@daan/api`, `@daan/mobile`, `@daan/shared`, `@daan/web` | Each `package.json` | Lockfile and workspace query |
-| Repository front door | Daan | `README.md` | README truth check |
+| API identity | Alitaptap API / `X-Alitaptap-Service: api` | `apps/api/src/index.ts`, `apps/api/src/app.ts` | API unit test |
+| Package identity | `alitaptap`, `@alitaptap/api`, `@alitaptap/mobile`, `@alitaptap/shared`, `@alitaptap/web` | Each `package.json` | Lockfile and workspace query |
+| Repository front door | Alitaptap | `README.md` | README truth check |
 | Repository description | Evidence-first commuter intelligence for the Philippines | GitHub repository setting | GitHub API read-back |
 
 No canonical public URL or deployment exists yet, so canonical-link and absolute social-image metadata remain intentionally unset.
@@ -69,8 +68,10 @@ The linked Expo/EAS project predates this brand contract. Until a separately aut
 
 These are compatibility identifiers, not customer-facing brand copy. A future rename must migrate all five surfaces atomically and rebuild the native client.
 
+The local directory, GitHub repository, and remote URL still use `project-daan`. Browser state continues to read the legacy `daan.community.v1` and `daan.contributor.v1` keys while writing canonical `alitaptap.*` keys. The API temporarily emits deprecated `X-Daan-Service` beside `X-Alitaptap-Service`. See [the rename compatibility record](alitaptap-migration.md).
+
 Applied migration comments, `docs/hackathon`, and `docs/superpowers` are historical records and may retain earlier names. New package, variable, collection, and file names follow the repository's singular naming convention.
 
 ## Asset boundary
 
-`apps/web/public/asset/alitaptap-mark.webp` is the current mark, `alitaptap-trail.webp` is the decorative trail, and `daan-spectrum.webp` is the evidence spectrum. The raster source and implementation QA are recorded in [brand QA](brand-qa.md). A transparent vector master, trademark clearance, formal clear-space rule, and social-share image remain open production-brand work.
+`apps/web/public/asset/alitaptap-mark.webp` is the current mark and `alitaptap-trail.webp` is the decorative trail. The legacy-named `daan-spectrum.webp` is the evidence spectrum; its binary filename is retained until the canonical design archive is re-exported. The raster source and implementation QA are recorded in [brand QA](brand-qa.md). A transparent vector master, trademark clearance, formal clear-space rule, and social-share image remain open production-brand work.

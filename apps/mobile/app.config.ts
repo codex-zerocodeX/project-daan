@@ -1,7 +1,7 @@
 import type { ExpoConfig } from "expo/config";
 
 const config: ExpoConfig = {
-  name: "Daan",
+  name: "Alitaptap",
   slug: "komyut",
   version: "0.1.0",
   scheme: "komyut",
@@ -35,7 +35,7 @@ const config: ExpoConfig = {
       "expo-location",
       {
         locationWhenInUsePermission:
-          "Daan uses your location to show you on the map and plan commute routes.",
+          "Alitaptap uses your location to show you on the map and plan commute routes.",
       },
     ],
   ],

@@ -1,8 +1,10 @@
 import { mergeCommunitySeed, seedCommunityState } from "./seed";
 import type { CommunityIdentity, CommunityReply, CommunityReport, CommunityState, CommunityVote } from "./type";
 
-export const communityStateKey = "daan.community.v1";
-export const communityIdentityKey = "daan.contributor.v1";
+export const communityStateKey = "alitaptap.community.v1";
+export const communityIdentityKey = "alitaptap.contributor.v1";
+export const communityStateLegacyKey = "daan.community.v1";
+export const communityIdentityLegacyKey = "daan.contributor.v1";
 
 export interface CommunityStorage {
   getItem(key: string): string | null;
@@ -82,8 +84,17 @@ export function saveCommunityState(storage: CommunityStorage, state: CommunitySt
   storage.setItem(communityStateKey, JSON.stringify(state));
 }
 
+function readStoredValue(storage: CommunityStorage, canonicalKey: string, legacyKey: string): string | null {
+  const canonicalValue = storage.getItem(canonicalKey);
+  if (canonicalValue !== null) return canonicalValue;
+
+  const legacyValue = storage.getItem(legacyKey);
+  if (legacyValue !== null) storage.setItem(canonicalKey, legacyValue);
+  return legacyValue;
+}
+
 export function loadCommunityState(storage: CommunityStorage): CommunityState {
-  const rawState = storage.getItem(communityStateKey);
+  const rawState = readStoredValue(storage, communityStateKey, communityStateLegacyKey);
   if (!rawState) {
     const state = seedCommunityState();
     saveCommunityState(storage, state);
@@ -105,7 +116,7 @@ export function loadCommunityIdentity(
   storage: CommunityStorage,
   createId: () => string = () => crypto.randomUUID(),
 ): CommunityIdentity {
-  const rawIdentity = storage.getItem(communityIdentityKey);
+  const rawIdentity = readStoredValue(storage, communityIdentityKey, communityIdentityLegacyKey);
   if (rawIdentity) {
     try {
       const identity = JSON.parse(rawIdentity) as unknown;

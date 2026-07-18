@@ -60,7 +60,7 @@ export function ScoreCard({ route }: ScoreCardProp) {
       </span>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink-soft">Daan score</p>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink-soft">Alitaptap score</p>
           <div className="mt-1 flex items-end gap-2">
             <span className="text-[64px] font-extrabold leading-none tracking-[-0.065em] text-brand-navy" aria-hidden="true">
               {displayScore}

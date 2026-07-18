@@ -3,7 +3,7 @@ import { hasCommunityTarget, normalizeCommunityUrl, readCommunityUrl, writeCommu
 
 describe("community URL", () => {
   it("preserves unrelated query and hash while writing singular community keys", () => {
-    const source = new URL("https://daan.example/?map=fail&origin=gate#receipt");
+    const source = new URL("https://alitaptap.example/?map=fail&origin=gate#receipt");
     const next = writeCommunityUrl(source, { routeId: "route-a", segmentId: "segment-a", threadId: "thread-a", reportId: null, replyId: null });
     expect(next.searchParams.get("map")).toBe("fail");
     expect(next.searchParams.get("origin")).toBe("gate");
@@ -20,7 +20,7 @@ describe("community URL", () => {
   });
 
   it("recognizes a history-restored community target that must reopen its disclosure", () => {
-    expect(hasCommunityTarget(readCommunityUrl(new URL("https://daan.example/?reportId=report-a")))).toBe(true);
-    expect(hasCommunityTarget(readCommunityUrl(new URL("https://daan.example/?routeId=route-a")))).toBe(false);
+    expect(hasCommunityTarget(readCommunityUrl(new URL("https://alitaptap.example/?reportId=report-a")))).toBe(true);
+    expect(hasCommunityTarget(readCommunityUrl(new URL("https://alitaptap.example/?routeId=route-a")))).toBe(false);
   });
 });

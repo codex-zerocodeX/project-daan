@@ -17,7 +17,7 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { DaanMap } from "../../src/components/DaanMap";
+import { AlitaptapMap } from "../../src/components/AlitaptapMap";
 import { Button } from "../../src/components/ui/Button";
 import { DEFAULT_DESTINATION, MOCK_ORIGIN } from "../../src/lib/mockRoutes";
 import { color, font, radius, shadow, text } from "../../src/lib/theme";
@@ -36,12 +36,12 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.mapBlock}>
-        <DaanMap />
+        <AlitaptapMap />
         <View style={styles.mapWash} />
         <View style={styles.mapScrim} />
         <View style={[styles.mapHeader, { top: insets.top + 10 }]}>
           <View>
-            <Text style={styles.brandName}>Daan · Metro Manila</Text>
+            <Text style={styles.brandName}>Alitaptap · Metro Manila</Text>
             <Text style={styles.greeting}>Good morning</Text>
             <Text style={styles.headline}>Where to today?</Text>
           </View>

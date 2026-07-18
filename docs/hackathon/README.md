@@ -1,5 +1,7 @@
 # OpenAI Build Week Manila — Project Daan
 
+> **Historical naming note.** This July 2026 record uses **Project Daan**, the internal codename at the time. The current product and codebase name is **Alitaptap**.
+
 Date: Saturday, July 18, 2026 · Leong Hall, Ateneo de Manila University · submission cutoff 3:00 PM
 
 Team: five (Gelo, Rafaello Sibayan, +3 — updated event morning from the earlier two-person plan)
@@ -61,11 +63,11 @@ No strategy guarantees a win. License hard lines: nothing cached, derived, or ML
 
 ## Runnable map foundation
 
-The current interface combines the fixture-backed Daan route receipt with a mobile-first MapLibre route workspace. Local place search plans A → B paths over a deterministic Katipunan graph, and heap-backed Dijkstra independently optimizes the `shortest_time` and `comfort_balance` profiles; each computed path has a stable route identity. Community questions are bound to that exact route; commuters can post answers, reply up to three levels, vote useful or stale context, and build local karma. Place-node reviews remain separate and are similarity-matched into questions as supporting context.
+The current interface combines the fixture-backed Alitaptap route receipt with a mobile-first MapLibre route workspace. Local place search plans A → B paths over a deterministic Katipunan graph, and heap-backed Dijkstra independently optimizes the `shortest_time` and `comfort_balance` profiles; each computed path has a stable route identity. Community questions are bound to that exact route; commuters can post answers, reply up to three levels, vote useful or stale context, and build local karma. Place-node reviews remain separate and are similarity-matched into questions as supporting context.
 
 The foundation is deliberately honest about its boundary: search, routing, seeded questions, and place reviews currently use local fixtures; new answers, nested replies, accept/dispute votes, and anonymous contributor karma persist only in versioned localStorage. Origin, destination, departure time, route, segment, question, answer, and reply selections are deep-linkable and restore from the URL. Editing an endpoint invalidates the visible receipt until the route is checked again, so an old score is never presented as current input. OpenFreeMap/OpenMapTiles/OpenStreetMap provide only the rendered map. The monorepo now contains Supabase-backed API seams and an optional server-side AI explanation endpoint, but the judging web receipt does not call them; live geocoding, account state, server-synced report submission, and rewards are not included in this experience.
 
-This workspace treats the current product as **Project Daan**. The initial UI request used “smartset”; no separate Smartset brand is introduced here.
+At the event, this workspace used **Project Daan** as its internal codename. The current product and codebase name is **Alitaptap**. The initial UI request used “smartset”; no separate Smartset brand is introduced here.
 
 ```bash
 npm ci

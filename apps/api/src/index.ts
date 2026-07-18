@@ -19,5 +19,5 @@ const app = createApp({
 const port = Number(process.env.PORT ?? 8787);
 
 serve({ fetch: app.fetch, port }, () => {
-  console.log(`Daan API listening on http://localhost:${port}`);
+  console.log(`Alitaptap API listening on http://localhost:${port}`);
 });

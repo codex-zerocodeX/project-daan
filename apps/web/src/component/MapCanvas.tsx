@@ -125,8 +125,8 @@ export function MapCanvas({ alternative, selectedNodeId, onNodeSelect }: MapCanv
   }, [alternative, isReady, nodeData, routeData]);
 
   return (
-    <section className="daan-map-shell relative overflow-hidden bg-surface" aria-label="Interactive route map">
-      <div ref={containerRef} className="daan-map" />
+    <section className="alitaptap-map-shell relative overflow-hidden bg-surface" aria-label="Interactive route map">
+      <div ref={containerRef} className="alitaptap-map" />
       {!isReady && !isFailed && (
         <div className="absolute inset-0 grid place-items-center bg-paper/90 text-sm font-bold text-ink-soft">Loading route map…</div>
       )}
@@ -145,7 +145,7 @@ export function MapCanvas({ alternative, selectedNodeId, onNodeSelect }: MapCanv
         </div>
       )}
       {alternative && (
-        <div className="daan-map-hint pointer-events-none absolute rounded-chip bg-surface/95 px-3 py-1.5 text-[11px] font-extrabold shadow-soft">
+        <div className="alitaptap-map-hint pointer-events-none absolute rounded-chip bg-surface/95 px-3 py-1.5 text-[11px] font-extrabold shadow-soft">
           Tap a checkpoint for local context
         </div>
       )}

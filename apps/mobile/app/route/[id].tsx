@@ -12,7 +12,7 @@ import {
 import { Fragment, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { DaanMap } from "../../src/components/DaanMap";
+import { AlitaptapMap } from "../../src/components/AlitaptapMap";
 import { CrowdMeter } from "../../src/components/transit/CrowdMeter";
 import { ReviewCard } from "../../src/components/transit/ReviewCard";
 import { SignalBox } from "../../src/components/transit/SignalBox";
@@ -48,7 +48,7 @@ export default function RouteDetailScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.mapBlock}>
-        <DaanMap />
+        <AlitaptapMap />
         <Pressable
           accessibilityLabel="Back to route options"
           accessibilityRole="button"

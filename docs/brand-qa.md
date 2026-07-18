@@ -1,4 +1,4 @@
-# Project Daan — Alitaptap visual QA
+# Alitaptap visual QA
 
 ## Evidence
 
@@ -17,7 +17,7 @@
 
 The final desktop render preserves the reference composition: 78px brand header, narrow disclosed-fixture banner, left decision column, dominant right map, score and coverage stacked below route choice, and the navy Alitaptap place-detail panel directly below the map. The map frame, search controls, route cards, score card, and evidence bar align at the same visual scale and density.
 
-The implementation intentionally keeps the product wordmark as **Daan** while using **Alitaptap** as the firefly mascot. The source mock displayed “Alitaptap” as the wordmark; preserving the established product name avoids a product rename while retaining the selected logo art and brand language.
+The implementation now uses **Alitaptap** as the product wordmark. **Project Daan** was the internal codename used when the original comparison was recorded; the selected firefly art and visual language remain unchanged.
 
 ## Focused comparison
 
@@ -69,7 +69,7 @@ Existing Lucide controls remain aligned and semantically labeled. The calmer alt
 
 ### Final pass
 
-No actionable P0, P1, or P2 fidelity issue remains. The retained **Daan** wordmark is an intentional product-continuity decision. A paper-background firefly beside the coverage bar from the generated mock is omitted as nonessential P3 decoration because the mascot already appears in the persistent header and functional empty state.
+No actionable P0, P1, or P2 fidelity issue remains. The **Alitaptap** wordmark is the canonical product identity. A paper-background firefly beside the coverage bar from the generated mock is omitted as nonessential P3 decoration because the mascot already appears in the persistent header and functional empty state.
 
 ## Implementation checklist
 

@@ -1,7 +1,7 @@
 {
-  "name": "@daan/shared",
+  "name": "@alitaptap/shared",
   "version": "0.1.0",
-  "description": "Daan shared API and data contracts",
+  "description": "Alitaptap shared API and data contracts",
   "private": true,
   "type": "module",
   "main": "src/index.ts",
