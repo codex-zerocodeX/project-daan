@@ -21,3 +21,23 @@ export function fakeSupabaseSelect(result: { data: unknown; error: unknown }): S
     }),
   } as unknown as SupabaseClient;
 }
+
+type TableResult = { data: unknown; error: unknown };
+
+/**
+ * Fake for routes that read more than one table. Keyed by table name; each
+ * query is awaitable directly or after `.in(...)`: from(t).select()[.in()]
+ */
+export function fakeSupabaseTables(results: Record<string, TableResult>): SupabaseClient {
+  return {
+    from: (table: string) => {
+      const result = results[table] ?? { data: [], error: null };
+      const query = {
+        in: () => query,
+        then: (onFulfilled: (value: TableResult) => unknown) =>
+          Promise.resolve(result).then(onFulfilled),
+      };
+      return { select: () => query };
+    },
+  } as unknown as SupabaseClient;
+}
