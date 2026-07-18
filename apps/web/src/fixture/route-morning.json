@@ -1,0 +1,90 @@
+{
+  "route_id": "katipunan-demo-1",
+  "origin_label": "Ateneo Gate 3",
+  "destination_label": "Katipunan LRT-2 Station",
+  "departure_time": "2026-07-18T06:00:00+08:00",
+  "distance_m": 1420,
+  "duration_min": 21,
+  "score": 61,
+  "verdict": "manageable",
+  "coverage_pct": 62,
+  "weather": {
+    "apparent_temperature_c": 28,
+    "rain_probability_pct": 10,
+    "multiplier": 1,
+    "source": "open-meteo",
+    "fetched_at": "2026-07-18T05:55:00+08:00"
+  },
+  "is_fixture": true,
+  "segment": [
+    {
+      "segment_id": "s1",
+      "name": "Katipunan Ave service road",
+      "length_m": 480,
+      "score": 40,
+      "polyline": [[14.639, 121.074], [14.637, 121.073]],
+      "road_class": "primary",
+      "evidence": [
+        {"kind":"sidewalk","value":"none","state":"negative","delta":-20,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/123456","report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"lit","value":"yes","state":"positive","delta":10,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/123456","report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"blocked","value":"blocked","state":"negative","delta":-8,"source":"community","weight":0.8,"source_url":null,"report_id":"r-seed-1","reporter_karma":3,"reported_at":"2026-07-18T09:40:00+08:00"}
+      ],
+      "explanation": "Cooler air makes the route more manageable, but the missing sidewalk and blockage still matter."
+    },
+    {
+      "segment_id": "s2",
+      "name": "Gate 2.5 footpath",
+      "length_m": 210,
+      "score": 90,
+      "polyline": [[14.637, 121.073], [14.6358, 121.0724]],
+      "road_class": "footway",
+      "evidence": [
+        {"kind":"sidewalk","value":"separate","state":"positive","delta":15,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/234567","report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"crossing","value":"marked","state":"positive","delta":5,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/node/345678","report_id":null,"reporter_karma":null,"reported_at":null}
+      ],
+      "explanation": "Cool morning conditions strengthen an already well-mapped footpath and crossing."
+    },
+    {
+      "segment_id": "s3",
+      "name": "Esteban Abada corner",
+      "length_m": 260,
+      "score": 60,
+      "polyline": [[14.6358, 121.0724], [14.6345, 121.0718]],
+      "road_class": "residential",
+      "evidence": [
+        {"kind":"sidewalk","value":"unknown","state":"unknown","delta":0,"source":"osm","weight":1,"source_url":null,"report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"crossing","value":"unknown","state":"unknown","delta":0,"source":"osm","weight":1,"source_url":null,"report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"lit","value":"yes","state":"positive","delta":10,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/345679","report_id":null,"reporter_karma":null,"reported_at":null}
+      ],
+      "explanation": "The morning is cooler, but infrastructure tags remain unknown and are still excluded from scoring."
+    },
+    {
+      "segment_id": "s4",
+      "name": "Katipunan flyover approach",
+      "length_m": 190,
+      "score": 50,
+      "polyline": [[14.6345, 121.0718], [14.6336, 121.0712]],
+      "road_class": "secondary",
+      "evidence": [
+        {"kind":"crossing","value":"unmarked","state":"negative","delta":-10,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/node/456789","report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"queue","value":"queue","state":"negative","delta":-5,"source":"community","weight":0.5,"source_url":null,"report_id":"r-seed-2","reporter_karma":0,"reported_at":"2026-07-18T13:28:00+08:00"},
+        {"kind":"lit","value":"yes","state":"positive","delta":10,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/456780","report_id":null,"reporter_karma":null,"reported_at":null}
+      ],
+      "explanation": "Lower heat helps, although the unmarked crossing and reported bottleneck still reduce confidence."
+    },
+    {
+      "segment_id": "s5",
+      "name": "LRT-2 station walk",
+      "length_m": 280,
+      "score": 82,
+      "polyline": [[14.6336, 121.0712], [14.6319, 121.0705]],
+      "road_class": "tertiary",
+      "evidence": [
+        {"kind":"sidewalk","value":"unknown","state":"unknown","delta":0,"source":"osm","weight":1,"source_url":null,"report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"surface","value":"unknown","state":"unknown","delta":0,"source":"osm","weight":1,"source_url":null,"report_id":null,"reporter_karma":null,"reported_at":null},
+        {"kind":"lit","value":"yes","state":"positive","delta":10,"source":"osm","weight":1,"source_url":"https://www.openstreetmap.org/way/567890","report_id":null,"reporter_karma":null,"reported_at":null}
+      ],
+      "explanation": "Mapped lighting improves the early-morning approach, while sidewalk and surface evidence remain unknown."
+    }
+  ]
+}

@@ -4,11 +4,13 @@
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
+    "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "dev:api": "npm run dev --workspace apps/api",
     "dev:mobile": "npm run start --workspace apps/mobile",
+    "dev:web": "npm run dev --workspace apps/web",
     "format": "prettier --write ."
   },
   "engines": { "node": ">=22" },
