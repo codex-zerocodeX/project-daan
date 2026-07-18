@@ -34,7 +34,7 @@ export function AuthForm() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>
-        {mode === "signIn" ? "Sign in to Komyut" : "Join Komyut"}
+        {mode === "signIn" ? "Sign in to ALITAPTAP" : "Join ALITAPTAP"}
       </Text>
       <Text style={styles.subheading}>
         Community-powered commuting for the Philippines.

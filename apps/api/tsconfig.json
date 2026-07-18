@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": { "types": ["node"] },
-  "include": ["src"]
+  "include": ["src"],
+  // the Workers entry is checked separately against Workers globals
+  "exclude": ["src/worker.ts"]
 }

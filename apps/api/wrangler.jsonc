@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "komyut-api",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-07-18",
+  // supabase-js reaches for node built-ins (stream/buffer) in places
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "logs": { "head_sampling_rate": 1 }
+  }
+  // Secrets are NOT stored here. Set them once with:
+  //   npx wrangler secret put SUPABASE_URL
+  //   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+}

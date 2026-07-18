@@ -1,0 +1,7 @@
+{
+  // Checks the Cloudflare Workers entry (and everything it imports) against
+  // Workers runtime globals, not Node's. Node entry + tests use tsconfig.json.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "types": [] },
+  "include": ["src/worker.ts", "worker-configuration.d.ts"]
+}

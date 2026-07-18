@@ -126,6 +126,35 @@ export const ComposeResponseSchema = z.object({
   }),
 });
 
+// Thread search: find community threads relevant to an origin->destination trip.
+// This is the primary flow - threads first, composed routes only as a fallback.
+export const ThreadSearchRequestSchema = z.object({
+  origin: LatLngSchema,
+  destination: LatLngSchema,
+});
+
+/** "exact" = one answer-route covers both ends; "partial" = it covers only one. */
+export const ThreadMatchSchema = z.enum(["exact", "partial"]);
+
+export const ThreadSearchResultSchema = z.object({
+  thread: ThreadSchema,
+  match: ThreadMatchSchema,
+  /** metres from the trip endpoint to the nearest node on this thread's answers */
+  origin_distance_m: z.number().nullable(),
+  destination_distance_m: z.number().nullable(),
+  route_ids: z.array(z.uuid()),
+  answer_count: z.number().int(),
+});
+
+export const ThreadSearchResponseSchema = z.object({
+  results: z.array(ThreadSearchResultSchema),
+});
+
+export type ThreadSearchRequest = z.infer<typeof ThreadSearchRequestSchema>;
+export type ThreadMatch = z.infer<typeof ThreadMatchSchema>;
+export type ThreadSearchResult = z.infer<typeof ThreadSearchResultSchema>;
+export type ThreadSearchResponse = z.infer<typeof ThreadSearchResponseSchema>;
+
 export type ThreadCategory = z.infer<typeof ThreadCategorySchema>;
 export type Profile = z.infer<typeof ProfileSchema>;
 export type Thread = z.infer<typeof ThreadSchema>;
