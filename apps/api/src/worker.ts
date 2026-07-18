@@ -19,12 +19,19 @@ export default {
 
     // Optional config, so read it off `env` without requiring the generated
     // types to declare it. Absent OPENAI_API_KEY just means AI search 503s.
-    const opt = env as Partial<{ OPENAI_MODEL: string; CORS_ORIGIN: string }>;
+    // OPENAI_API_KEY is a secret rather than a var, so `wrangler types` never
+    // emits it on Env -- reading it here keeps typecheck independent of which
+    // secrets happen to exist locally.
+    const opt = env as Partial<{
+      OPENAI_API_KEY: string;
+      OPENAI_MODEL: string;
+      CORS_ORIGIN: string;
+    }>;
 
     const app = createApp({
       supabase: createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY),
-      chat: env.OPENAI_API_KEY
-        ? openAiChat(env.OPENAI_API_KEY, opt.OPENAI_MODEL)
+      chat: opt.OPENAI_API_KEY
+        ? openAiChat(opt.OPENAI_API_KEY, opt.OPENAI_MODEL)
         : undefined,
       corsOrigin: opt.CORS_ORIGIN,
     });
