@@ -28,9 +28,11 @@ export type ComposeOptions = {
   snapMeters?: number;
   /** Max distance to link two nodes from different routes into one graph. */
   stitchMeters?: number;
+  /** Max distance at which two stitched nodes are treated as the same stop. */
+  collapseMeters?: number;
 };
 
-const DEFAULTS = { snapMeters: 300, stitchMeters: 150 };
+const DEFAULTS = { snapMeters: 300, stitchMeters: 150, collapseMeters: 25 };
 
 const ORIGIN = "__origin__";
 const DEST = "__dest__";
@@ -47,7 +49,7 @@ export function composeRoute(
   destination: Point,
   options: ComposeOptions = {},
 ): ComposeResult | null {
-  const { snapMeters, stitchMeters } = { ...DEFAULTS, ...options };
+  const { snapMeters, stitchMeters, collapseMeters } = { ...DEFAULTS, ...options };
   if (nodes.length === 0) return null;
 
   const byId = new Map(nodes.map((node) => [node.id, node]));
@@ -62,8 +64,29 @@ export function composeRoute(
   const nodeIds = path.order.filter((id) => id !== ORIGIN && id !== DEST);
   if (nodeIds.length === 0) return null;
 
-  const pathNodes = nodeIds.map((id) => byId.get(id)!);
+  const pathNodes = collapseStitchPoints(
+    nodeIds.map((id) => byId.get(id)!),
+    collapseMeters,
+  );
   return toResult(pathNodes, origin, destination, path.distance, false);
+}
+
+/**
+ * Where two answers meet at the same stop, they contribute two nodes at (nearly)
+ * the same point. The arriving node's instruction is stale ("board southbound")
+ * once you're transferring, so keep the node that actually moves you onward.
+ */
+function collapseStitchPoints(chain: ComposeNode[], collapseMeters: number): ComposeNode[] {
+  const out: ComposeNode[] = [];
+  for (const node of chain) {
+    const prev = out[out.length - 1];
+    if (prev && prev.route_id !== node.route_id && haversineMeters(prev, node) <= collapseMeters) {
+      out[out.length - 1] = node;
+      continue;
+    }
+    out.push(node);
+  }
+  return out;
 }
 
 /** A single existing answer with a node near the origin and a later node near the destination. */
