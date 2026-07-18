@@ -1,4 +1,4 @@
-# CLAUDE.md — Alitaptap repository reference
+# AGENTS.md — Alitaptap repository reference
 
 Alitaptap is an evidence-first commuter-intelligence platform for the Philippines. Read the [brand contract](docs/brand.md), [architecture](docs/architecture.md), and [convention](docs/conventions.md) before changing a current-facing surface.
 

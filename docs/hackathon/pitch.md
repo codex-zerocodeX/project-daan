@@ -45,7 +45,7 @@ Open the harshest segment, then one unknown-heavy segment. Let the visual receip
 
 ### 78–90 seconds — Codex proof and close
 
-> Codex materially improved [name one concrete behavior] today: we gave it [constraint or failing case], reviewed [artifact], and the shipped result is [visible outcome]. Daan's proof today is bounded but complete: a commuter can make a route decision, inspect why, and see what the product still does not know.
+> Codex materially improved route-receipt reliability today. We required every result to remain fixture-honest and restorable, reviewed the URL-state tests and phone browser flow, and shipped a receipt that survives reload but becomes visibly stale as soon as either endpoint changes. Daan's proof today is bounded but complete: a commuter can make a route decision, inspect why, and see what the product still does not know.
 
 ## Panel-aware question preparation
 
@@ -97,11 +97,11 @@ Benchmark live routing coverage, clear every data right, calibrate weights with 
 
 **“Show one thing Codex materially improved today.”**
 
-Use this structure and replace every bracket before presenting:
+Use the route-receipt artifact recorded in the [Codex contribution receipt](../../CODEX_CONTRIBUTION.md):
 
-> We asked Codex to [specific task] under [specific constraint]. Its first result exposed [failure or trade-off]. We steered it with [test, evidence, or product decision], and this [diff/test/interaction] is the material improvement: [observable before → after].
+> We asked Codex to integrate a complete route receipt without presenting fixture data as live evidence. We steered it with deterministic URL-state tests, stale-input invalidation, and a repeatable phone browser flow. The material improvement is visible: the receipt now restores after reload, preserves the chosen route and evidence context, and invalidates itself when either endpoint changes instead of showing an old score for new input.
 
-Strong candidates are route-profile correctness, deterministic community-state behavior, URL-state recovery, or the fixture-honesty correction—whichever has the clearest artifact. Do not answer with tool volume, token count, or “it wrote the app.”
+Show the URL-state test or `script/route-flow.mjs`; do not answer with tool volume, token count, or “it wrote the app.”
 
 ## Official-rubric self-check
 

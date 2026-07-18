@@ -13,7 +13,7 @@ Edited honestly on July 16, 2026. A gap is a gap, not an opportunity. No item is
 | Official rubric sync | Clean Start, Runs Live, Claims Have Evidence; Codex Craft, Product Judgment, Problem & Insight; 10/8/7/5 scoring | Documented in `context.md` |
 | Shipped-state sync | README, PRD boundary, roadmap, and pitch identify fixtures/localStorage and unbuilt live adapters | Documented; verify with repository checks |
 | Prepared demo | Route selection → profile/receipt → unknown segment → time switch → route-bound community context | Implemented; timed rehearsal pending |
-| Codex material-improvement proof | One real task/diff/test artifact with before → steering → after | Pending; bracket remains in `pitch.md` |
+| Codex material-improvement proof | One real task/diff/test artifact with before → steering → after | Documented in the [Codex contribution receipt](../../CODEX_CONTRIBUTION.md) and synchronized into `pitch.md` |
 | Clean Start and task identifier | Timestamped event-day boundary plus actual main task identifier | Pending; do not fabricate |
 | Submission consistency | Submitted URL, description, video, and spoken pitch match the documented boundary | Pending external verification |
 

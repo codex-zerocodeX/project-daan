@@ -36,7 +36,7 @@ Consequences: run the real prepared path, disclose the fixture boundary before t
 |---|---|
 | Prepared fixture path runs from route selection through receipt and community context | Implemented; rehearse on the submitted URL |
 | Fixture boundary is stated in the first 25 seconds | Written in [pitch.md](pitch.md); rehearsal still required |
-| One material Codex improvement has a task/diff/test artifact | Open—select the strongest real artifact and replace the bracketed pitch text |
+| One material Codex improvement has a task/diff/test artifact | Documented in the [Codex contribution receipt](../../CODEX_CONTRIBUTION.md); task identifier remains separately open |
 | Clean Start evidence and main task identifier are captured | Open—add the actual identifier/evidence; do not invent it |
 | Spoken pitch, README, submission copy, and video make the same shipped-versus-planned claims | Documentation aligned; submission/video still require verification |
 
@@ -55,6 +55,7 @@ Consequences: run the real prepared path, disclose the fixture boundary before t
 | [Pitch](pitch.md) | Active fixture-honest 90-second script, panel-aware Q&A, Codex proof beat, and failure recovery |
 | [Source](source.md) | Evidence ledger and claim boundary |
 | [Retrospective](retrospective.md) | Post-event outcome and reusable learning |
+| [Codex contribution receipt](../../CODEX_CONTRIBUTION.md) | Material improvement, commit map, verification contract, human oversight, and claim boundary |
 | [Decision receipt](receipt/) | July 14 gate receipts — historical; the July 18 team vote superseded that process |
 
 ## Non-negotiable boundary
