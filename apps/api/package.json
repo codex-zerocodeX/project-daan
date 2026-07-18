@@ -7,8 +7,10 @@
     "dev": "tsx watch --env-file=.env src/index.ts",
     "start": "tsx --env-file=.env src/index.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src"
+    "typecheck": "wrangler types && tsc --noEmit && tsc --noEmit -p tsconfig.worker.json",
+    "lint": "eslint src",
+    "cf:dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.0",
@@ -21,6 +23,7 @@
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
-    "vitest": "^3.0.0"
+    "vitest": "^3.0.0",
+    "wrangler": "^4.112.0"
   }
 }

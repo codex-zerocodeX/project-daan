@@ -17,7 +17,10 @@ if (!openAiKey) {
 
 const app = createApp({
   supabase: createClient(url, key),
-  chat: openAiKey ? openAiChat(openAiKey) : undefined,
+  chat: openAiKey
+    ? openAiChat(openAiKey, process.env.OPENAI_MODEL)
+    : undefined,
+  corsOrigin: process.env.CORS_ORIGIN,
 });
 const port = Number(process.env.PORT ?? 8787);
 

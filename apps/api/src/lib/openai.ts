@@ -11,7 +11,11 @@ const TIMEOUT_MS = 30_000;
 // so this budget covers reasoning + the JSON answer, not the answer alone.
 const MAX_COMPLETION_TOKENS = 2000;
 
-export function openAiChat(apiKey: string): ChatFn {
+/**
+ * `model` is passed in rather than read from the environment: this module also
+ * runs on Cloudflare Workers, where `process.env` does not exist.
+ */
+export function openAiChat(apiKey: string, model = DEFAULT_MODEL): ChatFn {
   return async (prompt) => {
     const res = await fetch(ENDPOINT, {
       method: "POST",
@@ -22,7 +26,7 @@ export function openAiChat(apiKey: string): ChatFn {
       body: JSON.stringify({
         // gpt-5.6 rejects `max_tokens` and any `temperature` other than the
         // default, so neither may be reintroduced without checking the model.
-        model: process.env.OPENAI_MODEL ?? DEFAULT_MODEL,
+        model,
         max_completion_tokens: MAX_COMPLETION_TOKENS,
         response_format: { type: "json_object" },
         messages: [{ role: "user", content: prompt }],

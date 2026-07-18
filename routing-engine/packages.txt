@@ -1,0 +1,14 @@
+@lakad/routing dependency list
+
+Runtime dependencies: NONE
+
+The routing engine in src/index.ts uses only built-in JavaScript/TypeScript features.
+It does not require Hono, Supabase, a database client, GeoJSON, or any map service.
+
+Development-only tools:
+- TypeScript (^5.7.0): type checking and compiling TypeScript
+- tsx (^4.19.0): runs src/index.test.ts during development
+- Node.js 22 or newer: required runtime
+
+To reuse only the engine in another project, copy src/index.ts.
+Optionally copy src/index.test.ts if you also want its automated tests.

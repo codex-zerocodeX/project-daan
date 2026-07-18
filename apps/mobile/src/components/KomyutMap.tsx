@@ -1,19 +1,34 @@
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
-// The installed @maplibre/maplibre-react-native (v11) renamed the v10-era
-// component API: MapView -> Map, ShapeSource -> GeoJSONSource, LineLayer ->
-// Layer (with a `type` prop). Map is aliased to MapView locally to avoid
-// shadowing the global `Map` constructor and to keep this file's JSX close
-// to the brief's intent.
-import {
-  Camera,
-  GeoJSONSource,
-  Layer,
-  Map as MapView,
-  UserLocation,
-} from "@maplibre/maplibre-react-native";
+import Constants, { ExecutionEnvironment } from "expo-constants";
+import { MapPin } from "lucide-react-native";
 import { EXAMPLE_ROUTE, MANILA_CENTER, OSM_RASTER_STYLE } from "../lib/mapStyle";
+import { color, font, radius, text } from "../lib/theme";
+
+// MapLibre is native code, so it cannot load inside Expo Go (which ships a
+// fixed set of native modules). Importing it there throws at module load and
+// takes the whole app down on launch. Detect Expo Go first, then require
+// lazily, so the rest of the app -- search, threads, compose, ask -- stays
+// fully usable in Expo Go. A dev build still gets the real map.
+const isExpoGo =
+  Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+
+type MapLibreModule = typeof import("@maplibre/maplibre-react-native");
+
+const maplibre: MapLibreModule | null = (() => {
+  if (isExpoGo) return null;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const mod = require("@maplibre/maplibre-react-native") as MapLibreModule;
+    // A missing native module can yield an object without the components. The
+    // types claim Map is always present, so probe it as plain data instead.
+    const exports = mod as unknown as Record<string, unknown>;
+    return exports?.Map ? mod : null;
+  } catch {
+    return null;
+  }
+})();
 
 // Data-driven styling: line color interpolates red->yellow->green from each
 // segment's walkability property. Real walkability data reuses this exact layer.
@@ -36,8 +51,13 @@ const routeLineStyle = {
 
 export function KomyutMap() {
   useEffect(() => {
+    if (!maplibre) return;
     Location.requestForegroundPermissionsAsync();
   }, []);
+
+  if (!maplibre) return <MapUnavailable />;
+
+  const { Camera, GeoJSONSource, Layer, Map: MapView, UserLocation } = maplibre;
 
   return (
     <MapView style={styles.map} mapStyle={OSM_RASTER_STYLE}>
@@ -50,6 +70,50 @@ export function KomyutMap() {
   );
 }
 
+/** Shown in Expo Go, where the native map cannot load. Everything else works. */
+function MapUnavailable() {
+  return (
+    <View style={styles.fallback}>
+      <View style={styles.badge}>
+        <MapPin size={18} color={color.p500} />
+      </View>
+      <Text style={styles.title}>Map needs a dev build</Text>
+      <Text style={styles.body}>
+        MapLibre is native code and can&apos;t run in Expo Go. Search, threads and
+        routes all work here.
+      </Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   map: { flex: 1 },
+  fallback: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingHorizontal: 32,
+    backgroundColor: color.sunken,
+  },
+  badge: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.pill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: color.primarySoft,
+  },
+  title: {
+    fontSize: text.bodyMd,
+    fontFamily: font.sansBold,
+    color: color.textStrong,
+  },
+  body: {
+    fontSize: text.sm,
+    fontFamily: font.sansMedium,
+    color: color.textMuted,
+    textAlign: "center",
+    lineHeight: text.sm * 1.4,
+  },
 });
