@@ -4,6 +4,8 @@ Alitaptap is an evidence-first commuter-intelligence platform for the Philippine
 
 The product and codebase were renamed from the internal codename **Project Daan**. The local directory and GitHub repository still use `project-daan` as a compatibility identifier until a separately coordinated repository migration.
 
+**Live web demo:** [project-daan.pages.dev](https://project-daan.pages.dev/). The URL retains the repository codename; the deployed product identity is Alitaptap.
+
 ## Quick start
 
 ```bash
@@ -67,6 +69,27 @@ The web workspace reads no environment variable.
 | `npm run lint` | Lint every workspace |
 | `npm run test` | Run every workspace test suite |
 | `node script/route-flow.mjs` | Run the dependency-free Chrome route flow at 390 × 844 after `npm run build` |
+
+## Web deployment
+
+The fixture-bounded web surface is deployed manually to the Cloudflare Pages project `project-daan`; the project is not connected to GitHub. Deploy only from a clean, gated `main` checkout:
+
+```bash
+npm ci
+npm run build
+npm run typecheck
+npm run lint
+npm run test
+node script/route-flow.mjs
+
+npx --yes wrangler@4 pages deploy apps/web/dist \
+  --project-name project-daan \
+  --branch codex/daan-integration \
+  --commit-hash "$(git rev-parse HEAD)" \
+  --commit-dirty=false
+```
+
+The Pages production-branch label remains `codex/daan-integration` as a deployment compatibility identifier; `--commit-hash` must point to the clean `main` commit being released. This publishes `apps/web` only. The current API has no Worker adapter, and the native mobile app has no store-submission pipeline in this repository.
 
 ## Repository map
 
