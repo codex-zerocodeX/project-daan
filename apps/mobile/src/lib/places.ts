@@ -141,6 +141,75 @@ const GAZETTEER: readonly GazetteerEntry[] = [
     lng: 120.982,
     aliases: ["moa", "mall of asia", "sm moa", "sm mall of asia"],
   },
+
+  // --- Corridors added with the second seed batch. Without these the threads
+  // covering them exist in the database but are unreachable from the UI,
+  // because a place the gazetteer cannot resolve can never become coordinates.
+  {
+    name: "Market! Market!, BGC",
+    lat: 14.55,
+    lng: 121.055,
+    aliases: ["bgc", "market market", "bonifacio global city", "taguig", "the fort"],
+  },
+  {
+    name: "Guadalupe MRT-3",
+    lat: 14.567,
+    lng: 121.045,
+    aliases: ["guadalupe", "guadalupe station", "guadalupe mrt"],
+  },
+  {
+    name: "Magallanes MRT-3",
+    lat: 14.542,
+    lng: 121.019,
+    aliases: ["magallanes", "magallanes station", "magallanes mrt"],
+  },
+  {
+    name: "NAIA Terminal 3",
+    lat: 14.511,
+    lng: 121.019,
+    aliases: ["naia", "airport", "naia terminal 3", "terminal 3", "t3", "naia t3"],
+  },
+  {
+    name: "PITX",
+    lat: 14.509,
+    lng: 120.991,
+    aliases: [
+      "pitx",
+      "paranaque integrated terminal",
+      "paranaque integrated terminal exchange",
+      "parañaque integrated terminal",
+    ],
+  },
+  {
+    name: "Baclaran LRT-1",
+    lat: 14.533,
+    lng: 120.997,
+    aliases: ["baclaran", "baclaran station", "baclaran lrt"],
+  },
+  {
+    name: "Recto LRT-2",
+    lat: 14.603,
+    lng: 120.983,
+    aliases: ["recto", "recto station", "recto lrt", "doroteo jose"],
+  },
+  {
+    name: "Divisoria",
+    lat: 14.601,
+    lng: 120.972,
+    aliases: ["divisoria", "divi", "168 mall", "tutuban"],
+  },
+  {
+    name: "Festival Mall, Alabang",
+    lat: 14.418,
+    lng: 121.041,
+    aliases: ["festival mall", "festival", "alabang festival"],
+  },
+  {
+    name: "Alabang Town Center",
+    lat: 14.423,
+    lng: 121.029,
+    aliases: ["alabang", "alabang town center", "atc", "muntinlupa"],
+  },
 ];
 
 /**
