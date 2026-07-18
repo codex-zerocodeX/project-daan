@@ -1,0 +1,45 @@
+import type { ExpoConfig } from "expo/config";
+
+const config: ExpoConfig = {
+  name: "Komyut",
+  slug: "komyut",
+  version: "0.1.0",
+  scheme: "komyut",
+  orientation: "portrait",
+  icon: "./assets/images/icon.png",
+  userInterfaceStyle: "automatic",
+  newArchEnabled: true,
+  ios: {
+    supportsTablet: false,
+    bundleIdentifier: "ph.komyut.app",
+  },
+  android: {
+    package: "ph.komyut.app",
+    adaptiveIcon: {
+      foregroundImage: "./assets/images/android-icon-foreground.png",
+      backgroundColor: "#ffffff",
+    },
+  },
+  plugins: [
+    "expo-router",
+    "@maplibre/maplibre-react-native",
+    [
+      "expo-splash-screen",
+      {
+        image: "./assets/images/splash-icon.png",
+        imageWidth: 200,
+        resizeMode: "contain",
+        backgroundColor: "#ffffff",
+      },
+    ],
+    [
+      "expo-location",
+      {
+        locationWhenInUsePermission:
+          "Komyut uses your location to show you on the map and plan commute routes.",
+      },
+    ],
+  ],
+};
+
+export default config;
