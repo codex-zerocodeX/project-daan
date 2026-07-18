@@ -1,6 +1,7 @@
 {
-  "name": "@komyut/api",
+  "name": "@daan/api",
   "version": "0.1.0",
+  "description": "Daan API service",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +13,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.13.0",
-    "@komyut/shared": "*",
+    "@daan/shared": "*",
     "@supabase/supabase-js": "^2.47.0",
     "hono": "^4.6.0",
     "zod": "^4.0.0"

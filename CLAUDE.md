@@ -1,75 +1,50 @@
-# CLAUDE.md - AI assistant reference for Komyut
+# CLAUDE.md — Daan repository reference
 
-Komyut is a community-based commuting platform (Philippines). Mobile app +
-API + Supabase. This file is the map; follow it before exploring.
+Daan is an evidence-first commuter-intelligence platform for the Philippines. Read the [brand contract](docs/brand.md), [architecture](docs/architecture.md), and [convention](docs/conventions.md) before changing a current-facing surface.
 
-## Stack (do not substitute)
+## Stack
 
-- npm workspaces monorepo, Node 22, TypeScript strict everywhere
-- `apps/mobile`: Expo + Expo Router (file-based), MapLibre React Native + OSM
-  raster tiles, TanStack Query (server state), Zustand (UI state),
-  Supabase JS (auth + direct table reads/writes under RLS)
-- `apps/api`: Hono on @hono/node-server. Owns algorithm-shaped logic only
-  (route planning, karma rules). CRUD goes straight from mobile to Supabase.
-- `packages/shared` (`@komyut/shared`): zod v4 schemas - the single source of
-  truth for API contracts and table row shapes. Use `z.uuid()`, `z.url()`
-  (v4 APIs).
-- `supabase/migrations`: SQL, applied to the hosted Supabase project manually
-  (SQL editor) or via `supabase db push`.
+- npm workspace monorepo, Node 22, strict TypeScript
+- `apps/web`: React, Vite, MapLibre GL JS, deterministic fixture receipt, browser-local community state
+- `apps/mobile`: Expo Router, MapLibre React Native, TanStack Query, Zustand, Supabase auth/data
+- `apps/api`: Hono service for algorithm-shaped and server-authorized work
+- `packages/shared` (`@daan/shared`): Zod v4 mobile/API contract
+- `supabase/migrations`: append-only PostgreSQL/PostGIS and RLS history
+- `routing-engine`: pure prototype, not yet integrated into workspace CI
 
-## Commands (run from repo root)
+## Command
 
-| Command | What |
+| Command | Purpose |
 | --- | --- |
-| `npm install` | Install all workspaces |
-| `npm run dev:api` | API with watch + .env on :8787 |
-| `npm run dev:mobile` | Expo dev server |
-| `npm run typecheck` / `lint` / `test` | All workspaces (CI runs these) |
-| `npm test -w apps/api` | One workspace |
+| `npm ci` | Install the locked workspace |
+| `npm run dev:web` | Start the web receipt |
+| `npm run dev:api` | Start API watch mode on port 8787 by default |
+| `npm run dev:mobile` | Start Expo development server |
+| `npm run build` | Build every workspace with a build script |
+| `npm run typecheck` | Type-check all workspaces |
+| `npm run lint` | Lint all workspaces |
+| `npm run test` | Test all workspaces |
 
-## Conventions
+## Boundary
 
-- API responses: `{data: ...}` or `{error: string, issues?: [...]}`. Server
-  errors are generic strings - never leak internals.
-- Server state = TanStack Query hooks in `apps/mobile/src/hooks/`.
-  UI state = Zustand stores in `apps/mobile/src/stores/`. Never mix.
-- Screens live in `apps/mobile/app/` (Expo Router). Keep screens thin;
-  logic goes in `src/hooks`, presentational pieces in `src/components`.
-- Coordinates: GeoJSON order `[lng, lat]` in geometry; `{lat, lng}` objects in
-  API request bodies. `LatLngSchema` validates the latter.
-- Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `ci:`).
+- Web score and evidence currently come from disclosed fixtures.
+- Mobile route card currently uses mock route/review data.
+- MapLibre renders geometry; it is not the routing or evidence engine.
+- API/mobile payload must cross `@daan/shared`.
+- Supabase service-role key stays only in `apps/api/.env`.
+- Expo display name is Daan, but the linked `komyut` slug, scheme, application ID, and EAS UUID remain compatibility identifiers until a separately authorized native migration.
+- New identifier, collection, file, and schema name is singular.
 
-## Recipes
+## Recipe
 
-**Add an API endpoint:** create `apps/api/src/routes/<name>.ts` exporting a
-factory `(deps: AppDeps) => Hono` (see `threads.ts`), mount it in
-`src/app.ts`, add request/response schemas to `packages/shared/src/schemas.ts`,
-and write a test in `src/routes/__tests__/` using `fakeSupabase` from
-`__tests__/helpers.ts`. TDD: failing test first.
+- **API endpoint:** route factory under `apps/api/src/routes`, mount in `app.ts`, add shared request/response contract, and write a route test.
+- **Mobile screen:** route under `apps/mobile/app`, data hook under `src/hooks`, presentational component under `src/components`.
+- **Web domain behavior:** pure function under `apps/web/src/lib` or `module`, with a colocated Vitest test.
+- **Database change:** add the next numbered migration with explicit RLS and deletion policy; never edit an applied migration.
 
-**Add a screen:** add a file under `apps/mobile/app/(tabs)/` (or a new route
-group), register it in the nearest `_layout.tsx`. Data via a hook in
-`src/hooks/` wrapping TanStack Query.
+## Gotcha
 
-**Add a table/column:** new numbered file in `supabase/migrations/` (e.g.
-`0002_add_x.sql`) - never edit an applied migration. Add RLS policies in the
-same file. Mirror the row shape in `packages/shared/src/schemas.ts`.
-
-**Add a shared type:** `packages/shared/src/schemas.ts` + test in
-`schemas.test.ts`. Export the inferred type.
-
-**Map overlays:** follow `KomyutMap.tsx` - a `ShapeSource` with GeoJSON whose
-feature properties drive layer styling (see the walkability interpolate
-expression). Add data to `src/lib/mapStyle.ts` or fetch it via a hook.
-
-## Gotchas
-
-- The mobile app needs a **dev build** (MapLibre is native code) - Expo Go
-  will not work. See docs/setup.md.
-- `EXPO_PUBLIC_API_URL` must be the machine's LAN IP for a physical phone.
-- The Supabase **service role key** lives only in `apps/api/.env`. The mobile
-  app uses only the anon key. Never swap them.
-- `POST /v1/routes/plan` is a mock straight line - it is the seam where the
-  real routing algorithm goes.
-- Signup passes `options.data.username`; a DB trigger copies it into
-  `profiles.username`.
+- Mobile needs a development build; Expo Go does not load native MapLibre.
+- Physical devices need a LAN-reachable `EXPO_PUBLIC_API_URL`.
+- The web MapLibre chunk is currently large; build warning is known and should be handled as a performance task, not hidden.
+- `routing-engine` is not yet exercised by the root workspace gate.

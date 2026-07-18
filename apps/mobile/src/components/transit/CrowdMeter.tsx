@@ -20,7 +20,11 @@ export function CrowdMeter({ level, size = "md", label = true }: Props) {
   const barWidth = size === "sm" ? 9 : 12;
   const baseHeight = size === "sm" ? 7 : 9;
   return (
-    <View style={styles.row}>
+    <View
+      accessible
+      accessibilityLabel={`Crowd: ${LABELS[level]}`}
+      style={styles.row}
+    >
       <View style={styles.bars}>
         {([1, 2, 3, 4] as const).map((i) => (
           <View

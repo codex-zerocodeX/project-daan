@@ -5,6 +5,11 @@
 - Source visual truth: `/var/folders/dv/ktxbpy5d47n6p1bpxs9qc9_r0000gn/T/codex-clipboard-4a97db71-039f-4c44-963e-ff4e8d033f67.png`
 - Desktop implementation: `/tmp/project-daan-alitaptap-desktop-final.png`
 - Mobile implementation: `/tmp/project-daan-alitaptap-mobile-final.png`
+- Expo final home implementation: `outputs/mobile-ui-qa/home-final-390x844.png`
+- Expo final result implementation: `outputs/mobile-ui-qa/results-390x844.png`
+- Expo final route-detail implementation: `outputs/mobile-ui-qa/detail-ready-390x844.png`
+- Expo reference comparison: `outputs/mobile-ui-qa/reference-vs-home.png`
+- Iteration evidence: `outputs/mobile-ui-qa/home-390x844.png` and `outputs/mobile-ui-qa/detail-in-progress-390x844.png`
 - Full-view comparison: `/tmp/project-daan-design-compare-final.png`
 - Focused upper-screen comparison: `/tmp/project-daan-design-focus-final.png`
 - Desktop viewport: `1440 × 1024`
@@ -31,7 +36,7 @@ The upper-screen comparison was required because the firefly asset, header crop,
 
 ### Fonts and typography
 
-The implementation uses the local humanist stack `Avenir Next, Avenir, Inter, system-ui` with compact extrabold headings, readable 14–15px body copy, uppercase receipt labels, and monospaced score metadata. Weight, line height, letter spacing, and wrapping match the reference closely. Mobile copy truncation is limited to the nonessential module subtitle; primary controls and labels remain readable.
+The implementation bundles Plus Jakarta Sans for compact extrabold headings and readable body copy, with DM Mono for evidence metadata. The same type family is loaded by the Expo client. Weight, line height, letter spacing, and wrapping preserve the reference hierarchy without depending on an operating-system font.
 
 ### Spacing and layout rhythm
 
@@ -43,7 +48,7 @@ Warm paper, raised ivory, deep navy, rain teal, and calamansi gold are defined a
 
 ### Image quality and asset fidelity
 
-`public/asset/alitaptap-mark.webp` supplies the header/fav icon artwork and `public/asset/alitaptap-trail.webp` supplies the empty-state illustration. Both are high-resolution generated raster assets with crisp small-size rendering and no transparency fringe. The firefly remains legible at mobile header size. No placeholder, handcrafted SVG, CSS art, or emoji substitutes are present.
+`apps/web/public/asset/alitaptap-mark.webp` supplies the header/favicon artwork and is the source for the Expo app, adaptive, and splash icons under `apps/mobile/assets/images`. `apps/web/public/asset/alitaptap-trail.webp` supplies the web empty-state illustration. The assets retain crisp small-size rendering and no transparency fringe. The firefly remains legible at mobile header and launcher size. No placeholder, handcrafted SVG, CSS art, or emoji substitutes are present.
 
 ### Copy and content
 
@@ -72,6 +77,7 @@ No actionable P0, P1, or P2 fidelity issue remains. The retained **Daan** wordma
 ## Implementation checklist
 
 - [x] Real Alitaptap raster logo and trail assets installed.
+- [x] Expo launcher, adaptive, and splash artwork aligned to the Alitaptap mark.
 - [x] Shared brand and semantic tokens applied.
 - [x] Desktop source composition matched.
 - [x] Mobile stack verified without horizontal overflow.

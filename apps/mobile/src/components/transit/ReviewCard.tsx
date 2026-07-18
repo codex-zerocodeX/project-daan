@@ -1,7 +1,7 @@
 import { Star, ThumbsUp } from "lucide-react-native";
 import { StyleSheet, Text, View } from "react-native";
 import type { RouteReview, Tone } from "../../lib/mockRoutes";
-import { color, font, radius, shadow, text, tone } from "../../lib/theme";
+import { color, font, radius, text, tone } from "../../lib/theme";
 import { CrowdMeter } from "./CrowdMeter";
 
 function MiniSignal({ label, value, t }: { label: string; value: string; t: Tone }) {
@@ -59,13 +59,11 @@ export function ReviewCard({ review }: { review: RouteReview }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: color.card,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    borderRadius: radius.lg,
-    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: color.borderSubtle,
+    paddingVertical: 16,
+    paddingHorizontal: 2,
     gap: 12,
-    ...shadow.xs,
   },
   header: { flexDirection: "row", alignItems: "center", gap: 10 },
   avatar: {

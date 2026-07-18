@@ -1,9 +1,9 @@
-# @komyut/mobile
+# @daan/mobile
 
-The Komyut Expo app. This workspace is managed from the repo root — do not run
-`npm install` in here.
+The Daan Expo client. This workspace is managed from the repository root; do not run a separate install or create a nested lockfile.
 
-- Setup and running the app (dev build required — Expo Go will not work):
-  see [docs/setup.md](../../docs/setup.md)
-- Stack, conventions, and recipes: see the root [README](../../README.md) and
-  [CLAUDE.md](../../CLAUDE.md)
+- Development setup and EAS compatibility identifier: [team setup](../../docs/setup.md)
+- Product and package identity: [brand contract](../../docs/brand.md)
+- System boundary: [architecture](../../docs/architecture.md)
+
+Expo Go is not supported because MapLibre requires a native development build.

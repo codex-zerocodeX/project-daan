@@ -1,5 +1,5 @@
-// Mock route/review data mirroring the Lakbay UI kit click-through
-// (ui_kits/lakbay-app). This is placeholder content until POST /v1/routes/plan
+// Mock route/review data adapted from the historical Lakbay design reference.
+// This is placeholder content until POST /v1/routes/plan
 // returns real community-stitched routes.
 
 export type LegMode = "walk" | "bus" | "transfer";

@@ -50,3 +50,7 @@ export function normalizeCommunityUrl(state: CommunityUrlState, context: Communi
 export function isSameCommunityUrl(left: CommunityUrlState, right: CommunityUrlState) {
   return communityQueryKey.every((key) => left[key] === right[key]);
 }
+
+export function hasCommunityTarget(state: CommunityUrlState) {
+  return Boolean(state.threadId || state.reportId || state.replyId);
+}

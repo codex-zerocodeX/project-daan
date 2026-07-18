@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { ComposeRequestSchema, ComposeResponseSchema } from "@komyut/shared";
+import { ComposeRequestSchema, ComposeResponseSchema } from "@daan/shared";
 import type { AppDeps } from "../app";
 import { composeRoute, type ComposeNode } from "../lib/composeAlgorithm";
 

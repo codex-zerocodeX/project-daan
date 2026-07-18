@@ -1,6 +1,7 @@
 {
-  "name": "@komyut/shared",
+  "name": "@daan/shared",
   "version": "0.1.0",
+  "description": "Daan shared API and data contracts",
   "private": true,
   "type": "module",
   "main": "src/index.ts",

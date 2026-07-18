@@ -1,7 +1,12 @@
 {
-  "name": "komyut",
+  "name": "daan",
   "version": "0.1.0",
+  "description": "Evidence-first commuter intelligence for the Philippines",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codex-zerocodeX/project-daan.git"
+  },
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "build": "npm run build --workspaces --if-present",

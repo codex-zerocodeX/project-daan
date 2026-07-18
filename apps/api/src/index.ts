@@ -13,5 +13,5 @@ const app = createApp({ supabase: createClient(url, key) });
 const port = Number(process.env.PORT ?? 8787);
 
 serve({ fetch: app.fetch, port }, () => {
-  console.log(`Komyut API listening on http://localhost:${port}`);
+  console.log(`Daan API listening on http://localhost:${port}`);
 });

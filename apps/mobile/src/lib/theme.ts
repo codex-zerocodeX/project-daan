@@ -1,34 +1,53 @@
-// Lakbay design tokens, from "Mobile commuting app design system" (repo root
-// zip). Color values are that system's oklch() tokens converted to sRGB hex —
-// React Native cannot parse oklch().
+// Daan mobile tokens. The component structure began with the Lakbay design
+// reference, but Daan is the only current-facing product identity.
+
+const brand = {
+  paper: "#f8f5ee",
+  surface: "#fffdf8",
+  ink: "#082c49",
+  inkSoft: "#586a78",
+  line: "#d8ddd9",
+  navy: "#082237",
+  teal: "#167b76",
+  gold: "#e8c547",
+};
 
 const neutral = {
-  n0: "#ffffff",
-  n50: "#f7fbfc",
-  n100: "#eff4f6",
-  n200: "#e1e7eb",
+  n0: brand.surface,
+  n50: brand.paper,
+  n100: "#eef1ed",
+  n200: brand.line,
   n300: "#d0d7db",
   n400: "#a4acb1",
-  n500: "#7a8389",
+  n500: brand.inkSoft,
   n600: "#5c656c",
   n700: "#3e464d",
-  n800: "#272f36",
-  n900: "#181f25",
+  n800: "#173e59",
+  n900: brand.ink,
 };
 
 const primary = {
-  p50: "#e5f8fa",
-  p100: "#caeef2",
-  p200: "#a1dbe1",
-  p400: "#48abb2",
-  p500: "#11939a",
-  p600: "#007882",
-  p700: "#005d69",
+  p50: "#e8f4f2",
+  p100: "#cee7e4",
+  p200: "#9ecfca",
+  p400: "#4b9a94",
+  p500: brand.teal,
+  p600: "#116662",
+  p700: brand.navy,
 };
 
 export const color = {
   ...neutral,
   ...primary,
+
+  brandPaper: brand.paper,
+  brandSurface: brand.surface,
+  brandInk: brand.ink,
+  brandInkSoft: brand.inkSoft,
+  brandLine: brand.line,
+  brandNavy: brand.navy,
+  brandTeal: brand.teal,
+  brandGold: brand.gold,
 
   accent100: "#d3f1de",
   accent500: "#5eab81",
@@ -42,17 +61,17 @@ export const color = {
   alert: "#c35f59",
   alertBg: "#ffe8e4",
 
-  bgApp: neutral.n50,
-  card: neutral.n0,
+  bgApp: brand.paper,
+  card: brand.surface,
   sunken: neutral.n100,
   primarySoft: primary.p50,
 
-  textStrong: neutral.n900,
+  textStrong: brand.ink,
   textBody: neutral.n800,
-  textMuted: neutral.n500,
+  textMuted: brand.inkSoft,
   textOnPrimary: "#f8fdfd",
 
-  borderSubtle: neutral.n200,
+  borderSubtle: brand.line,
   borderStrong: neutral.n300,
 };
 

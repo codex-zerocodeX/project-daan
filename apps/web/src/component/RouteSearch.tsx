@@ -40,6 +40,7 @@ function PlaceField({ label, tone, node, query, onQueryChange, onChange }: Place
           value={query}
           placeholder={tone === "origin" ? "Where are you coming from?" : "Where are you going?"}
           onFocus={() => setIsOpen(true)}
+          onBlur={() => setIsOpen(false)}
           onChange={(event) => {
             onQueryChange(event.target.value);
             onChange(null);
@@ -47,6 +48,12 @@ function PlaceField({ label, tone, node, query, onQueryChange, onChange }: Place
             setActiveIndex(0);
           }}
           onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              setIsOpen(false);
+              setActiveIndex(0);
+              return;
+            }
             if (!isOpen || suggestion.length === 0) return;
             if (event.key === "ArrowDown") {
               event.preventDefault();
@@ -57,8 +64,6 @@ function PlaceField({ label, tone, node, query, onQueryChange, onChange }: Place
             } else if (event.key === "Enter") {
               event.preventDefault();
               selectNode(suggestion[activeIndex]);
-            } else if (event.key === "Escape") {
-              setIsOpen(false);
             }
           }}
           className="min-w-0 flex-1 bg-transparent text-[15px] font-bold text-ink outline-none placeholder:font-medium placeholder:text-ink-soft/70"
@@ -73,7 +78,7 @@ function PlaceField({ label, tone, node, query, onQueryChange, onChange }: Place
               key={item.nodeId}
               role="option"
               aria-selected={index === activeIndex}
-              onMouseDown={(event) => event.preventDefault()}
+              onPointerDown={(event) => event.preventDefault()}
               onClick={() => selectNode(item)}
               className={`flex min-h-12 cursor-pointer items-center justify-between gap-3 rounded-[9px] px-3 py-2 ${index === activeIndex ? "bg-paper" : "hover:bg-paper"}`}
             >

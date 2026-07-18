@@ -9,10 +9,10 @@ import {
   Plus,
   Star,
 } from "lucide-react-native";
-import { Fragment } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { KomyutMap } from "../../src/components/KomyutMap";
+import { DaanMap } from "../../src/components/DaanMap";
 import { CrowdMeter } from "../../src/components/transit/CrowdMeter";
 import { ReviewCard } from "../../src/components/transit/ReviewCard";
 import { SignalBox } from "../../src/components/transit/SignalBox";
@@ -41,12 +41,17 @@ export default function RouteDetailScreen() {
   const dest = params.dest || DEFAULT_DESTINATION;
   const route = (params.id && findRoute(params.id)) || EXACT_ROUTES[0];
   const rel = tone[route.reliabilityTone];
+  const scrollRef = useRef<ScrollView>(null);
+  const [saved, setSaved] = useState(false);
+  const [tripStarted, setTripStarted] = useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.mapBlock}>
-        <KomyutMap />
+        <DaanMap />
         <Pressable
+          accessibilityLabel="Back to route options"
+          accessibilityRole="button"
           onPress={() => router.back()}
           style={({ pressed }) => [
             styles.roundBtn,
@@ -56,12 +61,28 @@ export default function RouteDetailScreen() {
         >
           <ChevronLeft size={20} color={color.textBody} />
         </Pressable>
-        <View style={[styles.roundBtn, { top: insets.top + 10, right: 14 }]}>
-          <Heart size={18} color={color.p600} />
-        </View>
+        <Pressable
+          accessibilityLabel={saved ? "Remove saved route" : "Save route"}
+          accessibilityRole="button"
+          accessibilityState={{ selected: saved }}
+          onPress={() => setSaved((value) => !value)}
+          style={({ pressed }) => [
+            styles.roundBtn,
+            { top: insets.top + 10, right: 14 },
+            saved && styles.savedBtn,
+            pressed && styles.pressed,
+          ]}
+        >
+          <Heart
+            size={18}
+            color={saved ? color.alert : color.p600}
+            fill={saved ? color.alert : "transparent"}
+          />
+        </Pressable>
       </View>
 
       <ScrollView
+        ref={scrollRef}
         style={styles.sheet}
         contentContainerStyle={styles.sheetContent}
         showsVerticalScrollIndicator={false}
@@ -72,7 +93,7 @@ export default function RouteDetailScreen() {
               <Text style={styles.toLabel}>To {dest}</Text>
               {route.recommended && (
                 <Pill bg={color.primarySoft} fg={color.p700}>
-                  Recommended
+                  Best balance
                 </Pill>
               )}
             </View>
@@ -82,27 +103,52 @@ export default function RouteDetailScreen() {
             </View>
           </View>
           <View style={styles.signalRow}>
-            <SignalBox label="Crowd">
+            <SignalBox label="Crowd" bg="transparent">
               <CrowdMeter level={route.crowd} size="sm" label={false} />
             </SignalBox>
+            <View style={styles.signalDivider} />
             <SignalBox
               label="Reliability"
               value={route.reliability}
               valueColor={rel.text}
-              bg={rel.bg}
+              bg="transparent"
             />
-            <SignalBox label="Walk" value={route.walk} />
+            <View style={styles.signalDivider} />
+            <SignalBox label="Walk" value={route.walk} bg="transparent" />
           </View>
         </View>
 
-        <View style={styles.tripCard}>
-          <Text style={styles.tripTitle}>Your trip</Text>
+        <View style={styles.tripSection}>
+          <View style={styles.tripHeading}>
+            <View>
+              <Text style={styles.tripEyebrow}>
+                {route.steps.length} checkpoints
+              </Text>
+              <Text style={styles.tripTitle}>Follow the trip</Text>
+            </View>
+            <View
+              style={[styles.readyMark, tripStarted && styles.progressMark]}
+            >
+              <Text
+                style={[styles.readyText, tripStarted && styles.progressText]}
+              >
+                {tripStarted ? "In progress" : "Ready"}
+              </Text>
+            </View>
+          </View>
           <View style={styles.timeline}>
             {route.steps.map((step, i) => (
               <Fragment key={i}>
                 <View style={styles.stepRow}>
                   <View style={styles.stepRail}>
-                    <View style={styles.stepIcon}>{stepIcon(step.kind)}</View>
+                    <View
+                      style={[
+                        styles.stepIcon,
+                        tripStarted && i === 0 && styles.stepIconActive,
+                      ]}
+                    >
+                      {stepIcon(step.kind)}
+                    </View>
                     {i < route.steps.length - 1 && (
                       <View style={styles.stepLine} />
                     )}
@@ -113,8 +159,18 @@ export default function RouteDetailScreen() {
                       i < route.steps.length - 1 && styles.stepBodySpaced,
                     ]}
                   >
-                    <Text style={styles.stepTitle}>{step.title || dest}</Text>
+                    <Text
+                      style={[
+                        styles.stepTitle,
+                        tripStarted && i === 0 && styles.stepTitleActive,
+                      ]}
+                    >
+                      {step.title || dest}
+                    </Text>
                     <Text style={styles.stepSubtitle}>{step.subtitle}</Text>
+                    {tripStarted && i === 0 && (
+                      <Text style={styles.currentStep}>Current checkpoint</Text>
+                    )}
                   </View>
                 </View>
               </Fragment>
@@ -139,15 +195,16 @@ export default function RouteDetailScreen() {
         <Button
           variant="outline"
           icon={<Plus size={18} color={color.textStrong} />}
-          onPress={() => router.back()}
+          onPress={() => scrollRef.current?.scrollToEnd({ animated: true })}
         >
           Review
         </Button>
         <Button
           full
           icon={<Navigation size={18} color={color.textOnPrimary} />}
+          onPress={() => setTripStarted(true)}
         >
-          Start trip
+          {tripStarted ? "Trip in progress" : "Start trip"}
         </Button>
       </View>
     </View>
@@ -159,15 +216,16 @@ const styles = StyleSheet.create({
   mapBlock: { height: 200 },
   roundBtn: {
     position: "absolute",
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: color.card,
     alignItems: "center",
     justifyContent: "center",
     ...shadow.sm,
   },
   pressed: { opacity: 0.7 },
+  savedBtn: { backgroundColor: color.alertBg },
   sheet: { flex: 1, marginTop: -24 },
   sheetContent: { padding: 16, gap: 14, paddingBottom: 24 },
   heroCard: {
@@ -196,19 +254,43 @@ const styles = StyleSheet.create({
   duration: { fontFamily: font.monoMedium, fontSize: 28, color: color.textStrong },
   fare: { fontFamily: font.mono, fontSize: text.bodyMd, color: color.textMuted },
   signalRow: { flexDirection: "row", gap: 10 },
-  tripCard: {
-    backgroundColor: color.card,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    padding: 18,
-    ...shadow.xs,
+  signalDivider: {
+    width: 1,
+    marginVertical: 8,
+    backgroundColor: color.borderSubtle,
+  },
+  tripSection: { paddingVertical: 8, paddingHorizontal: 4 },
+  tripHeading: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  tripEyebrow: {
+    fontSize: text.xs,
+    fontFamily: font.sansBold,
+    textTransform: "uppercase",
+    letterSpacing: 0.44,
+    color: color.p600,
+    marginBottom: 3,
   },
   tripTitle: {
     fontSize: text.h3,
     fontFamily: font.sansBold,
     color: color.textStrong,
   },
+  readyMark: {
+    borderRadius: radius.pill,
+    backgroundColor: color.goodBg,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  readyText: {
+    fontSize: text.xs,
+    fontFamily: font.sansBold,
+    color: color.accent600,
+  },
+  progressMark: { backgroundColor: color.primarySoft },
+  progressText: { color: color.p700 },
   timeline: { marginTop: 14 },
   stepRow: { flexDirection: "row", gap: 12 },
   stepRail: { alignItems: "center" },
@@ -220,11 +302,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  stepIconActive: {
+    backgroundColor: color.primarySoft,
+    borderWidth: 2,
+    borderColor: color.p400,
+  },
   stepLine: {
     width: 2,
     flex: 1,
     minHeight: 22,
-    backgroundColor: color.borderSubtle,
+    backgroundColor: color.p200,
   },
   stepBody: { flex: 1 },
   stepBodySpaced: { paddingBottom: 18 },
@@ -233,11 +320,20 @@ const styles = StyleSheet.create({
     fontFamily: font.sansSemiBold,
     color: color.textStrong,
   },
+  stepTitleActive: { color: color.p700 },
   stepSubtitle: {
     fontSize: text.sm,
     fontFamily: font.sans,
     color: color.textMuted,
     marginTop: 2,
+  },
+  currentStep: {
+    marginTop: 5,
+    fontSize: text.xs,
+    fontFamily: font.sansBold,
+    color: color.p600,
+    textTransform: "uppercase",
+    letterSpacing: 0.4,
   },
   reviewHeader: {
     flexDirection: "row",

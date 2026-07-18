@@ -68,16 +68,17 @@ The foundation is deliberately honest about its boundary: search, routing, seede
 This workspace treats the current product as **Project Daan**. The initial UI request used “smartset”; no separate Smartset brand is introduced here.
 
 ```bash
-npm install
-npm run dev
+npm ci
+npm run dev:web
 ```
 
 Quality checks:
 
 ```bash
 npm run lint
-npm test
+npm run test
+npm run typecheck
 npm run build
 ```
 
-The graph, route-question, and review fixture live in `src/fixture/`. Pure search, route-profile Dijkstra, review compilation, and cosine-similarity functions live in `src/lib/`; `src/module/community/` owns the local repository, deterministic seed merge, route projection, threaded UI, and URL state. `src/lib/map-style.ts` keeps the MapLibre source/layer contract separate from the web canvas so the mapping contract can be reused later.
+The graph, route-question, and review fixture live in `apps/web/src/fixture/`. Pure search, route-profile Dijkstra, review compilation, and cosine-similarity functions live in `apps/web/src/lib/`; `apps/web/src/module/community/` owns the local repository, deterministic seed merge, route projection, threaded UI, and URL state. `apps/web/src/lib/map-style.ts` keeps the MapLibre source/layer contract separate from the web canvas so the mapping contract can be reused later.

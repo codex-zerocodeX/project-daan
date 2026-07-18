@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowRight, ChevronLeft } from "lucide-react-native";
-import { useState } from "react";
+import { ArrowRight, ChevronLeft, Sparkles } from "lucide-react-native";
+import { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RouteCard } from "../src/components/transit/RouteCard";
@@ -12,14 +12,62 @@ import {
 } from "../src/lib/mockRoutes";
 import { color, font, radius, text } from "../src/lib/theme";
 
-const FILTERS = ["Fastest", "Fewest transfers", "Cheapest", "Least crowded"];
+const filterOption = [
+  "Best match",
+  "Fastest",
+  "Fewest transfers",
+  "Cheapest",
+  "Least crowded",
+] as const;
+
+type FilterOption = (typeof filterOption)[number];
+
+function numericValue(value: string) {
+  return Number(value.replace(/[^0-9.]/g, ""));
+}
 
 export default function ResultsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams<{ dest?: string }>();
   const dest = params.dest || DEFAULT_DESTINATION;
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState<FilterOption>("Best match");
+
+  const exactRoute = useMemo(() => {
+    const route = [...EXACT_ROUTES];
+
+    if (filter === "Fastest")
+      return route.sort(
+        (first, second) =>
+          numericValue(first.duration) - numericValue(second.duration),
+      );
+    if (filter === "Fewest transfers")
+      return route.sort(
+        (first, second) =>
+          first.legs.filter((leg) => leg.mode === "transfer").length -
+          second.legs.filter((leg) => leg.mode === "transfer").length,
+      );
+    if (filter === "Cheapest")
+      return route.sort(
+        (first, second) => numericValue(first.fare) - numericValue(second.fare),
+      );
+    if (filter === "Least crowded")
+      return route.sort((first, second) => first.crowd - second.crowd);
+
+    return route.sort(
+      (first, second) => Number(second.recommended) - Number(first.recommended),
+    );
+  }, [filter]);
+
+  const recommendedRoute = EXACT_ROUTES.find((route) => route.recommended)!;
+  const fastestRoute = [...EXACT_ROUTES].sort(
+    (first, second) =>
+      numericValue(first.duration) - numericValue(second.duration),
+  )[0];
+  const minuteDifference =
+    numericValue(recommendedRoute.duration) - numericValue(fastestRoute.duration);
+  const fareDifference =
+    numericValue(fastestRoute.fare) - numericValue(recommendedRoute.fare);
 
   const openRoute = (id: string) =>
     router.push({ pathname: "/route/[id]", params: { id, dest } });
@@ -29,6 +77,8 @@ export default function ResultsScreen() {
       <View style={[styles.header, { paddingTop: insets.top + 14 }]}>
         <View style={styles.headerRow}>
           <Pressable
+            accessibilityLabel="Back to trip planner"
+            accessibilityRole="button"
             onPress={() => router.back()}
             style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
           >
@@ -49,16 +99,21 @@ export default function ResultsScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.filterRow}
         >
-          {FILTERS.map((label, i) => (
+          {filterOption.map((label) => (
             <Pressable
               key={label}
-              onPress={() => setFilter(i)}
-              style={[styles.filterChip, i === filter && styles.filterActive]}
+              accessibilityRole="button"
+              accessibilityState={{ selected: label === filter }}
+              onPress={() => setFilter(label)}
+              style={[
+                styles.filterChip,
+                label === filter && styles.filterActive,
+              ]}
             >
               <Text
                 style={[
                   styles.filterText,
-                  i === filter && styles.filterTextActive,
+                  label === filter && styles.filterTextActive,
                 ]}
               >
                 {label}
@@ -72,10 +127,21 @@ export default function ResultsScreen() {
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
       >
+        <View style={styles.decisionIntro}>
+          <View style={styles.decisionIcon}>
+            <Sparkles size={18} color={color.p700} />
+          </View>
+          <View style={styles.decisionCopy}>
+            <Text style={styles.decisionTitle}>Pick your trade-off</Text>
+            <Text style={styles.decisionText}>
+              Best balance saves ₱{fareDifference}; fastest saves {minuteDifference} min.
+            </Text>
+          </View>
+        </View>
         <Text style={styles.sectionLabel}>
-          {EXACT_ROUTES.length} routes to {dest}
+          {EXACT_ROUTES.length} routes · sorted by {filter.toLowerCase()}
         </Text>
-        {EXACT_ROUTES.map((route) => (
+        {exactRoute.map((route) => (
           <RouteCard
             key={route.id}
             route={route}
@@ -118,9 +184,9 @@ const styles = StyleSheet.create({
   },
   headerRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: color.borderSubtle,
     backgroundColor: color.card,
@@ -155,6 +221,32 @@ const styles = StyleSheet.create({
   },
   filterTextActive: { color: color.textOnPrimary },
   list: { padding: 16, gap: 12 },
+  decisionIntro: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 4,
+  },
+  decisionIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: color.primarySoft,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  decisionCopy: { flex: 1, gap: 2 },
+  decisionTitle: {
+    fontSize: text.bodyLg,
+    fontFamily: font.sansBold,
+    color: color.textStrong,
+  },
+  decisionText: {
+    fontSize: text.sm,
+    lineHeight: text.sm * 1.4,
+    fontFamily: font.sansMedium,
+    color: color.textMuted,
+  },
   sectionLabel: {
     fontSize: text.xs,
     fontFamily: font.sansBold,

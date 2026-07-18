@@ -1,13 +1,13 @@
-// Web implementation of KomyutMap. The native @maplibre/maplibre-react-native
+// Web implementation of DaanMap. The native @maplibre/maplibre-react-native
 // module ships no web build, so the browser renders with maplibre-gl directly —
 // same OSM raster style and walkability-colored route line as native. Metro
-// resolves this file instead of KomyutMap.tsx on web builds.
+// resolves this file instead of DaanMap.tsx on web builds.
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
 import { EXAMPLE_ROUTE, MANILA_CENTER, OSM_RASTER_STYLE } from "../lib/mapStyle";
 
-export function KomyutMap() {
+export function DaanMap() {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

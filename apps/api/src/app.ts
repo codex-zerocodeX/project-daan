@@ -9,6 +9,10 @@ export type AppDeps = { supabase: SupabaseClient };
 
 export function createApp(deps: AppDeps) {
   const app = new Hono();
+  app.use("*", async (context, next) => {
+    await next();
+    context.header("X-Daan-Service", "api");
+  });
   app.route("/health", healthRoute());
   app.route("/v1/threads", threadsRoute(deps));
   app.route("/v1/routes", routePlanRoute());

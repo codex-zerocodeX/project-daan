@@ -34,7 +34,7 @@ const routeLineStyle = {
   ],
 } as const;
 
-export function KomyutMap() {
+export function DaanMap() {
   useEffect(() => {
     Location.requestForegroundPermissionsAsync();
   }, []);

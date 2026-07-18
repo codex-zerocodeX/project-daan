@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { RoutePlanRequestSchema, RoutePlanResponseSchema } from "@komyut/shared";
+import { RoutePlanRequestSchema, RoutePlanResponseSchema } from "@daan/shared";
 
 export function routePlanRoute() {
   const route = new Hono();

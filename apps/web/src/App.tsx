@@ -1,5 +1,6 @@
 import { ChevronDown, Clock3, MapPin, Route as RouteIcon, ShieldCheck, TriangleAlert } from "lucide-react";
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent, RefObject } from "react";
 import { CoverageBar } from "./component/CoverageBar";
 import { FallbackBanner } from "./component/FallbackBanner";
 import { Header } from "./component/Header";
@@ -9,19 +10,23 @@ import { RouteSearch } from "./component/RouteSearch";
 import { SegmentReceipt } from "./component/SegmentReceipt";
 import { ShareBar } from "./component/ShareBar";
 import { placeNode, planRoute, review } from "./lib/route";
+import { readRouteReceiptUrl, writeRouteReceiptUrl } from "./lib/routeReceiptUrl";
 import type { DepartureTime, PlaceNode } from "./lib/type";
 import { verdictMeta } from "./lib/verdict";
 import { CommunityPanel } from "./module/community/CommunityPanel";
 import { useCommunity } from "./module/community/useCommunity";
 import { useCommunityUrl } from "./module/community/useCommunityUrl";
+import { hasCommunityTarget } from "./module/community/url";
 
 const node = placeNode();
 const MapCanvas = lazy(() => import("./component/MapCanvas").then((module) => ({ default: module.MapCanvas })));
 const defaultOrigin = node.find((item) => item.nodeId === "ateneo-gate-3") ?? null;
 const defaultDestination = node.find((item) => item.nodeId === "lrt-katipunan") ?? null;
 const initialUrl = new URL(window.location.href);
-const initialOrigin = node.find((item) => item.nodeId === initialUrl.searchParams.get("originNodeId")) ?? defaultOrigin;
-const initialDestination = node.find((item) => item.nodeId === initialUrl.searchParams.get("destinationNodeId")) ?? defaultDestination;
+const initialReceiptUrl = readRouteReceiptUrl(initialUrl);
+const initialOrigin = node.find((item) => item.nodeId === initialReceiptUrl.originNodeId) ?? defaultOrigin;
+const initialDestination = node.find((item) => item.nodeId === initialReceiptUrl.destinationNodeId) ?? defaultDestination;
+const initialDepartureTime = initialReceiptUrl.departureTime;
 
 interface RouteQuery {
   originNodeId: string;
@@ -35,7 +40,7 @@ function App() {
     originNodeId: initialOrigin?.nodeId ?? "",
     destinationNodeId: initialDestination?.nodeId ?? "",
   });
-  const [departureTime, setDepartureTime] = useState<DepartureTime>("14:00");
+  const [departureTime, setDepartureTime] = useState<DepartureTime>(initialDepartureTime);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -47,6 +52,15 @@ function App() {
       ["threadId", "reportId", "replyId"].some((key) => initialUrl.searchParams.has(key)),
   );
   const resultSummaryRef = useRef<HTMLElement | null>(null);
+  const detailSummaryRef = useRef<HTMLElement | null>(null);
+  const threadSummaryRef = useRef<HTMLElement | null>(null);
+
+  const isRouteCurrent = Boolean(
+    origin &&
+      destination &&
+      origin.nodeId === routeQuery.originNodeId &&
+      destination.nodeId === routeQuery.destinationNodeId,
+  );
 
   const routePlan = useMemo(
     () => planRoute(routeQuery.originNodeId, routeQuery.destinationNodeId, departureTime),
@@ -73,17 +87,23 @@ function App() {
     [community.snapshot, routeId, segmentId, threadId],
   );
   const { urlState, navigateCommunity } = useCommunityUrl(communityContext);
-  const activeAlternative = routePlan.alternative.find((item) => item.routeId === urlState.routeId) ?? routePlan.alternative[0] ?? null;
+  const isThreadDisclosureOpen = isThreadOpen || hasCommunityTarget(urlState);
+  const committedAlternative = routePlan.alternative.find((item) => item.routeId === urlState.routeId) ?? routePlan.alternative[0] ?? null;
+  const activeAlternative = isRouteCurrent ? committedAlternative : null;
   const activeSegmentId = activeAlternative?.route.segment.map((item) => item.segmentId) ?? [];
   const openSegmentId = urlState.segmentId ?? selectedSegmentId ?? activeSegmentId[0] ?? null;
   const communityProjection = activeSegmentId.map((item) => community.getProjection(activeAlternative?.routeId ?? "", item));
   const selectedNode = node.find((item) => item.nodeId === selectedNodeId) ?? null;
-  const comparisonAlternative = routePlan.alternative.find((item) => item.routeId !== activeAlternative?.routeId) ?? null;
+  const comparisonAlternative = isRouteCurrent
+    ? routePlan.alternative.find((item) => item.routeId !== activeAlternative?.routeId) ?? null
+    : null;
   const scoreDelta = comparisonAlternative && activeAlternative ? comparisonAlternative.route.score - activeAlternative.route.score : 0;
   const durationDelta = comparisonAlternative && activeAlternative ? comparisonAlternative.route.durationMin - activeAlternative.route.durationMin : 0;
   const routeMeta = activeAlternative ? verdictMeta[activeAlternative.route.verdict] : null;
   const RouteVerdictIcon = routeMeta?.icon;
-  const routeError = routePlan.failure?.reason === "unreachable"
+  const routeError = !isRouteCurrent
+    ? formError
+    : routePlan.failure?.reason === "unreachable"
     ? "No walkable connection is available for those two places in this map yet."
     : routePlan.failure?.reason === "missing_node"
       ? "Choose both places from the search suggestions."
@@ -111,6 +131,36 @@ function App() {
     return () => layoutQuery.removeEventListener("change", changeLayout);
   }, []);
 
+  useEffect(() => {
+    const nextUrl = writeRouteReceiptUrl(new URL(window.location.href), {
+      originNodeId: initialOrigin?.nodeId ?? null,
+      destinationNodeId: initialDestination?.nodeId ?? null,
+      departureTime: initialDepartureTime,
+    });
+    window.history.replaceState(window.history.state, "", nextUrl);
+  }, []);
+
+  useEffect(() => {
+    const restoreReceipt = () => {
+      const receipt = readRouteReceiptUrl(new URL(window.location.href));
+      const nextOrigin = node.find((item) => item.nodeId === receipt.originNodeId) ?? defaultOrigin;
+      const nextDestination = node.find((item) => item.nodeId === receipt.destinationNodeId) ?? defaultDestination;
+      setOrigin(nextOrigin);
+      setDestination(nextDestination);
+      setRouteQuery({
+        originNodeId: nextOrigin?.nodeId ?? "",
+        destinationNodeId: nextDestination?.nodeId ?? "",
+      });
+      setDepartureTime(receipt.departureTime);
+      setSelectedNodeId(null);
+      setSelectedSegmentId(null);
+      setFormError(null);
+      setRouteNotice("Route receipt restored from browser history.");
+    };
+    window.addEventListener("popstate", restoreReceipt);
+    return () => window.removeEventListener("popstate", restoreReceipt);
+  }, []);
+
   function submitRoute() {
     if (!origin || !destination) {
       setFormError("Choose both places from the search suggestions.");
@@ -124,9 +174,11 @@ function App() {
     setSelectedNodeId(null);
     setSelectedSegmentId(null);
     setRouteQuery({ originNodeId: origin.nodeId, destinationNodeId: destination.nodeId });
-    const nextUrl = new URL(window.location.href);
-    nextUrl.searchParams.set("originNodeId", origin.nodeId);
-    nextUrl.searchParams.set("destinationNodeId", destination.nodeId);
+    const nextUrl = writeRouteReceiptUrl(new URL(window.location.href), {
+      originNodeId: origin.nodeId,
+      destinationNodeId: destination.nodeId,
+      departureTime,
+    });
     window.history.pushState(window.history.state, "", nextUrl);
     navigateCommunity({ routeId: null, segmentId: null, threadId: null, reportId: null, replyId: null }, true);
     setRouteNotice(`Route checked from ${origin.shortName} to ${destination.shortName}.`);
@@ -136,18 +188,58 @@ function App() {
           behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
           block: "start",
         });
+        resultSummaryRef.current?.focus({ preventScroll: true });
       });
     });
   }
 
   function changeOrigin(value: PlaceNode | null) {
     setOrigin(value);
+    setSelectedNodeId(null);
+    setSelectedSegmentId(null);
     setFormError(null);
   }
 
   function changeDestination(value: PlaceNode | null) {
     setDestination(value);
+    setSelectedNodeId(null);
+    setSelectedSegmentId(null);
     setFormError(null);
+  }
+
+  function changeDepartureTime(time: DepartureTime) {
+    setDepartureTime(time);
+    const nextUrl = writeRouteReceiptUrl(new URL(window.location.href), {
+      originNodeId: routeQuery.originNodeId || null,
+      destinationNodeId: routeQuery.destinationNodeId || null,
+      departureTime: time,
+    });
+    window.history.replaceState(window.history.state, "", nextUrl);
+    setRouteNotice(`Departure changed to ${time === "06:00" ? "6 AM" : "2 PM"}. Route score updated.`);
+  }
+
+  function closeDisclosure(
+    event: ReactKeyboardEvent<HTMLDetailsElement>,
+    setOpen: (isOpen: boolean) => void,
+    summary: RefObject<HTMLElement | null>,
+  ) {
+    if (
+      event.defaultPrevented ||
+      event.key !== "Escape" ||
+      !event.currentTarget.open ||
+      window.matchMedia("(min-width: 1024px)").matches
+    ) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(false);
+    window.requestAnimationFrame(() => summary.current?.focus({ preventScroll: true }));
+  }
+
+  function changeThreadOpen(isOpen: boolean) {
+    setIsThreadOpen(isOpen);
+    if (!isOpen && hasCommunityTarget(urlState)) {
+      navigateCommunity({ threadId: null, reportId: null, replyId: null }, true);
+    }
   }
 
   function selectAlternative(routeId: string) {
@@ -190,6 +282,7 @@ function App() {
 
         <section className="daan-control daan-route-sheet" aria-label="Plan and compare a route">
           <RouteSearch
+            key={`${routeQuery.originNodeId}:${routeQuery.destinationNodeId}`}
             node={node}
             origin={origin}
             destination={destination}
@@ -207,7 +300,7 @@ function App() {
                   key={time}
                   type="button"
                   aria-pressed={departureTime === time}
-                  onClick={() => setDepartureTime(time)}
+                  onClick={() => changeDepartureTime(time)}
                   className={`min-h-11 rounded-chip px-4 text-xs font-extrabold ${departureTime === time ? "bg-brand-navy text-surface shadow-[0_6px_14px_rgb(8_34_55/0.12)]" : "text-ink-soft"}`}
                 >
                   {time === "06:00" ? "6 AM" : "2 PM"}
@@ -216,9 +309,14 @@ function App() {
             </div>
           </div>
 
-          <RouteAlternativePanel alternative={routePlan.alternative} selectedRouteId={activeAlternative?.routeId ?? null} onSelect={selectAlternative} />
+          <RouteAlternativePanel alternative={isRouteCurrent ? routePlan.alternative : []} selectedRouteId={activeAlternative?.routeId ?? null} onSelect={selectAlternative} />
 
-          {activeAlternative && routeMeta && RouteVerdictIcon ? (
+          {!isRouteCurrent ? (
+            <section ref={resultSummaryRef} tabIndex={-1} className="border-l-4 border-brand-gold bg-brand-gold/10 p-4" aria-live="polite">
+              <h2 className="text-lg font-extrabold">Route needs an update</h2>
+              <p className="mt-1 text-sm font-medium text-ink-soft">Choose both places from the suggestions, then check the route to refresh this receipt.</p>
+            </section>
+          ) : activeAlternative && routeMeta && RouteVerdictIcon ? (
             <section
               id="route-result-summary"
               ref={resultSummaryRef}
@@ -280,7 +378,7 @@ function App() {
               </div>
             </section>
           ) : (
-            <section className="border-l-4 border-avoid bg-avoid/5 p-4" aria-live="polite">
+            <section ref={resultSummaryRef} tabIndex={-1} className="border-l-4 border-avoid bg-avoid/5 p-4" aria-live="polite">
               <TriangleAlert className="text-avoid" aria-hidden="true" />
               <h2 className="mt-2 text-lg font-extrabold">Route unavailable</h2>
               <p className="mt-1 text-sm font-medium text-ink-soft">{routeError ?? "Choose two connected places to calculate a route."}</p>
@@ -289,8 +387,13 @@ function App() {
         </section>
 
         {activeAlternative && (
-          <details className="daan-detail daan-disclosure" open={isDetailOpen} onToggle={(event) => setIsDetailOpen(event.currentTarget.open)}>
-            <summary className="daan-disclosure-summary">
+          <details
+            className="daan-detail daan-disclosure"
+            open={isDetailOpen}
+            onKeyDown={(event) => closeDisclosure(event, setIsDetailOpen, detailSummaryRef)}
+            onToggle={(event) => setIsDetailOpen(event.currentTarget.open)}
+          >
+            <summary ref={detailSummaryRef} className="daan-disclosure-summary">
               <span>
                 <span className="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink-soft">The evidence</span>
                 <span className="text-base font-extrabold">Why this route scored {activeAlternative.route.score}</span>
@@ -308,14 +411,31 @@ function App() {
                   navigateCommunity({ segmentId, reportId: null, replyId: null });
                 }}
               />
-              <ShareBar route={activeAlternative.route} />
+              <ShareBar
+                route={activeAlternative.route}
+                receiptKey={JSON.stringify([
+                  activeAlternative.routeId,
+                  departureTime,
+                  routeQuery.originNodeId,
+                  routeQuery.destinationNodeId,
+                  urlState.segmentId,
+                  urlState.threadId,
+                  urlState.reportId,
+                  urlState.replyId,
+                ])}
+              />
             </div>
           </details>
         )}
 
         {activeAlternative && activeAlternative.thread.length > 0 && (
-          <details className="daan-thread daan-disclosure" open={isThreadOpen} onToggle={(event) => setIsThreadOpen(event.currentTarget.open)}>
-            <summary className="daan-disclosure-summary">
+          <details
+            className="daan-thread daan-disclosure"
+            open={isThreadDisclosureOpen}
+            onKeyDown={(event) => closeDisclosure(event, changeThreadOpen, threadSummaryRef)}
+            onToggle={(event) => changeThreadOpen(event.currentTarget.open)}
+          >
+            <summary ref={threadSummaryRef} className="daan-disclosure-summary">
               <span>
                 <span className="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink-soft">Along this path</span>
                 <span className="text-base font-extrabold">Community updates</span>

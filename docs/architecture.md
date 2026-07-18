@@ -1,36 +1,36 @@
-# Komyut Architecture
+# Daan architecture
 
 ```mermaid
 flowchart LR
-    M[apps/mobile\nExpo + MapLibre] -->|auth, CRUD under RLS| S[(Supabase\nPostgres + PostGIS\nAuth / Storage)]
-    M -->|"algorithm calls\n(/v1/routes/plan)"| A[apps/api\nHono]
-    A -->|service role| S
-    M -.->|contracts| SH[packages/shared\nzod schemas]
-    A -.->|contracts| SH
+    W["apps/web\nFixture receipt + community"] --> WF["Local graph, evidence fixture, localStorage"]
+    M["apps/mobile\nExpo + MapLibre"] -->|"auth and CRUD under RLS"| S[("Supabase\nPostgres + PostGIS")]
+    M -->|"algorithm request"| A["apps/api\nHono"]
+    A -->|"service role"| S
+    M -.->|"validated contract"| SH["packages/shared\n@daan/shared"]
+    A -.->|"validated contract"| SH
+    R["routing-engine\npure prototype"] -.->|"not wired"| A
 ```
 
-## Data flow rules
+## Current boundary
 
-- **CRUD** (threads, votes, comments, profiles): mobile -> Supabase directly,
-  protected by Row Level Security. No API hop.
-- **Algorithms** (route planning, later karma computation and walkability
-  scoring): mobile -> Hono API -> Supabase with the service role key.
-- **Contracts:** every payload crossing a boundary is validated with a schema
-  from `@komyut/shared` on both sides.
+The web and mobile/API paths coexist intentionally but do not yet share one production adapter:
 
-## Where future features plug in
+- `apps/web` proves the complete route-choice → evidence-receipt → community interaction on a deterministic Katipunan fixture.
+- `apps/mobile` is the Expo client for route discovery, account, and community surfaces.
+- `apps/api` owns algorithm-shaped and server-authorized work; direct CRUD stays behind Supabase Row Level Security.
+- `packages/shared` validates payload crossing the mobile/API boundary.
+- `routing-engine` is a pure prototype committed by a parallel lane and is not wired into a workspace or CI.
 
-| Feature | Seam |
-| --- | --- |
-| Real routing algorithm | Body of `POST /v1/routes/plan` (`apps/api/src/routes/plan.ts`) - graph over community route segments in PostGIS |
-| Walkability scoring | Properties on route GeoJSON features; rendered by the interpolate expression in `KomyutMap.tsx` |
-| Karma rules | New API routes + `profiles.karma`; triggers or API-side updates on votes |
-| Voting / commenting UI | Direct Supabase writes from mobile (`votes`, `comments` tables already exist with RLS) |
-| Image attachments | Supabase Storage bucket `thread-images` (public read, authenticated write) |
+The integration seam is the receipt contract: route or place input → attributable evidence → deterministic score → visible receipt → explanation. Replacing a fixture adapter must not change what the receipt claims.
 
-## Why this shape
+## Data flow rule
 
-One fork gives a teammate (and their AI assistant) the entire system. The
-API stays thin on purpose: anything a database policy can enforce lives in
-Supabase; anything algorithmic lives in TypeScript where it can be unit
-tested (`vitest`) without a device.
+- **Web route receipt:** local graph and fixture evidence; community write persists in versioned localStorage.
+- **Mobile CRUD:** mobile → Supabase under RLS.
+- **Server algorithm:** mobile → Hono API → Supabase with the service-role key where needed.
+- **Contract:** any mobile/API boundary payload is parsed by `@daan/shared`.
+- **Map:** MapLibre renders geometry; it does not own route selection or evidence truth.
+
+## Production gate
+
+Before promoting the web loop or routing prototype into the shared service, add licensed live routing/evidence adapters, field calibration, real Supabase/RLS integration tests, moderation and abuse review, and end-to-end route-receipt coverage.

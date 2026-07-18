@@ -20,7 +20,7 @@ type Props = {
 };
 
 const variantStyles: Record<NonNullable<Props["variant"]>, ViewStyle> = {
-  primary: { backgroundColor: color.p500, ...shadow.sm },
+  primary: { backgroundColor: color.brandNavy, ...shadow.sm },
   outline: {
     backgroundColor: color.card,
     borderWidth: 1,
@@ -47,6 +47,11 @@ export function Button({
 }: Props) {
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityState={{
+        busy: loading,
+        disabled: disabled || loading,
+      }}
       onPress={onPress}
       disabled={disabled || loading}
       style={({ pressed }) => [

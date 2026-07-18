@@ -1,4 +1,4 @@
-import { Repeat, Star } from "lucide-react-native";
+import { Check, ChevronRight, Repeat, Star } from "lucide-react-native";
 import { Fragment } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import type { RouteSummary } from "../../lib/mockRoutes";
@@ -13,6 +13,8 @@ export function RouteCard({ route, onPress }: Props) {
   const rel = tone[route.reliabilityTone];
   return (
     <Pressable
+      accessibilityLabel={`${route.duration}, ${route.fare}, ${route.reliability}, rated ${route.score}`}
+      accessibilityRole="button"
       onPress={onPress}
       style={({ pressed }) => [
         styles.card,
@@ -62,7 +64,7 @@ export function RouteCard({ route, onPress }: Props) {
         <View style={styles.pillRow}>
           {route.recommended && (
             <Pill bg={color.primarySoft} fg={color.p700}>
-              Recommended
+              Best balance
             </Pill>
           )}
           {!route.exact && route.near && (
@@ -72,21 +74,37 @@ export function RouteCard({ route, onPress }: Props) {
           )}
         </View>
       )}
+
+      {route.recommended ? (
+        <View style={styles.reasonRow}>
+          <Check size={15} color={color.p700} />
+          <Text style={styles.reasonText}>
+            Low fare · {route.reliability.toLowerCase()} · {route.walk} walk
+          </Text>
+          <ChevronRight size={18} color={color.p600} />
+        </View>
+      ) : null}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: color.card,
-    borderWidth: 1,
-    borderColor: color.borderSubtle,
-    borderRadius: radius.lg,
-    padding: 16,
+    position: "relative",
+    backgroundColor: "transparent",
+    borderBottomWidth: 1,
+    borderBottomColor: color.borderSubtle,
+    paddingVertical: 16,
+    paddingHorizontal: 4,
     gap: 12,
+  },
+  recommended: {
+    backgroundColor: color.card,
+    borderBottomWidth: 0,
+    borderRadius: radius.xl,
+    padding: 16,
     ...shadow.card,
   },
-  recommended: { borderColor: color.p200 },
   pressed: { opacity: 0.9 },
   topRow: {
     flexDirection: "row",
@@ -132,4 +150,17 @@ const styles = StyleSheet.create({
     color: color.textMuted,
   },
   pillRow: { flexDirection: "row", gap: 6 },
+  reasonRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+    paddingTop: 2,
+  },
+  reasonText: {
+    flex: 1,
+    fontSize: text.sm,
+    lineHeight: text.sm * 1.35,
+    fontFamily: font.sansSemiBold,
+    color: color.p700,
+  },
 });
