@@ -1,0 +1,14 @@
+{
+  "name": "komyut",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:mobile": "npm run start --workspace apps/mobile"
+  },
+  "engines": { "node": ">=22" }
+}
