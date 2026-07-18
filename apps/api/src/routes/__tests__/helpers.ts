@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type OpenAI from "openai";
 
 /** Fake for the exact query chain the API uses: from().select().order().limit() */
 export function fakeSupabase(result: { data: unknown; error: unknown }): SupabaseClient {
@@ -20,4 +21,12 @@ export function fakeSupabaseSelect(result: { data: unknown; error: unknown }): S
       select: async () => result,
     }),
   } as unknown as SupabaseClient;
+}
+
+export function fakeOpenAI(output: unknown): OpenAI {
+  return {
+    responses: {
+      parse: async () => ({ output_parsed: output }),
+    },
+  } as unknown as OpenAI;
 }

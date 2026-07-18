@@ -2,18 +2,15 @@
 
 ## Evidence
 
-- Source visual truth: `/var/folders/dv/ktxbpy5d47n6p1bpxs9qc9_r0000gn/T/codex-clipboard-4a97db71-039f-4c44-963e-ff4e8d033f67.png`
-- Desktop implementation: `/tmp/project-daan-alitaptap-desktop-final.png`
-- Mobile implementation: `/tmp/project-daan-alitaptap-mobile-final.png`
+- Repeatable web interaction proof: `node script/route-flow.mjs`
+- Final web mobile capture: `outputs/web-ui-qa/route-receipt-mobile-390x844.png`
+- Final web desktop capture: `outputs/web-ui-qa/route-receipt-desktop-1440x1024.png`
 - Expo final home implementation: `outputs/mobile-ui-qa/home-final-390x844.png`
 - Expo final result implementation: `outputs/mobile-ui-qa/results-390x844.png`
 - Expo final route-detail implementation: `outputs/mobile-ui-qa/detail-ready-390x844.png`
 - Expo reference comparison: `outputs/mobile-ui-qa/reference-vs-home.png`
 - Iteration evidence: `outputs/mobile-ui-qa/home-390x844.png` and `outputs/mobile-ui-qa/detail-in-progress-390x844.png`
-- Full-view comparison: `/tmp/project-daan-design-compare-final.png`
-- Focused upper-screen comparison: `/tmp/project-daan-design-focus-final.png`
-- Desktop viewport: `1440 × 1024`
-- Mobile viewport: `375 × 812`
+- Automated web viewport: `390 × 844`; desktop browser check: `1440 × 1024`
 - State: fixture route from Ateneo Gate 3 to Katipunan LRT-2 Station, 2 PM, shortest route selected, empty place-detail state.
 
 ## Full-view comparison
@@ -40,7 +37,7 @@ The implementation bundles Plus Jakarta Sans for compact extrabold headings and 
 
 ### Spacing and layout rhythm
 
-Desktop column proportion, 16px grid gap, 14px card radius, header height, map height, panel padding, and control rhythm match the reference. Mobile collapses to one column without horizontal overflow (`scrollWidth = clientWidth = 375`). The primary route action and both alternatives remain visible and usable at 375px.
+Desktop column proportion, 16px grid gap, 14px card radius, header height, map height, panel padding, and control rhythm match the reference. Mobile collapses to one column without horizontal overflow at 390px. The primary route action and both alternatives remain visible and usable at the tested phone viewport.
 
 ### Colors and visual tokens
 
@@ -56,7 +53,7 @@ All operational copy remains truthful to the existing fixture-backed product. �
 
 ### Icon and interaction
 
-Existing Lucide controls remain aligned and semantically labeled. The calmer alternative uses a leaf rather than an AI-like sparkle. Browser interaction checks confirmed route submission, alternative selection (`40/100`, Harsh), mapped-place selection, score/coverage continuity, and URL state updates. Browser console errors: none. The external OpenFreeMap style continues to emit its pre-existing missing-sprite warnings; this brand change introduced no new warning or error.
+Existing Lucide controls remain aligned and semantically labeled. The calmer alternative uses a leaf rather than an AI-like sparkle. Browser interaction checks confirm route submission, result focus, departure-time URL and reload persistence, stale-receipt invalidation, clipboard-feedback reset, and Escape focus return for the evidence and community disclosures. The repeatable 390px route flow records zero runtime exceptions and zero console errors. The external OpenFreeMap style can still emit missing-sprite warnings; no new warning or error is attributed to this interaction pass.
 
 ## Comparison history
 
@@ -64,9 +61,9 @@ Existing Lucide controls remain aligned and semantically labeled. The calmer alt
 
 - Finding [P2 — image quality]: the first header render cropped the generated square mascot too aggressively inside the wide tile.
 - Fix: changed the image fit treatment and tightened the raster crop around the firefly.
-- Post-fix evidence: `/tmp/project-daan-alitaptap-desktop-final.png` shows the full body, wings, antennae, and glow within the header tile.
+- Post-fix evidence: the current header render shows the full body, wings, antennae, and glow within the tile; the repeatable browser gate verifies that the surrounding route workspace remains usable.
 
-- Finding [P2 — mobile readability]: dotted trail light passed behind empty-state copy at 375px.
+- Finding [P2 — mobile readability]: dotted trail light passed behind empty-state copy at the earlier phone width.
 - Fix: added a same-navy text backing that masks the decorative points without introducing a visible nested card.
 - Post-fix evidence: the mobile map-state capture preserves readable white copy while the trail continues outside the text area.
 

@@ -19,3 +19,5 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test
+      - name: Verify web route flow at 390px
+        run: node script/route-flow.mjs

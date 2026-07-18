@@ -126,6 +126,21 @@ export const ComposeResponseSchema = z.object({
   }),
 });
 
+export const RouteExplainRequestSchema = z.object({
+  route: z.object({
+    summary: z.string().trim().min(1).max(2000),
+    distance_meter: z.number().nonnegative(),
+    step: z.array(z.string().trim().min(1).max(500)).min(1).max(50),
+  }),
+  preference: z.string().trim().min(1).max(1000).optional(),
+});
+
+export const RouteExplainResponseSchema = z.object({
+  headline: z.string().trim().min(1).max(120),
+  reason: z.array(z.string().trim().min(1).max(500)).min(1).max(3),
+  caution: z.array(z.string().trim().min(1).max(500)).max(3),
+});
+
 export type ThreadCategory = z.infer<typeof ThreadCategorySchema>;
 export type Profile = z.infer<typeof ProfileSchema>;
 export type Thread = z.infer<typeof ThreadSchema>;
@@ -140,3 +155,5 @@ export type RoutePlanResponse = z.infer<typeof RoutePlanResponseSchema>;
 export type ComposeRequest = z.infer<typeof ComposeRequestSchema>;
 export type ComposeStep = z.infer<typeof ComposeStepSchema>;
 export type ComposeResponse = z.infer<typeof ComposeResponseSchema>;
+export type RouteExplainRequest = z.infer<typeof RouteExplainRequestSchema>;
+export type RouteExplainResponse = z.infer<typeof RouteExplainResponseSchema>;

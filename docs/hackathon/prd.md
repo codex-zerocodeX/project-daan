@@ -8,7 +8,7 @@ One-day scope. The official local rubric is Codex Craft, Product Judgment, and P
 
 ## Current implementation boundary
 
-The requirement below is the intended event-day product contract, not a blanket shipped-feature claim. The current runnable build uses a deterministic Katipunan graph and disclosed route, weather, evidence, question, and review fixtures. It ships route search, time/profile comparison, route alternatives, an inspectable score and receipt, visible unknown coverage, route-bound community discussion, voting, reply, review matching, local karma, URL state, and localStorage persistence. It does **not** ship live geocoding, live routing, live weather, a shared Supabase backend, GPT-generated explanation, cross-device report sync, Miles, or partner traffic intelligence. [README.md](README.md) and [pitch.md](pitch.md) are the judge-facing state of record.
+The requirement below is the intended event-day product contract, not a blanket shipped-feature claim. The current runnable build uses a deterministic Katipunan graph and disclosed route, weather, evidence, question, and review fixtures. It ships route search, time/profile comparison, route alternatives, an inspectable score and receipt, visible unknown coverage, route-bound community discussion, voting, reply, review matching, local karma, restorable URL state, and localStorage persistence. The URL receipt preserves origin, destination, departure time, route, segment, and opened community context; draft endpoint edits invalidate the old visible receipt. The monorepo has Supabase-backed API seams and an optional server-side AI explanation endpoint, but the judging web experience does **not** consume them. It does not ship live geocoding, live routing, live weather, cross-device report sync, Miles, or partner traffic intelligence. [README.md](README.md) and [pitch.md](pitch.md) are the judge-facing state of record.
 
 ## Problem
 
@@ -28,7 +28,7 @@ One problem, three faces: the individual lacks a trustworthy answer, the communi
 
 We are an **honest walkability evaluator**, not a better router. Cite, never claim: Frank walkability index, Krambeck GWI (field-tested in Manila, 2006), PET/UTCI thermal-comfort routing, CoolWalks, Tile2Net, Project Sidewalk.
 
-Route-choice contract: show `shortest_time` and `comfort_balance` only when their independently optimized path differs. The comfort choice uses an inspectable time-and-score tradeoff and must never be labeled “calmest” or “best.” If both profiles choose the same path, show one combined choice. See [routing architecture](docs/routing-architecture.md).
+Route-choice contract: show `shortest_time` and `comfort_balance` only when their independently optimized path differs. The comfort choice uses an inspectable time-and-score tradeoff and must never be labeled “calmest” or “best.” If both profiles choose the same path, show one combined choice. See [routing architecture](../routing-architecture.md).
 
 ## Functional requirement
 

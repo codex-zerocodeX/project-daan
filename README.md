@@ -27,14 +27,16 @@ The mobile app uses native MapLibre and requires an Expo development build; Expo
 
 | Surface | Current state | Boundary |
 | --- | --- | --- |
-| `apps/web` | Route search, two deterministic route profiles, MapLibre canvas, score and evidence receipt, route-bound community interaction | Local Katipunan graph, disclosed fixtures, and browser-local writes |
+| `apps/web` | Route search, two deterministic route profiles, MapLibre canvas, restorable URL receipt, score and evidence receipt, route-bound community interaction | Local Katipunan graph, disclosed fixtures, and browser-local writes |
 | `apps/mobile` | Expo route discovery, route detail, community, profile, Supabase auth, and native/web map surface | Route and review cards still use mock data; shared service behavior remains under development |
-| `apps/api` | Hono health, thread, route-plan, and compose seams | Requires Supabase for stored community data; route planning is not yet the web receipt engine |
+| `apps/api` | Hono health, thread, route-plan, compose, and optional AI explanation seams | Requires Supabase for stored community data and server-only OpenAI configuration for explanation; route planning is not yet the web receipt engine |
 | `packages/shared` | Zod request, response, and row contracts | Covers the API/mobile path, not the web fixture domain |
 | `supabase/migrations` | PostGIS, auth/profile, thread/comment/vote, route/node, and karma schema | Apply in numeric order to the team Supabase project |
 | `routing-engine` | Pure in-memory transport-routing prototype | Not wired into an application workspace or CI yet |
 
 The current web build does **not** claim live citywide routing, live weather, scientific calibration, server-synced community evidence, rewards, or institutional adoption. The fixture boundary is visible in the interface and documented in the [event product record](docs/hackathon/README.md).
+
+Web receipt links preserve origin, destination, departure time, route, selected evidence, and opened community context. Editing either endpoint immediately invalidates the visible receipt until both places are selected and the route is checked again. A render failure falls back without deleting the receipt URL.
 
 ## Configuration
 
@@ -42,6 +44,8 @@ The current web build does **not** claim live citywide routing, live weather, sc
 | --- | --- | --- |
 | `SUPABASE_URL` | API | Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | API | Server-only service credential; never expose it to a client |
+| `OPENAI_API_KEY` | API | Optional server-only credential for `POST /v1/routes/explain`; never expose it to a client |
+| `OPENAI_MODEL` | API | Optional explanation model; defaults to the value documented in `apps/api/.env.example` |
 | `PORT` | API | Optional API port; defaults to `8787` |
 | `EXPO_PUBLIC_SUPABASE_URL` | Mobile | Public Supabase project URL |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Mobile | Public anonymous client key |
@@ -60,6 +64,7 @@ The web workspace reads no environment variable.
 | `npm run typecheck` | Type-check every workspace |
 | `npm run lint` | Lint every workspace |
 | `npm run test` | Run every workspace test suite |
+| `node script/route-flow.mjs` | Run the dependency-free Chrome route flow at 390 × 844 after `npm run build` |
 
 ## Repository map
 
@@ -71,6 +76,7 @@ The web workspace reads no environment variable.
 | `packages/shared` | `@daan/shared` API and row contract |
 | `supabase/migrations` | Append-only PostgreSQL/PostGIS schema history |
 | `routing-engine` | Unwired pure routing prototype |
+| `script` | Repeatable local quality and browser-flow checks |
 | `docs` | Setup, architecture, brand, convention, and historical event record |
 
 ## Reference
@@ -82,3 +88,5 @@ The web workspace reads no environment variable.
 - [Routing decision](docs/routing-architecture.md)
 - [Visual QA record](docs/brand-qa.md)
 - [Hackathon product record](docs/hackathon/README.md)
+- [Contribution guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)

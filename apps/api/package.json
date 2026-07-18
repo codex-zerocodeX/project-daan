@@ -12,10 +12,11 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.0",
     "@daan/shared": "*",
+    "@hono/node-server": "^1.13.0",
     "@supabase/supabase-js": "^2.47.0",
     "hono": "^4.6.0",
+    "openai": "^6.48.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {

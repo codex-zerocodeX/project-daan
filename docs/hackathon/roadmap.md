@@ -52,11 +52,11 @@ The runnable checkout does not have live geocoding/routing/weather, a shared Sup
 
 Migration note: the UI prompt's map component targets MapLibre GL JS. Leaflet references are superseded. MapLibre gives the RN path for free; Leaflet does not.
 
-Routing decision: the current fixture uses heap-backed Dijkstra with separate `shortest_time` and `comfort_balance` profiles. MapLibre only renders the resulting GeoJSON. The production recommendation is Valhalla behind the stateless route API, gated by a Metro Manila extract benchmark; see [routing architecture](docs/routing-architecture.md).
+Routing decision: the current fixture uses heap-backed Dijkstra with separate `shortest_time` and `comfort_balance` profiles. MapLibre only renders the resulting GeoJSON. The production recommendation is Valhalla behind the stateless route API, gated by a Metro Manila extract benchmark; see [routing architecture](../routing-architecture.md).
 
 ## Sequencing
 
-- **Event-day outcome** — Fixture-bounded M1 route/profile/receipt loop and local M2 community interaction implemented. Live adapters, shared report sync, GPT explanation, Miles, and M5 did not ship and remain outside the judging claim.
+- **Event-day outcome** — Fixture-bounded M1 route/profile/receipt loop and local M2 community interaction implemented. The web receipt restores origin, destination, departure time, selected evidence, and opened community context from its URL; stale draft input is invalidated, render failure has a bounded fallback, and the phone route flow is repeatable through `script/route-flow.mjs`. Supabase-backed API seams and an optional server-side AI explanation endpoint exist in the monorepo but are not integrated into the judging web experience. Live adapters, shared report sync, Miles, and M5 remain outside the judging claim.
 - **Weeks 1–4** — Harden M1 (geocoding, any-route, Mapillary evidence, route alternatives). Extract `daan-core`. Write the M2 abuse review (fake report, location spoof, brigading) before promoting reports beyond demo scale. Gate: 50 organic route checks by strangers.
 - **Months 2–3** — M2/M3 to real community scale behind the abuse review. Expo RN shell begins, reusing `daan-core` + MapLibre style. The flywheel: receipts attract users, users contribute evidence, evidence improves receipts.
 - **Months 6+** — M4 partner rewards / M5 only on signed partner / lawful feed. LGU dashboard (worst school routes, before/after sidewalk receipts) as the institutional surface.

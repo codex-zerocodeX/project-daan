@@ -45,6 +45,7 @@ function App() {
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [routeNotice, setRouteNotice] = useState("");
+  const [receiptRevision, setReceiptRevision] = useState(0);
   const [isDetailOpen, setIsDetailOpen] = useState(() => window.matchMedia("(min-width: 1024px)").matches);
   const [isThreadOpen, setIsThreadOpen] = useState(
     () =>
@@ -152,6 +153,7 @@ function App() {
         destinationNodeId: nextDestination?.nodeId ?? "",
       });
       setDepartureTime(receipt.departureTime);
+      setReceiptRevision((revision) => revision + 1);
       setSelectedNodeId(null);
       setSelectedSegmentId(null);
       setFormError(null);
@@ -282,7 +284,7 @@ function App() {
 
         <section className="daan-control daan-route-sheet" aria-label="Plan and compare a route">
           <RouteSearch
-            key={`${routeQuery.originNodeId}:${routeQuery.destinationNodeId}`}
+            key={`${routeQuery.originNodeId}:${routeQuery.destinationNodeId}:${receiptRevision}`}
             node={node}
             origin={origin}
             destination={destination}
@@ -312,7 +314,7 @@ function App() {
           <RouteAlternativePanel alternative={isRouteCurrent ? routePlan.alternative : []} selectedRouteId={activeAlternative?.routeId ?? null} onSelect={selectAlternative} />
 
           {!isRouteCurrent ? (
-            <section ref={resultSummaryRef} tabIndex={-1} className="border-l-4 border-brand-gold bg-brand-gold/10 p-4" aria-live="polite">
+            <section ref={resultSummaryRef} tabIndex={-1} className="route-focus-target border-l-4 border-brand-gold bg-brand-gold/10 p-4" aria-live="polite">
               <h2 className="text-lg font-extrabold">Route needs an update</h2>
               <p className="mt-1 text-sm font-medium text-ink-soft">Choose both places from the suggestions, then check the route to refresh this receipt.</p>
             </section>
@@ -321,7 +323,7 @@ function App() {
               id="route-result-summary"
               ref={resultSummaryRef}
               tabIndex={-1}
-              className="route-result-summary scroll-mt-4 border-t border-line"
+              className="route-focus-target route-result-summary scroll-mt-4 border-t border-line"
               aria-labelledby="route-result-heading"
               aria-live="polite"
             >
@@ -378,7 +380,7 @@ function App() {
               </div>
             </section>
           ) : (
-            <section ref={resultSummaryRef} tabIndex={-1} className="border-l-4 border-avoid bg-avoid/5 p-4" aria-live="polite">
+            <section ref={resultSummaryRef} tabIndex={-1} className="route-focus-target border-l-4 border-avoid bg-avoid/5 p-4" aria-live="polite">
               <TriangleAlert className="text-avoid" aria-hidden="true" />
               <h2 className="mt-2 text-lg font-extrabold">Route unavailable</h2>
               <p className="mt-1 text-sm font-medium text-ink-soft">{routeError ?? "Choose two connected places to calculate a route."}</p>
@@ -413,16 +415,7 @@ function App() {
               />
               <ShareBar
                 route={activeAlternative.route}
-                receiptKey={JSON.stringify([
-                  activeAlternative.routeId,
-                  departureTime,
-                  routeQuery.originNodeId,
-                  routeQuery.destinationNodeId,
-                  urlState.segmentId,
-                  urlState.threadId,
-                  urlState.reportId,
-                  urlState.replyId,
-                ])}
+                receiptKey={window.location.href}
               />
             </div>
           </details>

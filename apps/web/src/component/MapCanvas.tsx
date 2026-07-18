@@ -144,9 +144,11 @@ export function MapCanvas({ alternative, selectedNodeId, onNodeSelect }: MapCanv
           </div>
         </div>
       )}
-      <div className="daan-map-hint pointer-events-none absolute rounded-chip bg-surface/95 px-3 py-1.5 text-[11px] font-extrabold shadow-soft">
-        Tap a checkpoint for local context
-      </div>
+      {alternative && (
+        <div className="daan-map-hint pointer-events-none absolute rounded-chip bg-surface/95 px-3 py-1.5 text-[11px] font-extrabold shadow-soft">
+          Tap a checkpoint for local context
+        </div>
+      )}
     </section>
   );
 }

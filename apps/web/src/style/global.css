@@ -67,6 +67,11 @@ summary:focus-visible {
   outline-offset: 3px;
 }
 
+.route-focus-target:focus-visible {
+  outline: 3px solid var(--color-brand-teal);
+  outline-offset: 4px;
+}
+
 ::selection {
   color: var(--color-surface);
   background: var(--color-brand-teal);
