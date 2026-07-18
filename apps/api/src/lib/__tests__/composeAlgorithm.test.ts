@@ -42,6 +42,26 @@ describe("composeRoute", () => {
     expect(result!.coordinates.at(-1)).toEqual([destination.lng, destination.lat]);
   });
 
+  it("collapses two answers meeting at the same stop into one transfer step", () => {
+    const transfer = { lat: 14.603, lng: 121.003 };
+    const nodes: ComposeNode[] = [
+      { id: n(1), route_id: "A", thread_id: "TA", seq: 0, lat: 14.6005, lng: 121.0005, label: "Start" },
+      { id: n(2), route_id: "A", thread_id: "TA", seq: 1, ...transfer, label: "Board southbound (stale)" },
+      // answer B starts at the exact same stop -> must not appear twice
+      { id: n(3), route_id: "B", thread_id: "TB", seq: 0, ...transfer, label: "Board northbound" },
+      { id: n(4), route_id: "B", thread_id: "TB", seq: 1, lat: 14.606, lng: 121.006, label: "Arrive" },
+    ];
+
+    const result = composeRoute(nodes, origin, destination);
+
+    expect(result).not.toBeNull();
+    // the stale arriving instruction is dropped, the onward one kept
+    expect(result!.steps.map((s) => s.node_id)).toEqual([n(1), n(3), n(4)]);
+    expect(result!.steps.map((s) => s.label)).not.toContain("Board southbound (stale)");
+    // both threads are still credited
+    expect(result!.thread_ids).toEqual(["TA", "TB"]);
+  });
+
   it("returns null when the two clusters are too far apart to stitch", () => {
     const nodes: ComposeNode[] = [
       { id: n(1), route_id: "A", thread_id: "TA", seq: 0, lat: 14.6005, lng: 121.0005, label: "Start" },
