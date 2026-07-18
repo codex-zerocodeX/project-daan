@@ -1,0 +1,9 @@
+# Default review owner until workspace-specific maintainers are assigned.
+* @codex-zerocodeX
+
+/apps/api/ @codex-zerocodeX
+/apps/mobile/ @codex-zerocodeX
+/apps/web/ @codex-zerocodeX
+/packages/shared/ @codex-zerocodeX
+/supabase/ @codex-zerocodeX
+/.github/ @codex-zerocodeX

@@ -27,7 +27,7 @@ The mobile app uses native MapLibre and requires an Expo development build; Expo
 
 | Surface | Current state | Boundary |
 | --- | --- | --- |
-| `apps/web` | Route search, two deterministic route profiles, MapLibre canvas, score and evidence receipt, route-bound community interaction | Local Katipunan graph, disclosed fixtures, and browser-local writes |
+| `apps/web` | Route search, two deterministic route profiles, MapLibre canvas, restorable URL receipt, score and evidence receipt, route-bound community interaction | Local Katipunan graph, disclosed fixtures, and browser-local writes |
 | `apps/mobile` | Expo route discovery, route detail, community, profile, Supabase auth, and native/web map surface | Route and review cards still use mock data; shared service behavior remains under development |
 | `apps/api` | Hono health, thread, route-plan, and compose seams | Requires Supabase for stored community data; route planning is not yet the web receipt engine |
 | `packages/shared` | Zod request, response, and row contracts | Covers the API/mobile path, not the web fixture domain |
@@ -35,6 +35,8 @@ The mobile app uses native MapLibre and requires an Expo development build; Expo
 | `routing-engine` | Pure in-memory transport-routing prototype | Not wired into an application workspace or CI yet |
 
 The current web build does **not** claim live citywide routing, live weather, scientific calibration, server-synced community evidence, rewards, or institutional adoption. The fixture boundary is visible in the interface and documented in the [event product record](docs/hackathon/README.md).
+
+Web receipt links preserve origin, destination, departure time, route, and opened evidence/community context. Editing either endpoint immediately invalidates the visible receipt until both places are selected and the route is checked again.
 
 ## Configuration
 
