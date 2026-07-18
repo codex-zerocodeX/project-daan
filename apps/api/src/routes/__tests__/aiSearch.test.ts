@@ -73,6 +73,44 @@ describe("POST /v1/ai/search", () => {
     expect(body.data.thread_ids).toEqual([]);
   });
 
+  it("passes prior turns to the model as context", async () => {
+    let seen = "";
+    const app = createApp({
+      supabase: fakeSupabase({ data: [sampleThread], error: null }),
+      chat: async (prompt) => {
+        seen = prompt;
+        return JSON.stringify({ answer: "At night it is quieter.", thread_ids: [] });
+      },
+    });
+
+    const res = await app.request("/v1/ai/search", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        query: "what about at night?",
+        history: [{ question: "how do I get to Ayala?", answer: "Take the busway." }],
+      }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(seen).toContain("how do I get to Ayala?");
+    expect(seen).toContain("Take the busway.");
+  });
+
+  it("works with no history field at all", async () => {
+    const app = createApp({
+      supabase: fakeSupabase({ data: [sampleThread], error: null }),
+      chat: replyWith(JSON.stringify({ answer: "Use the busway.", thread_ids: [] })),
+    });
+
+    const res = await app.request("/v1/ai/search", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ query: "fastest way along EDSA" }),
+    });
+    expect(res.status).toBe(200);
+  });
+
   it("rejects a query that is too short", async () => {
     const app = createApp({
       supabase: fakeSupabase({ data: [sampleThread], error: null }),

@@ -127,8 +127,16 @@ export const ComposeResponseSchema = z.object({
 });
 
 // AI thread search: a natural-language question answered from existing threads.
+// Prior turns, oldest first. Capped because the whole thread corpus already
+// shares the prompt - history is context for pronouns, not a transcript.
+export const AiSearchTurnSchema = z.object({
+  question: z.string().max(200),
+  answer: z.string().max(1000),
+});
+
 export const AiSearchRequestSchema = z.object({
   query: z.string().min(3).max(200),
+  history: z.array(AiSearchTurnSchema).max(3).default([]),
 });
 
 export const AiSearchResponseSchema = z.object({
@@ -151,5 +159,6 @@ export type RoutePlanResponse = z.infer<typeof RoutePlanResponseSchema>;
 export type ComposeRequest = z.infer<typeof ComposeRequestSchema>;
 export type ComposeStep = z.infer<typeof ComposeStepSchema>;
 export type ComposeResponse = z.infer<typeof ComposeResponseSchema>;
+export type AiSearchTurn = z.infer<typeof AiSearchTurnSchema>;
 export type AiSearchRequest = z.infer<typeof AiSearchRequestSchema>;
 export type AiSearchResponse = z.infer<typeof AiSearchResponseSchema>;

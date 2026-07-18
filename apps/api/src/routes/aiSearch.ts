@@ -18,8 +18,13 @@ const CANDIDATE_LIMIT = 50;
 const BODY_CHARS = 300;
 
 type Candidate = { id: string; title: string; body: string; category: string };
+type Turn = { question: string; answer: string };
 
-function buildPrompt(query: string, candidates: Candidate[]): string {
+function buildPrompt(
+  query: string,
+  candidates: Candidate[],
+  history: Turn[],
+): string {
   const threads = candidates
     .map((t) => `[${t.id}] (${t.category}) ${t.title}\n${t.body.slice(0, BODY_CHARS)}`)
     .join("\n\n");
@@ -38,6 +43,15 @@ function buildPrompt(query: string, candidates: Candidate[]): string {
     "THREADS:",
     threads,
     "",
+    // Earlier turns resolve pronouns ("what about at night?"). They are context
+    // for reading the question, never a source of facts.
+    ...(history.length > 0
+      ? [
+          "EARLIER IN THIS CONVERSATION (context only - never cite it as a source):",
+          ...history.map((t) => `Q: ${t.question}\nA: ${t.answer}`),
+          "",
+        ]
+      : []),
     `QUESTION: ${query}`,
     "",
     'Reply with JSON only: {"answer": "<2-3 sentences>", "thread_ids": ["<id you used>"]}',
@@ -90,7 +104,9 @@ export function aiSearchRoute({ supabase, chat }: AppDeps) {
 
     let rawReply: string;
     try {
-      rawReply = await chat(buildPrompt(parsed.data.query, candidates));
+      rawReply = await chat(
+        buildPrompt(parsed.data.query, candidates, parsed.data.history),
+      );
     } catch (err) {
       console.error("openai call failed:", (err as Error).message);
       return c.json({ error: "AI search unavailable" }, 503);

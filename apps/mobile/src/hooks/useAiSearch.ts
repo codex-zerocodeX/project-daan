@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import type { AiSearchResponse } from "@komyut/shared";
+import type { AiSearchResponse, AiSearchTurn } from "@komyut/shared";
 import { apiPost } from "../lib/api";
+
+export type AiSearchInput = { query: string; history: AiSearchTurn[] };
 
 /**
  * Ask the AI a question about existing threads. A mutation, not a query: it
@@ -8,7 +10,7 @@ import { apiPost } from "../lib/api";
  */
 export function useAiSearch() {
   return useMutation({
-    mutationFn: (query: string) =>
-      apiPost<AiSearchResponse>("/v1/ai/search", { query }),
+    mutationFn: ({ query, history }: AiSearchInput) =>
+      apiPost<AiSearchResponse>("/v1/ai/search", { query, history }),
   });
 }

@@ -18,8 +18,10 @@ import { useAiSearch } from "../src/hooks/useAiSearch";
 import { useThreads } from "../src/hooks/useThreads";
 import { color, font, radius, shadow, space, text } from "../src/lib/theme";
 
-/** One exchange. Each question is answered independently - there is no history. */
 type Turn = { question: string; answer: string; sourceIds: string[] };
+
+/** How many prior exchanges to send as context. Matches the server's cap. */
+const HISTORY_TURNS = 3;
 
 const SUGGESTIONS = [
   "How do I get to Ayala on a budget?",
@@ -43,13 +45,22 @@ export default function AiSearchScreen() {
     const q = question.trim();
     if (q.length < 3 || ai.isPending) return;
     setDraft("");
-    ai.mutate(q, {
-      onSuccess: (res) =>
-        setTurns((prev) => [
-          ...prev,
-          { question: q, answer: res.answer, sourceIds: res.thread_ids },
-        ]),
-    });
+    // Send the last few exchanges so follow-ups like "what about at night?"
+    // resolve against what was just asked.
+    const history = turns
+      .slice(-HISTORY_TURNS)
+      .map(({ question, answer }) => ({ question, answer }));
+
+    ai.mutate(
+      { query: q, history },
+      {
+        onSuccess: (res) =>
+          setTurns((prev) => [
+            ...prev,
+            { question: q, answer: res.answer, sourceIds: res.thread_ids },
+          ]),
+      },
+    );
   }
 
   const empty = turns.length === 0 && !ai.isPending && !ai.error;
@@ -162,6 +173,15 @@ export default function AiSearchScreen() {
             value={draft}
             onChangeText={setDraft}
             onSubmitEditing={() => send(draft)}
+            // A multiline input swallows Enter, so on web submit it explicitly
+            // and leave shift+Enter for a newline.
+            onKeyPress={(e) => {
+              const ev = e.nativeEvent as { key: string; shiftKey?: boolean };
+              if (Platform.OS === "web" && ev.key === "Enter" && !ev.shiftKey) {
+                e.preventDefault();
+                send(draft);
+              }
+            }}
             placeholder="Ask a question…"
             placeholderTextColor={color.textMuted}
             returnKeyType="send"
