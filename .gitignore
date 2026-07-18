@@ -8,3 +8,4 @@ dist-check/
 *.log
 .DS_Store
 .superpowers/
+/.claude/
