@@ -1,0 +1,252 @@
+BWOpenAI Global Build Week
+
+Home + AgendaGetting ThereJudging Criteria
+
+[Earth, the moon, and a sunrise against a star-filled sky]
+
+OpenAI Community Buildathon Manila
+
+A full-day community Buildathon for learning new Codex workflows, meeting serious builders, and shipping a working project from a clean start.
+
+See the agenda ↓Plan your arrival ↗
+
+DateSaturday, July 18
+
+Time8:00 AM–5:00 PM
+
+VenueLeong Hall, Ateneo
+
+Status At capacity
+
+250builders
+
+3speaker-builders
+
+5final demos
+
+$8.5kCodex prize credits
+
+01 / Agenda
+
+One day. Built to ship.
+
+The day moves from practical talks to focused building, then finishes with live demos. The hard submission cutoff is 3:00 PM.
+
+Learn Build Show
+
+8:00– 9:00
+
+Registration & team formation
+
+Check in, meet other builders, form a team, claim credits, and get your laptop ready.
+
+↘
+
+9:00– 9:25
+
+Welcome, Codex briefing & kickoff
+
+Welcome remarks, the Codex briefing, how the day works, and the official Buildathon kickoff.
+
+↘
+
+9:25– 9:45
+
+Speaker: Lesmon
+
+Lesmon Saluta shares a practical builder workflow and lessons teams can use during the Buildathon.
+
+↘
+
+9:45– 12:00
+
+Build Sprint 1
+
+Start the project and turn the idea into a working first version.
+
+↘
+
+12:00– 1:00
+
+Lunch
+
+Eat, recharge, meet people outside your team, and get an informal mentor check-in.
+
+↘
+
+1:00– 1:20
+
+Speaker: Adrian
+
+Adrian Angelo Abelarde shares a practical builder workflow and lessons teams can use during the Buildathon.
+
+↘
+
+1:20– 1:40
+
+Speaker: Bryl
+
+Bryl Lim shares a practical builder workflow and lessons teams can use during the Buildathon.
+
+↘
+
+1:40– 3:00
+
+Build Sprint 2 & mentor support
+
+Finish the core experience, test it, and submit by the firm 3:00 PM deadline.
+
+↘
+
+3:00Hard cutoff
+
+SUBMISSIONS DUE
+
+!
+
+3:00– 3:45
+
+Snacks & judges' deliberation
+
+Teams take a snack break while judges review the submissions and select the finalist demos.
+
+↘
+
+3:45– 4:15
+
+Demos & judging
+
+Finalists show what works, who it helps, and how Codex changed the build.
+
+↘
+
+4:15– 4:30
+
+Awards
+
+Winner announcements, prizes, and acknowledgements.
+
+↘
+
+4:30– 5:00
+
+Closing & community time
+
+Closing remarks, group photo, introductions, and time to exchange details.
+
+↘
+
+02 / Speakers
+
+Real builders. Real workflows.
+
+Short, practical showcases on the latest OpenAI developer updates, what AI handled, what the human checked, and what you can copy during the Buildathon.
+
+01
+
+LS
+
+Builder showcase
+
+Lesmon Saluta
+
+Skills, topic details, and demo links coming soon.
+
+02
+
+AA
+
+Builder showcase
+
+Adrian Angelo Abelarde
+
+Skills, topic details, and demo links coming soon.
+
+03
+
+BL
+
+Builder showcase
+
+Bryl Lim
+
+Skills, topic details, and demo links coming soon.
+
+03 / Buildathon
+
+Start clean. Make it work.
+
+Bring an idea or find one in the room. Build the project at the event, use Codex meaningfully, and show the working core—not a promise of what it might become.
+
+Eligibility ruleAll project work starts Saturday.
+
+Read the judging criteria →
+
+Five finalists demo live. Judges score Codex Craft, Product Judgment, and Problem & Insight.
+
+Credits
+
+Check in. Check your inbox.
+
+Use the same email you registered with. A volunteer will send your individual API and Codex credit links after confirming your attendance.
+
+- Claim both links while you are at the help desk.
+- Never forward or publicly share a claim link.
+- Ask a volunteer before leaving if either link fails.
+
+Submissions
+
+One team. One clear record.
+
+One teammate submits your project, working links, team details, the problem you chose, and evidence of how Codex contributed.
+
+Final cutoff3:00 PMThe submission plugin and instructions will be shared onsite.
+
+Meet people
+
+Arrive curious. Leave connected.
+
+Come early if you need teammates or want to meet builders outside your usual school, company, or discipline.
+
+1.  Someone building for a user you care about.
+2.  Someone with a skill your team needs.
+3.  Someone outside your normal circle.
+
+04 / Before you go
+
+The useful small print.
+
+Everything worth knowing before you enter Leong Hall.
+
+Can I bring something I already built?+
+
+No. Ideas and teams can exist beforehand, but all code, prototypes, and design work for the local Buildathon must begin at the event.
+
+Do I need a team?+
+
+No. You can arrive solo. We will help people looking for teammates meet one another before the first build block.
+
+What should I bring?+
+
+Bring a laptop, charger, and the accounts or tools you normally use to build. A laptop is strongly recommended for the room setup.
+
+How do submissions work?+
+
+One person submits for each team. The submission asks for your project, team, working links, the problem you are solving, and evidence of how Codex helped. Final submissions close at 3:00 PM.
+
+How do I get event credits?+
+
+Check in using the same email you registered with. A volunteer will send your individual API and Codex credit links to that address. Do not forward those links.
+
+Can I walk in without a confirmed registration?+
+
+No. Capacity, food, and credit allocation are based on the confirmed attendee list.
+
+BW
+
+OpenAI Global Build Week
+Community Buildathon · Manila
+
+Saturday, July 18 · 8:00 AM–5:00 PMLeong Hall · Ateneo de Manila University
+
+Open directions →

@@ -1,0 +1,186 @@
+BWOpenAI Global Build Week
+
+Home + AgendaGetting ThereJudging Criteria
+
+Judging criteria · Five finalist demos
+
+How the finals are judged.
+
+All five finalist projects already work. The final score is about how well each team used Codex, chose what to build, and understood the problem.
+
+Maximum score per judge303 equally weighted criteria
+
+3equally weighted criteria
+
+30maximum points per judge
+
+10·8·7·5the only score choices
+
+4independent judges
+
+Pass / fail · Zero points
+
+Eligibility gates.
+
+These determine who reaches the final round. Once a project passes, judges begin from the same starting line. Functionality is a gate—not a scored bonus.
+
+01
+
+Clean start
+
+Ideas and teams may exist beforehand. Code, prototypes, design artifacts, and project work begin on Saturday.
+
+02
+
+Runs live
+
+The project itself runs during review. A video, slide deck, or mockup cannot stand in for the working build.
+
+03
+
+Claims have evidence
+
+If a feature or Codex contribution cannot be shown when asked, judges score as though that claim was not made.
+
+What judges score
+
+Three questions. Thirty points.
+
+Each criterion is worth the same amount. Breadth, polish, and ambition matter only when they produce a better, more thoughtful build.
+
+01
+
+Codex Craft
+
+Did the team use Codex deeply, appropriately, and demonstrably, not merely as one-shot code generation?
+
+Look forSpecific artifacts, sessions, decisions, steering, recovery from failure, and visible payoff. Breadth counts only when it served the work.
+
+10
+
+Exceptional
+
+Codex materially shaped several meaningful parts of the build. The team shows strong evidence, explains how it steered the work, and chose capabilities because they fit the task.
+
+8
+
+Above the bar
+
+Codex carried substantial work across the build, including purposeful use beyond routine generation. Concrete evidence shows a clear payoff.
+
+7
+
+Solid finalist
+
+Codex contributed meaningfully, but mostly through routine or one-shot use. Evidence is limited or the team’s steering is difficult to see.
+
+5
+
+Not demonstrated
+
+Codex use is thin, incidental, or only asserted. The team cannot point to a specific contribution and its visible result.
+
+Examples: planning, research, coding, debugging, testing, review, terminal work, parallel agents, and visual or multimodal input.
+
+02
+
+Product Judgment
+
+Did the team choose the right scope and turn it into one coherent, complete core experience?
+
+Look forA clear job, deliberate priorities, sensible boundaries, and cuts that protect the core experience instead of scattering effort.
+
+10
+
+Exceptional
+
+Exceptionally focused and coherent. The team made excellent cuts and completed the experience that matters most.
+
+8
+
+Above the bar
+
+A complete, well-chosen core experience with sensible boundaries. Secondary work supports rather than distracts from it.
+
+7
+
+Solid finalist
+
+A usable core exists, but scope or priorities feel somewhat scattered. Several choices compete for attention.
+
+5
+
+Weak
+
+The pieces exist, but they do not yet form a coherent product experience. The team built around the core instead of completing it.
+
+03
+
+Problem & Insight
+
+Is the project grounded in a specific problem and audience, with a thoughtful or non-obvious approach?
+
+Look forA named audience, evidence or firsthand knowledge, a solution aimed at the cause of the pain, and choices that are right, not merely different.
+
+10
+
+Exceptional
+
+A specific audience and pain are backed by evidence or firsthand knowledge. The solution addresses the cause, with a non-obvious choice the team can defend.
+
+8
+
+Above the bar
+
+A real problem, plausible audience, and solution that clearly addresses it. The project’s distinct angle survives questioning.
+
+7
+
+Solid finalist
+
+The problem is broad or generic. The solution is reasonable but interchangeable, and answers about the user stay abstract.
+
+5
+
+Not demonstrated
+
+The problem is asserted rather than grounded. It feels like technology looking for a use, with no clear answer to who needs it and why.
+
+The scale
+
+Seven is honorable.
+
+A 7 means solid finalist work. An 8 means clearly above the finalist bar. A 10 is exceptional and should be rare. A 5 means the criterion was weak or not demonstrated.
+
+1.  01
+    Watch and ask.
+    Every team gets the same core question: “Show us one thing Codex did today that materially improved this project.”
+2.  02
+    Score provisionally.
+    Each judge records 10, 8, 7, or 5 for all three criteria immediately after the pitch.
+3.  03
+    Calibrate once.
+    After all five teams, judges may revise their own scores against the written anchors. They do not negotiate a shared score.
+
+Score the work and the judgment behind it.Do not reward presentation charisma, polished slides, team size, prior experience, huge scope, feature count, or trendy technology by itself.
+
+Tie-break
+
+Codex Craft first.
+
+Higher combined Codex Craft score, then more 10s across all judge scores, then more 8s. If still tied, use the head judge’s ranking recorded before totals are revealed.
+
+Remember
+
+Proof beats claims.
+
+If a feature or Codex contribution cannot be shown when asked, judges score as though that claim was not made.
+
+BW
+
+OpenAI Global Build Week
+Community Buildathon · Manila
+
+Saturday, July 18 · 8:00 AM–5:00 PMLeong Hall · Ateneo de Manila University
+
+Open directions →

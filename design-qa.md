@@ -1,0 +1,82 @@
+# Project Daan — Alitaptap visual QA
+
+## Evidence
+
+- Source visual truth: `/var/folders/dv/ktxbpy5d47n6p1bpxs9qc9_r0000gn/T/codex-clipboard-4a97db71-039f-4c44-963e-ff4e8d033f67.png`
+- Desktop implementation: `/tmp/project-daan-alitaptap-desktop-final.png`
+- Mobile implementation: `/tmp/project-daan-alitaptap-mobile-final.png`
+- Full-view comparison: `/tmp/project-daan-design-compare-final.png`
+- Focused upper-screen comparison: `/tmp/project-daan-design-focus-final.png`
+- Desktop viewport: `1440 × 1024`
+- Mobile viewport: `375 × 812`
+- State: fixture route from Ateneo Gate 3 to Katipunan LRT-2 Station, 2 PM, shortest route selected, empty place-detail state.
+
+## Full-view comparison
+
+The final desktop render preserves the reference composition: 78px brand header, narrow disclosed-fixture banner, left decision column, dominant right map, score and coverage stacked below route choice, and the navy Alitaptap place-detail panel directly below the map. The map frame, search controls, route cards, score card, and evidence bar align at the same visual scale and density.
+
+The implementation intentionally keeps the product wordmark as **Daan** while using **Alitaptap** as the firefly mascot. The source mock displayed “Alitaptap” as the wordmark; preserving the established product name avoids a product rename while retaining the selected logo art and brand language.
+
+## Focused comparison
+
+The upper-screen comparison was required because the firefly asset, header crop, input spacing, route-card weight, map chrome, and empty-state banner are too small to judge reliably in the full-width comparison. The final focused comparison confirms:
+
+- the mascot is a real raster asset with a navy-backed crop, not CSS or SVG art;
+- the header mascot, wordmark, supporting line, and Metro Manila pill retain the source hierarchy;
+- form control height, card radius, selected route surface, and score typography closely track the source;
+- the empty-state panel uses a separate real raster trail asset and keeps HTML copy readable above it;
+- semantic route colors and the explicit unknown label remain independent from the brand palette.
+
+## Required fidelity surface
+
+### Fonts and typography
+
+The implementation uses the local humanist stack `Avenir Next, Avenir, Inter, system-ui` with compact extrabold headings, readable 14–15px body copy, uppercase receipt labels, and monospaced score metadata. Weight, line height, letter spacing, and wrapping match the reference closely. Mobile copy truncation is limited to the nonessential module subtitle; primary controls and labels remain readable.
+
+### Spacing and layout rhythm
+
+Desktop column proportion, 16px grid gap, 14px card radius, header height, map height, panel padding, and control rhythm match the reference. Mobile collapses to one column without horizontal overflow (`scrollWidth = clientWidth = 375`). The primary route action and both alternatives remain visible and usable at 375px.
+
+### Colors and visual tokens
+
+Warm paper, raised ivory, deep navy, rain teal, and calamansi gold are defined as shared tokens. The teal-to-gold coverage treatment is a raster spectrum asset rather than a CSS gradient. Pleasant, manageable, harsh, avoid, and unknown retain separate semantic tokens and text labels. Text contrast remains high on both paper and navy surfaces.
+
+### Image quality and asset fidelity
+
+`public/asset/alitaptap-mark.webp` supplies the header/fav icon artwork and `public/asset/alitaptap-trail.webp` supplies the empty-state illustration. Both are high-resolution generated raster assets with crisp small-size rendering and no transparency fringe. The firefly remains legible at mobile header size. No placeholder, handcrafted SVG, CSS art, or emoji substitutes are present.
+
+### Copy and content
+
+All operational copy remains truthful to the existing fixture-backed product. “Unknown is not scored and never hidden,” the fallback disclosure, verdict description, route evidence, and place-detail copy remain intact. No live or unbuilt feature was introduced.
+
+### Icon and interaction
+
+Existing Lucide controls remain aligned and semantically labeled. The calmer alternative uses a leaf rather than an AI-like sparkle. Browser interaction checks confirmed route submission, alternative selection (`40/100`, Harsh), mapped-place selection, score/coverage continuity, and URL state updates. Browser console errors: none. The external OpenFreeMap style continues to emit its pre-existing missing-sprite warnings; this brand change introduced no new warning or error.
+
+## Comparison history
+
+### Iteration 1
+
+- Finding [P2 — image quality]: the first header render cropped the generated square mascot too aggressively inside the wide tile.
+- Fix: changed the image fit treatment and tightened the raster crop around the firefly.
+- Post-fix evidence: `/tmp/project-daan-alitaptap-desktop-final.png` shows the full body, wings, antennae, and glow within the header tile.
+
+- Finding [P2 — mobile readability]: dotted trail light passed behind empty-state copy at 375px.
+- Fix: added a same-navy text backing that masks the decorative points without introducing a visible nested card.
+- Post-fix evidence: the mobile map-state capture preserves readable white copy while the trail continues outside the text area.
+
+### Final pass
+
+No actionable P0, P1, or P2 fidelity issue remains. The retained **Daan** wordmark is an intentional product-continuity decision. A paper-background firefly beside the coverage bar from the generated mock is omitted as nonessential P3 decoration because the mascot already appears in the persistent header and functional empty state.
+
+## Implementation checklist
+
+- [x] Real Alitaptap raster logo and trail assets installed.
+- [x] Shared brand and semantic tokens applied.
+- [x] Desktop source composition matched.
+- [x] Mobile stack verified without horizontal overflow.
+- [x] Route, alternative, place, score, coverage, receipt, and URL behavior preserved.
+- [x] Console error check completed.
+- [x] Full and focused source/implementation comparisons completed.
+
+final result: passed

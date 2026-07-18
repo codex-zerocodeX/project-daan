@@ -39,8 +39,12 @@ Source: [OpenAI Build Week](https://openai.com/build-week/) and [Devpost rule](h
 ## Local rule confirmed (official microsite, July 18)
 
 - All project work starts Saturday: no pre-built project; idea and team may form beforehand, but code and prototype must begin at the event.
-- Judging criterion: working build quality, usefulness, and visible Codex impact.
-- Core functionality must demonstrate working state, not future promise.
+- Four judges score independently; each judge can award at most 30 points.
+- Three equally weighted criteria: **Codex Craft**, **Product Judgment**, and **Problem & Insight**.
+- Each criterion uses only four score choices: **10** (exceptional), **8** (strong), **7** (solid), or **5** (weak/unclear).
+- Eligibility gates before scoring: **Clean Start**, **Runs Live**, and **Claims Have Evidence**. A failed gate makes the entry ineligible.
+- Judges ask: **“Show us one thing Codex did today that materially improved this project.”**
+- Tie-break order: combined Codex Craft score, then number of 10s, then number of 8s, then head-judge ranking.
 - Submission: team lead submits project, working link, team detail, problem statement, and evidence of Codex contribution.
 - Five finalists give a live demo (3:45–4:15 PM block, so roughly 5–6 minutes per team including transition).
 - Solo attendance permitted; organizer facilitates team matching.
@@ -49,9 +53,9 @@ Source: [OpenAI Build Week](https://openai.com/build-week/) and [Devpost rule](h
 ## Local rule unknown
 
 - whether the local prize also requires Devpost;
-- whether the product itself must call GPT-5.6 (the confirmed criterion emphasizes Codex-in-workflow, not a specific model in the product);
+- whether the product itself must call GPT-5.6 (the published rubric scores Codex use in how the team built and judged trade-offs, not a named runtime model requirement);
 - exact per-team live-demo duration;
-- local judge identity;
+- exact public panel announcement, the journalist's name, and the exact AIPO/TBI/TTO representative;
 - venue-network availability.
 
 The on-site-only question is now resolved: the dated new-work boundary is mandatory, not precautionary.
@@ -62,6 +66,19 @@ The on-site-only question is now resolved: the dated new-work boundary is mandat
 - Daniella Guerrero is publicly associated with incubation and commercialization work.
 - AIPO describes its work around ideation, protection, commercialization, sustainability, and societal challenges.
 - Do not imply organizer endorsement or optimize for a biography.
+
+## Panel intelligence
+
+This is useful for communication emphasis, not a substitute for the published rubric.
+
+| Panel lens | State | Practical preparation |
+|---|---|---|
+| Bryl Lim, app builder / AI and full-stack engineer | Onsite team report; public builder role independently verified | Be ready to run the real path, explain the route/profile architecture, name what was cut, and distinguish fixture proof from production infrastructure. |
+| Journalism / fact-checking lens; one reported connection to Legit Ba 'To | Onsite team report; Legit Ba 'To is publicly verifiable, but the judge's name and exact role are not yet independently verified | Lead with provenance, visible unknowns, reported-versus-official labels, and the limits of the score. Do not say the product or any journalist endorsed Daan. |
+| TBI/TTO head | Onsite team report; AIPO's commercialization and Blue Nest incubation function is publicly verifiable, but the exact judge identity is not | State the first adopter, institutional value, procurement/data-right risk, and next validation gate without inventing traction. |
+| David Marquez, Codex Ambassador | Onsite team report; ambassador role independently verified | Keep one concrete Codex improvement and its artifact ready; describe the team's steering and trade-off, not “Codex built everything.” |
+
+Public role verification does not itself prove judging assignment. The assignment remains attributed to the team's onsite report until an organizer publishes the panel.
 
 ## Audience hypothesis
 

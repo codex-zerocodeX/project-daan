@@ -4,64 +4,40 @@
 
 | Priority | Question | Owner | State | Decision affected |
 |---:|---|---|---|---|
-| 1 | Is the local prize based only on work completed on site, or any eligible work from July 13–21? | Rafaello | Open | Code start and reused work boundary |
+| 1 | Is the local prize based only on work completed on site, or any eligible work from July 13–21? | Rafaello | Resolved — official judging page requires a clean start at the event | Code start and reused work boundary |
 | 2 | May a team consume an existing team-owned public API or a small rights-cleared public fixture if the application and judged user loop are new and the reuse boundary is documented? | Rafaello | Open | All repo-derived finalist eligibility |
 | 3 | Must the product call GPT-5.6, or is substantial Codex use during development sufficient? | Rafaello | Open | Core architecture |
 | 4 | What is the live-demo duration, and is a backup recording permitted? | Rafaello | Open | Pitch and fallback |
-| 5 | Who judges the Manila prize, and does the local entry also require Devpost? | Rafaello | Open | Submission and Q&A |
+| 5 | Does the local entry also require Devpost? | Rafaello | Open | Submission route |
+| 6 | Can the organizer publish the panel names and identify the journalist and AIPO/TBI/TTO representative exactly? | Rafaello | Partly resolved — onsite report names panel lenses; public announcement still missing | Q&A attribution |
 
 ## Immediate operation
 
 | Priority | Item | Owner | State | Acceptance evidence |
 |---:|---|---|---|---|
-| 1 | Verify remaining credit and request the optional USD 100 build credit if needed | Gelo | Open | [`receipt/quota-check.json`](receipt/quota-check.json) records the account state and acknowledgement if required |
-| 2 | Run one target-user reality check | Rafaello | Open | [`receipt/target-user-reality.json`](receipt/target-user-reality.json) records the permission-safe workflow, failure, workaround, and cost |
-
-## Idea triage
-
-The structured expansion added 50 entries but promoted none automatically. The July 14 paper cut reduced them to ten, researched the survivor, and kept Flashcard Expiry as the only expansion challenger.
-
-| Idea | State | Decision reason | Re-open condition |
-|---|---|---|---|
-| Flashcard Expiry | Technical pass; expansion challenger | Synthetic fixture expired only the affected card, preserved the other card, repaired, and repeated identically three times | One student or teacher recognizes the failure; real-source right and narrower comparable gate pass |
-| Saan Tayo? | Technical and comparable pass; finalist | Five PSA indicators joined across 1,583 municipalities; the weight change moved the top-ten order; direct alternatives and bounded wedge are recorded | Observer, user, model-necessity, host/reuse, and Maphy event-authorization gates pass |
-| Tumpak | Technical and comparable pass; finalist | Public PSA case failed stale state and passed the identical repaired case; direct prior art lowers the idea-quality score | User, model-native extraction/stability, comprehension, and host/reuse gates pass |
-| CleanRoute | Technical and comparable pass; finalist | Harmless local fixture detected mutation, quarantined the proxy, rerouted cleanly, and current alternatives narrowed the claim | User, model necessity/stability, production relevance, comprehension, and host/reuse gates pass |
-| Xedoc Lens | Hold | Dogfoods the strategy and repo inventory, but risks generic idea-validator/meta-tool framing | It changes a decision for a non-hackathon user and beats a plain prompt visibly |
-| Bukas Pa? | Hold | Clear student pain and existing verifier substrate, but verified opportunity matching is crowded | One official-source user case exposes a gap the current matcher products do not cover |
-| Packet Ready | Hold | Strong visual and practical Philippine form asset, but the primitive is well established | Completeness receipt is objectively testable and distinct from AI form fill |
-| Mind Mirror | Hold | Emotionally legible and TunnelMind-native, but direct current products are abundant | Twin's real-export coherence test passes |
-| Build Receipt | Fallback | Lowest completion risk and can dogfood its proof | All finalist gates fail or reuse rule invalidates them |
-| Agent Fence | Rejected for Saturday | Direct competitors plus security integration breadth | A later event provides more time or a uniquely local failure case |
-| Budget Basket | Rejected for Saturday | Existing Presyo work plus dense local prior art | A non-comparison user job and fresh data right are validated |
-| VANTAGE patent directions | Quarantined | Active patent and ownership boundaries are not cleared; AIPO adjacency increases conflict risk | Written permission and clean ownership/disclosure boundary |
+| 1 | Select and capture one material Codex improvement | Gelo | Open | Actual task/diff/test shows the initial state, team steering, and visible improvement; bracketed pitch text is replaced |
+| 1 | Verify the prepared path on the submitted URL | Both | Open | Three timed runs complete route selection, receipt inspection, time switch, and community context without a blocking defect |
+| 1 | Capture Clean Start and main task identifier | Gelo | Open | Timestamped event-day boundary and actual identifier are present in the submission evidence |
+| 2 | Run one commuter comprehension check | Rafaello | Open | First-time observer states the decision, the strongest route reason, and one unknown without prompting |
+| 2 | Reconcile submission copy and video | Rafaello | Open | Every surface says fixture/localStorage and omits unbuilt live data, GPT, Miles, backend, and traction claims |
 
 ## Active risk
 
 | Priority | Risk | Early signal | Owner | Response |
 |---:|---|---|---|---|
-| 1 | Local rule invalidates pre-event application work | Host says on-site-only | Both | Keep research; start eligible code at kickoff |
-| 1 | Candidate source lacks event/publication right | Exact upstream right, aggregator term, attribution, or needed maintainer/host authorization is absent | Gelo | Obtain written authorization or replace with a self-authored synthetic source and disclose it |
-| 1 | Deterministic assertion is not green | One-change slice cannot fail stale state and pass current state by Friday night | Gelo | Fire Build Receipt pivot |
-| 2 | Product resembles a generic eval tool | Demo discusses score/dashboard more than authoritative change and affected answer | Rafaello | Return to change → question → failure → proof story |
-| 2 | GPT-5.6 is ornamental | Removing the model preserves user value | Gelo | Redesign the structured answer or repair job |
-| 2 | Demo path depends on network | First call exceeds 12 seconds | Both | One retry, then disclosed local/recorded fallback |
-| 2 | Impact story is invented | No target user recognizes the failure | Rafaello | Narrow the user or remove the demand claim |
-| 2 | Prepared failure looks staged | Judge cannot inspect why the stale answer fails | Both | Expose exact public source, case identifier, deterministic assertion, and unchanged rerun |
-| 3 | New feature enters after freeze | Work is not tied to a failed acceptance test | Both | Reject or revert it |
+| 1 | Fixture is mistaken for live evidence | Pitch says “live,” “real-time,” or “official data” without a current source | Both | State “disclosed Katipunan fixture” in the first 25 seconds and keep the banner visible |
+| 1 | Codex Craft answer is generic | Answer describes volume of generated code but no before → steering → after artifact | Gelo | Choose one material improvement with a task, diff, test, and visible result |
+| 1 | Runs Live gate fails on submitted URL | Prepared A → B path does not complete in a fresh browser | Gelo | Rehearse three runs; fix only path-blocking defects after freeze |
+| 1 | Clean Start evidence is incomplete | Pre-event file or unrecorded boundary makes project origin ambiguous | Gelo | Preserve timestamped event-day work evidence and explain the pre-event idea-only boundary |
+| 2 | Map network failure distracts from the local proof | Base map stays blank while local route data is otherwise available | Gelo | Rehearse the receipt-first fallback and state the map-tile failure plainly |
+| 2 | Community content is presented as verified fact | Report/review loses its “reported” distinction in narration | Rafaello | Point to the label, voting limitation, and unbuilt abuse controls |
+| 2 | Institutional story becomes invented traction | Pitch says an LGU, TBI, or partner will buy | Rafaello | Call it a hypothesis and name the next validation gate |
+| 2 | Data right is unclear before live-adapter work | Intended source lacks a recorded license, term, or attribution | Gelo | Keep the adapter unshipped until the source ledger is complete |
+| 3 | New feature enters after freeze | Change is not tied to a prepared-path blocker or submission gate | Both | Reject it and preserve the rehearsed state |
 
-## Pivot trigger
+## Historical idea triage
 
-Activate Build Receipt only if every finalist is removed by its written gate or a host rule. For each finalist, remove it when any condition is true:
-
-- the host disallows its public source, API, fixture, or reuse boundary;
-- the complete state change cannot run three times by Friday night;
-- GPT-5.6 is ornamental to the user value;
-- the demo atom cannot be explained in one sentence;
-- a current direct product owns the exact loop and the team cannot state a truthful user-visible difference;
-- the data-right or safety boundary cannot be demonstrated.
-
-Do not relock because an idea sounds exciting. Relock because it passes first.
+The July 14 finalist and Build Receipt pivot analysis is preserved in [idea.md](idea.md), [research.md](research.md), and decisions D-002 through D-012 below. Project Daan was selected July 18; those candidates are no longer active execution options for this event.
 
 ## Decision log
 
@@ -69,6 +45,7 @@ Newest decision is first. The stable identifier preserves order when several dec
 
 | Decision ID | Date | Decision | Evidence | Owner |
 |---|---|---|---|---|
+| D-013 | July 18, 2026 | Use the official three-part local rubric and eligibility gates; treat the panel composition as an onsite team report until the organizer publishes exact identities | Official judging page; team report: “our judges are app builders (bryl lim), journalists (one of them made legit ba to, tbi and tto's head, and david maquez”; public role checks recorded in `source.md` | Gelo |
 | D-012 | July 16, 2026 | Require eight typed decision receipts and refuse product instantiation until the complete dependency set and decision lock pass | `npm run receipt`; event `receipt/`; guarded `script/instantiate.mjs`; all current external evidence remains pending | Gelo |
 | D-011 | July 14, 2026 | Record Saan Tayo?, Tumpak, CleanRoute, and Flashcard Expiry as technical passes without selecting a product; record the three-finalist comparable screen as passed | `npm run gate`; live `npm run probe:saan-tayo` joined 1,583 municipalities; `research.md` and `source.md` name current alternatives and bounded distinctions; each receipt states its unproven boundary | Gelo |
 | D-010 | July 14, 2026 | Keep Flashcard Expiry as the sole expansion challenger; do not promote it yet | Ten-entry paper cut, screen of current comparables, and synthetic three-run fixture; human and real-source gates remain | Gelo |

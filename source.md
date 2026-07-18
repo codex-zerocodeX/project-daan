@@ -1,8 +1,27 @@
 # Source ledger
 
-Last checked: July 14, 2026, Asia/Manila
+Last checked: July 18, 2026, Asia/Manila
 
 This ledger separates confirmed fact, inference, participant report, and unknown state. It is the anti-hallucination boundary for the strategy.
+
+## Official Manila event site — checked July 18, 2026
+
+- [Event microsite](https://build-week-manila-ateneo-2026.dayvough.chatgpt.site/) — schedule, venue, prize pool, speaker, sprint, submission, and attendee instruction.
+- [Judging page](https://build-week-manila-ateneo-2026.dayvough.chatgpt.site/judging) — four independent judges; Clean Start, Runs Live, and Claims Have Evidence gates; Codex Craft, Product Judgment, and Problem & Insight; 10/8/7/5 score choices; material-Codex-improvement question; tie-break order.
+- Local archive: [`outputs/event-site-scrape/README.md`](outputs/event-site-scrape/README.md) and [`outputs/event-site-scrape/judging-guide.md`](outputs/event-site-scrape/judging-guide.md). The archive preserves same-origin pages, RSC payloads, assets, extracted text, hashes, and bounded discovery results.
+
+## Panel source boundary — checked July 18, 2026
+
+Participant report from the team onsite: the judging panel includes Bryl Lim, journalism representation with one reported connection to Legit Ba 'To, the TBI/TTO head, and David Marquez. The report does not make the category-to-person count fully clear. It is operationally useful but is not converted into a public organizer announcement.
+
+Independent public checks establish role context, not panel assignment:
+
+- [Bryl Lim](https://bryllim.com/) and his [experience page](https://bryllim.com/experience) describe an AI/full-stack builder with shipped application experience.
+- [Legit Ba 'To](https://legitbato.app/) is a public Philippine AI fact-checking product. The reviewed public source does not establish which journalist on the panel made it.
+- [AIPO Commercialization & Business Incubation](https://www.aipo.ateneo.edu/cbig) describes technology transfer and management of the Blue Nest Incubation Program. The reviewed public source does not identify the event judge.
+- [David Marquez's Codex Ambassador announcement](https://www.linkedin.com/posts/dayvough_im-excited-to-announce-that-ive-joined-activity-7439924659644559361-XtuV) supports the ambassador role.
+
+Boundary: tailor proof selection to these lenses, but never imply endorsement, invent a judge identity, or replace the official rubric with a biography.
 
 ## Supplied local material
 
@@ -474,14 +493,45 @@ Conclusion: reject Data Diet as a standalone idea for this event. The visualizat
 
 Conclusion: Flashcard Expiry is only a challenger. The bounded official-documentation review found source linkage and generation but did not find automatic impact analysis where a changed source invalidates only affected cards. Validate behavior and demand before promotion; do not claim universal novelty.
 
+## Commuter cost and transport inflation source ledger — checked July 18, 2026
+
+The detailed claim table and arithmetic are maintained in [`transport-cost.md`](transport-cost.md). Source authority is kept explicit here so an approved-but-suspended rate, local ordinance, temporary discount, or secondary bridge cannot silently become a national current fact.
+
+### Fare and discount authority
+
+- [LTFRB fare-rate index](https://ltfrb.gov.ph/fare-rates/) — national road-PUV guide index, labeled as of October 2024. Use: mode inventory and linked official matrix. Boundary: later order, suspension, and route-specific program still require separate checks.
+- [Traditional PUJ](https://ltfrb.gov.ph/wp-content/uploads/2024/11/Fare-Guide_Traditional-PUJ-Provisional-Fare-Increase_08Oct2023.pdf), [modern non-air-conditioned PUJ](https://www.ltfrb.gov.ph/wp-content/uploads/2024/11/Fare-Guide_Modernized-Non-Aircon-Provisional-Fare-Increase_08Oct2023.pdf), and [modern air-conditioned PUJ](https://ltfrb.gov.ph/wp-content/uploads/2024/11/Fare-Guide_Modernized-Aircon-Provisional-Fare-Increase_08Oct2023.pdf) — official base/add-on formula, priority discount, rounding, and effective date.
+- [City air-conditioned bus](https://ltfrb.gov.ph/wp-content/uploads/2024/11/PUB-City-Aircon.pdf), [provincial ordinary bus](https://ltfrb.gov.ph/wp-content/uploads/2024/11/PUB-Provincial-Ordinary.pdf), [provincial air-conditioned bus](https://ltfrb.gov.ph/wp-content/uploads/2024/11/PUB-Provincial-Aircon.pdf), and [provincial deluxe bus](https://ltfrb.gov.ph/wp-content/uploads/2024/11/PUB-Provincial-Deluxe.pdf) — official fare formula and effective date. Super-deluxe/luxury guides are linked from the detailed baseline.
+- [UV Express](https://ltfrb.gov.ph/wp-content/uploads/2024/11/UVE-Fare-Guide.pdf) and [regular taxi](https://www.ltfrb.gov.ph/wp-content/uploads/2024/11/TAXI-Fare-Rates.pdf) — official distance/time matrix. Taxi order excludes airport taxi.
+- [PNA March 17 approval](https://www.pna.gov.ph/articles/1271201), [PCO March 18 suspension](https://pco.gov.ph/news_releases/pbbm-orders-fare-increase-suspension/), and [PNA/DOTr scope](https://www.pna.gov.ph/index.php/articles/1271338) — decisive current-status chain. Use: keep March increases out of current defaults.
+- [PCO Service Contracting release](https://pco.gov.ph/news_releases/president-marcos-rolls-out-transport-subsidies-fare-discounts-to-offset-rising-fuel-costs/) — participating-route passenger discount. Boundary: targeted program, not universal matrix.
+
+### Local tricycle, rail, toll, speed, and inflation authority
+
+- [DILG–DOTr JMC 2017-01](https://region12.dilg.gov.ph/sites/default/files/issuances/DILG-DOTR-JMC2017-01.pdf), [Davao June 2026 matrix](https://davaocity.gov.ph/transportation-planning-traffic-management/cttmo-issues-fare-matrix-for-tricycles/), and [Quezon City ordinance notice](https://quezoncity.gov.ph/public-notice/an-ordinance-imposing-a-fare-increase-for-all-tricycles-for-hire-in-quezon-city-from-eight-pesos-php8-00-to-nine-pesos-php9-00-per-person-for-regular-trips-and-for-special-trips-from-sixteen-peso/) — authority and two local sample. Never generalize sample to another LGU.
+- [LRTA ticket page](https://www.lrta.gov.ph/tickets-and-fares/), [LRT-2 base adjustment](https://www.lrta.gov.ph/lrt-2-fare-adjustment/), and [MRT-3 2026 Citizen Charter](https://www.dotrmrt3.gov.ph/dotrmrt3-citizen-charter-handbook-2026-1st-edition.pdf) — base station fare and March 2026 universal discount for LRT-2/MRT-3. Boundary: not a universal LRT-1 discount. A separate [DOTr-MRT3 priority-card release](https://www.dotrmrt3.gov.ph/news/student-beep-cards-na-may-50-discount-inilunsad-ni-pbbm) supports 50% for eligible students, senior citizens, and PWDs across all three lines.
+- [TRB](https://trb.gov.ph/index.php/2015-03-24-05-42-02/47-press-release) and its individual [Connector](https://trb.gov.ph/index.php/toll-rates/nlex-slex-connector-road-toll-rate), [CALAX](https://trb.gov.ph/index.php/toll-rates/calax), [TPLEX](https://trb.gov.ph/index.php/toll-rates/tplex-toll-rate), and [NAIAX](https://trb.gov.ph/index.php/toll-rates/naiax-expressway) matrix — primary toll authority. The July 2026 SLEX/STAR amount uses a clearly labeled current secondary bridge pending a direct refreshed TRB table.
+- [RA 4136](https://lawphil.net/statutes/repacts/ra1964/ra_4136_1964.html) and [LTO speed-limiter update](https://lto.gov.ph/news/dotr-lto-ltfrb-start-preparation-for-implementation-of-speed-limiter-in-puvs/) — legal maximum and device boundary. Neither proves observed travel speed.
+- [PSA June 2026 CPI release](https://psa.gov.ph/content/summary-inflation-report-consumer-price-index-2018100-june-2026), [bottom-30 release](https://psa.gov.ph/content/summary-inflation-report-consumer-price-index-bottom-30-income-households-2018100-june-2026), and [OpenStat table](https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2M__PI__CPI__2018NEW/0012M4ACP22.px/) — official year-on-year rate and consistent-base June index used for 1/3/5-year arithmetic. Boundary: transport CPI is not a fare index.
+- [DOE January NCR price monitor](https://prod-cms.doe.gov.ph/documents/d/guest/ncr-price-monitoring-01132026-pdf) and [DOE March 10 oil monitor](https://prod-cms.doe.gov.ph/documents/d/guest/oil-monitor_10-march-2026-_male_rev-ayp-copy-1-pdf) — dated fuel-price and weekly-adjustment evidence. Boundary: neither is a July pump quote or an automatic passenger-fare change.
+
+### Transport-cost gap
+
+- refreshed official SLEX/STAR and Skyway gate-pair matrix;
+- text-readable official LRT-1 full station matrix;
+- route-specific P2P, ferry, airport bus, provincial van, and minibus fare;
+- LGU tricycle ordinance outside the two named sample;
+- timestamped observed speed and wait evidence for a real route.
+- latest city/brand DOE fuel monitor.
+
+Until each gap is filled, keep it unknown rather than borrowing a nearby rate.
+
 ## Unknown items
 
-- local judge identities;
+- exact public panel announcement, the journalist's name/role, and the exact AIPO/TBI/TTO representative;
 - exact local entrant count;
 - exact local demo duration;
-- local interpretation of eligible pre-event work;
 - whether the local prize needs a Devpost submission;
-- whether the event provides API credit on site;
 - venue network reliability;
 - permission/license for each eventual public fixture;
 - measured demand for a paid Philippine eval pack.
