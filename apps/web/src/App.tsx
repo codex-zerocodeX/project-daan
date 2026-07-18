@@ -109,9 +109,9 @@ function App() {
     : routePlan.failure?.reason === "missing_node"
       ? "Choose both places from the search suggestions."
       : routePlan.failure?.reason === "invalid_cost"
-        ? "This route has invalid evidence, so Daan did not score it."
+        ? "This route has invalid evidence, so Alitaptap did not score it."
         : routePlan.failure?.reason === "negative_cost"
-          ? "This route has an invalid negative path cost, so Daan did not score it."
+          ? "This route has an invalid negative path cost, so Alitaptap did not score it."
           : formError;
 
   useEffect(() => {
@@ -233,6 +233,7 @@ function App() {
     ) return;
     event.preventDefault();
     event.stopPropagation();
+    event.currentTarget.open = false;
     setOpen(false);
     window.requestAnimationFrame(() => summary.current?.focus({ preventScroll: true }));
   }
@@ -265,12 +266,12 @@ function App() {
       <Header />
       {activeAlternative?.route.isFixture && <FallbackBanner fetchedAt={activeAlternative.route.weather.fetchedAt} />}
 
-      <main className="daan-layout mx-auto w-full max-w-[1500px] sm:px-6 sm:py-5 lg:px-8">
-        <div className="daan-map-stage relative grid content-start lg:sticky lg:top-4">
-          <Suspense fallback={<div className="daan-map grid place-items-center bg-surface text-sm font-bold text-ink-soft">Loading route map…</div>}>
+      <main className="alitaptap-layout mx-auto w-full max-w-[1500px] sm:px-6 sm:py-5 lg:px-8">
+        <div className="alitaptap-map-stage relative grid content-start lg:sticky lg:top-4">
+          <Suspense fallback={<div className="alitaptap-map grid place-items-center bg-surface text-sm font-bold text-ink-soft">Loading route map…</div>}>
             <MapCanvas alternative={activeAlternative} selectedNodeId={selectedNodeId} onNodeSelect={selectNode} />
           </Suspense>
-          <div className="daan-map-intro pointer-events-none absolute left-5 top-5 z-10 max-w-[245px] sm:hidden">
+          <div className="alitaptap-map-intro pointer-events-none absolute left-5 top-5 z-10 max-w-[245px] sm:hidden">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-ink-soft">Your next move</p>
             <h1 className="mt-1 text-[30px] font-extrabold leading-[1.02] tracking-[-0.055em] text-ink">Where to today?</h1>
             <p className="mt-2 text-xs font-semibold leading-relaxed text-ink-soft">Compare time, comfort, and what commuters know.</p>
@@ -282,7 +283,7 @@ function App() {
           )}
         </div>
 
-        <section className="daan-control daan-route-sheet" aria-label="Plan and compare a route">
+        <section className="alitaptap-control alitaptap-route-sheet" aria-label="Plan and compare a route">
           <RouteSearch
             key={`${routeQuery.originNodeId}:${routeQuery.destinationNodeId}:${receiptRevision}`}
             node={node}
@@ -390,19 +391,19 @@ function App() {
 
         {activeAlternative && (
           <details
-            className="daan-detail daan-disclosure"
+            className="alitaptap-detail alitaptap-disclosure"
             open={isDetailOpen}
             onKeyDown={(event) => closeDisclosure(event, setIsDetailOpen, detailSummaryRef)}
             onToggle={(event) => setIsDetailOpen(event.currentTarget.open)}
           >
-            <summary ref={detailSummaryRef} className="daan-disclosure-summary">
+            <summary ref={detailSummaryRef} className="alitaptap-disclosure-summary">
               <span>
                 <span className="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink-soft">The evidence</span>
                 <span className="text-base font-extrabold">Why this route scored {activeAlternative.route.score}</span>
               </span>
               <ChevronDown size={20} aria-hidden="true" />
             </summary>
-            <div className="daan-disclosure-content grid content-start gap-4">
+            <div className="alitaptap-disclosure-content grid content-start gap-4">
               <CoverageBar coveragePct={activeAlternative.route.coveragePct} />
               <SegmentReceipt
                 segment={activeAlternative.route.segment}
@@ -423,19 +424,19 @@ function App() {
 
         {activeAlternative && activeAlternative.thread.length > 0 && (
           <details
-            className="daan-thread daan-disclosure"
+            className="alitaptap-thread alitaptap-disclosure"
             open={isThreadDisclosureOpen}
             onKeyDown={(event) => closeDisclosure(event, changeThreadOpen, threadSummaryRef)}
             onToggle={(event) => changeThreadOpen(event.currentTarget.open)}
           >
-            <summary ref={threadSummaryRef} className="daan-disclosure-summary">
+            <summary ref={threadSummaryRef} className="alitaptap-disclosure-summary">
               <span>
                 <span className="block text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink-soft">Along this path</span>
                 <span className="text-base font-extrabold">Community updates</span>
               </span>
               <ChevronDown size={20} aria-hidden="true" />
             </summary>
-            <div className="daan-disclosure-content">
+            <div className="alitaptap-disclosure-content">
               <CommunityPanel
                   routeId={activeAlternative.routeId}
                   thread={activeAlternative.thread}
