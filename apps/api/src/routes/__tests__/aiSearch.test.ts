@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createApp } from "../../app";
-import { fakeSupabase } from "./helpers";
+import { fakeSupabase, fakeSupabaseChains } from "./helpers";
 import type { ChatFn } from "../../lib/openai";
 
 const THREAD_ID = "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d";
@@ -153,5 +153,184 @@ describe("POST /v1/ai/search", () => {
     const body = (await res.json()) as { data: { thread_ids: string[] } };
     expect(body.data.thread_ids).toEqual([]);
     expect(called).toBe(false);
+  });
+});
+
+const OTHER_THREAD_ID = "3f2504e0-4f89-41d3-9a0c-0305e82c3301";
+
+const otherThread = {
+  ...sampleThread,
+  id: OTHER_THREAD_ID,
+  title: "How do I commute from Ateneo to Ayala?",
+  body: "First time doing this trip, not sure where to transfer.",
+};
+
+/** An answer-route row as the join returns it: nodes nested, order not promised. */
+const answer = (
+  over: Partial<{
+    id: string;
+    thread_id: string;
+    summary: string;
+    created_at: string;
+    nodes: { seq: number; label: string | null }[];
+  }>,
+) => ({
+  id: "aaaaaaaa-0000-4000-8000-000000000001",
+  thread_id: THREAD_ID,
+  summary: "Carousel then walk",
+  created_at: "2026-07-18T01:00:00+00:00",
+  nodes: [],
+  ...over,
+});
+
+/** Runs one search against threads + answer-routes and hands back the prompt. */
+async function promptFor(threads: unknown[], routes: { data: unknown; error: unknown }) {
+  let seen = "";
+  const app = createApp({
+    supabase: fakeSupabaseChains({
+      threads: { data: threads, error: null },
+      routes,
+    }),
+    chat: async (prompt) => {
+      seen = prompt;
+      return JSON.stringify({ answer: "ok", thread_ids: [] });
+    },
+  });
+
+  const res = await search(app, "how do I get to Ayala?");
+  return { res, prompt: seen };
+}
+
+describe("POST /v1/ai/search answer context", () => {
+  it("puts an answer's summary and node labels into the prompt in seq order", async () => {
+    const { res, prompt } = await promptFor([sampleThread], {
+      data: [
+        answer({
+          summary: "LRT-2 then MRT-3",
+          // deliberately out of order: the route must sort by seq, not by row order
+          nodes: [
+            { seq: 2, label: "Alight at Araneta-Cubao" },
+            { seq: 1, label: "Board LRT-2 westbound at Katipunan" },
+            { seq: 3, label: "Transfer to MRT-3 southbound" },
+          ],
+        }),
+      ],
+      error: null,
+    });
+
+    expect(res.status).toBe(200);
+    expect(prompt).toContain("ANSWER 1: LRT-2 then MRT-3");
+    expect(prompt).toContain("1. Board LRT-2 westbound at Katipunan");
+    expect(prompt).toContain("2. Alight at Araneta-Cubao");
+    expect(prompt).toContain("3. Transfer to MRT-3 southbound");
+    expect(prompt.indexOf("Board LRT-2")).toBeLessThan(prompt.indexOf("Alight at Araneta"));
+    expect(prompt.indexOf("Alight at Araneta")).toBeLessThan(prompt.indexOf("Transfer to MRT-3"));
+  });
+
+  it("nests each answer under its own thread and each node under its own answer", async () => {
+    const { prompt } = await promptFor([sampleThread, otherThread], {
+      data: [
+        answer({
+          id: "aaaaaaaa-0000-4000-8000-000000000001",
+          thread_id: THREAD_ID,
+          summary: "Carousel answer",
+          nodes: [{ seq: 1, label: "Ride the busway from Monumento" }],
+        }),
+        answer({
+          id: "aaaaaaaa-0000-4000-8000-000000000002",
+          thread_id: OTHER_THREAD_ID,
+          summary: "Ateneo answer",
+          nodes: [{ seq: 1, label: "Walk to Katipunan station" }],
+        }),
+      ],
+      error: null,
+    });
+
+    // each thread block runs until the next "[" id marker
+    const blockFor = (id: string) => {
+      const start = prompt.indexOf(`[${id}]`);
+      const next = prompt.indexOf("\n\n[", start);
+      return prompt.slice(start, next === -1 ? undefined : next);
+    };
+
+    const first = blockFor(THREAD_ID);
+    expect(first).toContain("Carousel answer");
+    expect(first).toContain("Ride the busway from Monumento");
+    expect(first).not.toContain("Ateneo answer");
+    expect(first).not.toContain("Walk to Katipunan station");
+
+    const second = blockFor(OTHER_THREAD_ID);
+    expect(second).toContain("Ateneo answer");
+    expect(second).toContain("Walk to Katipunan station");
+    expect(second).not.toContain("Carousel answer");
+    expect(second).not.toContain("Ride the busway from Monumento");
+  });
+
+  it("still lists a thread that has no answers", async () => {
+    const { prompt } = await promptFor([sampleThread, otherThread], {
+      data: [answer({ thread_id: THREAD_ID, summary: "Carousel answer" })],
+      error: null,
+    });
+
+    expect(prompt).toContain(`[${OTHER_THREAD_ID}]`);
+    expect(prompt).toContain("How do I commute from Ateneo to Ayala?");
+    // the unanswered thread carries no ANSWER block of its own
+    const start = prompt.indexOf(`[${OTHER_THREAD_ID}]`);
+    const next = prompt.indexOf("\n\n[", start);
+    expect(prompt.slice(start, next === -1 ? undefined : next)).not.toContain("ANSWER");
+  });
+
+  it("caps the answers shown per thread", async () => {
+    const { prompt } = await promptFor([sampleThread], {
+      data: [1, 2, 3, 4, 5].map((n) =>
+        answer({
+          id: `aaaaaaaa-0000-4000-8000-00000000000${n}`,
+          summary: `answer number ${n}`,
+          created_at: `2026-07-1${n}T00:00:00+00:00`,
+        }),
+      ),
+      error: null,
+    });
+
+    expect(prompt).toContain("answer number 1");
+    expect(prompt).toContain("answer number 3");
+    expect(prompt).not.toContain("answer number 4");
+    expect(prompt).not.toContain("answer number 5");
+  });
+
+  it("caps the nodes shown per answer", async () => {
+    const { prompt } = await promptFor([sampleThread], {
+      data: [
+        answer({
+          nodes: Array.from({ length: 12 }, (_, i) => ({
+            seq: i + 1,
+            label: `step number ${i + 1}`,
+          })),
+        }),
+      ],
+      error: null,
+    });
+
+    expect(prompt).toContain("step number 8");
+    expect(prompt).not.toContain("step number 9");
+    expect(prompt).not.toContain("step number 12");
+  });
+
+  it("degrades to threads-only when the answers query fails", async () => {
+    const { res, prompt } = await promptFor([sampleThread], {
+      data: null,
+      error: { message: "routes exploded" },
+    });
+
+    expect(res.status).toBe(200);
+    expect(prompt).toContain(`[${THREAD_ID}]`);
+    expect(prompt).not.toContain("ANSWER 1:");
+  });
+
+  it("tells the model that an answer is evidence but a bare question is not", async () => {
+    const { prompt } = await promptFor([sampleThread], { data: [], error: null });
+
+    expect(prompt).toContain("ANSWER");
+    expect(prompt.toLowerCase()).toContain("evidence");
   });
 });

@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { AiSearchRequestSchema, AiSearchResponseSchema } from "@komyut/shared";
 import type { AppDeps } from "../app";
 
@@ -16,29 +17,54 @@ const ModelReplySchema = z.object({
 const CANDIDATE_LIMIT = 50;
 /** Thread bodies are truncated before prompting — the gist is enough to rank on. */
 const BODY_CHARS = 300;
+/** Answers per thread. The first few carry the consensus; the tail is noise. */
+const ANSWERS_PER_THREAD = 3;
+/** Steps per answer. Long enough for a real multi-leg commute, short enough to fit. */
+const NODES_PER_ANSWER = 8;
+/** An answer summary is a headline, not the directions — the nodes carry those. */
+const SUMMARY_CHARS = 200;
+/** A node label is one instruction; anything longer is prose that got pasted in. */
+const LABEL_CHARS = 120;
 
 type Candidate = { id: string; title: string; body: string; category: string };
 type Turn = { question: string; answer: string };
+/** An answer-route flattened for prompting: its summary plus its steps in order. */
+type Answer = { summary: string; steps: string[] };
 
 function buildPrompt(
   query: string,
   candidates: Candidate[],
+  answersByThread: Map<string, Answer[]>,
   history: Turn[],
 ): string {
   const threads = candidates
-    .map((t) => `[${t.id}] (${t.category}) ${t.title}\n${t.body.slice(0, BODY_CHARS)}`)
+    .map((t) => {
+      const head = `[${t.id}] (${t.category}) ${t.title}\n${t.body.slice(0, BODY_CHARS)}`;
+      const answers = (answersByThread.get(t.id) ?? []).map((a, i) => {
+        const steps = a.steps.map((s, n) => `    ${n + 1}. ${s}`);
+        return [`  ANSWER ${i + 1}: ${a.summary}`, ...steps].join("\n");
+      });
+      // A thread with no answers is just its own question - no empty block.
+      return [head, ...answers].join("\n");
+    })
     .join("\n\n");
 
   return [
     "You help Filipino commuters by answering questions using ONLY the community threads below.",
     "Never invent routes, fares, or thread ids. If the threads do not answer the question, say so plainly.",
     "",
-    // Many threads are themselves unanswered questions. Treating one as fact
-    // produces confident misinformation with a citation attached, so be explicit.
-    "IMPORTANT: many threads are questions, not answers. A thread asking whether",
-    "something is true is NOT evidence that it is true. Only state something as",
-    "fact if a thread actually reports it. If the threads merely ask the same",
-    "question, say that other commuters have asked it too but it is unanswered.",
+    // Threads are questions; the ANSWER blocks under them are the actual
+    // knowledge. Conflating the two either invents facts from a question or
+    // throws away a real answer, so spell out which is which.
+    "IMPORTANT: a thread is a QUESTION. A thread asking whether something is true",
+    "is NOT evidence that it is true. A thread with no ANSWER block under it is",
+    "unanswered: if such threads merely ask the same question, say that other",
+    "commuters have asked it too but it is unanswered.",
+    "",
+    "An ANSWER block IS evidence: it is a reply posted by a commuter who made the",
+    "trip, and its numbered steps are the directions they gave. You may state what",
+    "an ANSWER says as fact and cite the thread it sits under. Prefer answers over",
+    "thread bodies. Still never add a step, fare, or line that no ANSWER mentions.",
     "",
     "THREADS:",
     threads,
@@ -66,6 +92,68 @@ function buildPrompt(
     "reply that you cannot tell what is being asked and cite nothing. Do not fall",
     "back to summarising an arbitrary thread.",
   ].join("\n");
+}
+
+/** An answer-route row with its nodes nested by the join. */
+type AnswerRow = {
+  thread_id: string;
+  summary: string | null;
+  created_at: string;
+  nodes: { seq: number; label: string | null }[] | null;
+};
+
+/**
+ * Load the answers for the candidate threads, grouped by thread.
+ *
+ * Answers are an enrichment: search still works without them, so every failure
+ * here returns an empty map instead of propagating. Losing the answers degrades
+ * the result; failing the request loses it entirely.
+ */
+async function loadAnswers(
+  supabase: SupabaseClient,
+  threadIds: string[],
+): Promise<Map<string, Answer[]>> {
+  const byThread = new Map<string, Answer[]>();
+
+  let rows: AnswerRow[];
+  try {
+    const { data, error } = await supabase
+      .from("routes")
+      .select("id, thread_id, summary, created_at, nodes(seq, label)")
+      .in("thread_id", threadIds);
+
+    if (error) {
+      console.error("answers query failed:", (error as { message?: string }).message);
+      return byThread;
+    }
+    rows = (data ?? []) as AnswerRow[];
+  } catch (err) {
+    console.error("answers query threw:", (err as Error).message);
+    return byThread;
+  }
+
+  // Oldest first: the earliest answers are the ones the thread has had time to
+  // correct, and a stable order keeps the per-thread cap deterministic.
+  const ordered = [...rows].sort((a, b) => a.created_at.localeCompare(b.created_at));
+
+  for (const row of ordered) {
+    const bucket = byThread.get(row.thread_id) ?? [];
+    if (bucket.length >= ANSWERS_PER_THREAD) continue;
+
+    const steps = [...(row.nodes ?? [])]
+      .sort((a, b) => a.seq - b.seq)
+      // an unlabelled node is a map point with nothing to read out loud
+      .flatMap((n) => (n.label ? [n.label.slice(0, LABEL_CHARS)] : []))
+      .slice(0, NODES_PER_ANSWER);
+
+    bucket.push({
+      summary: (row.summary ?? "").slice(0, SUMMARY_CHARS),
+      steps,
+    });
+    byThread.set(row.thread_id, bucket);
+  }
+
+  return byThread;
 }
 
 export function aiSearchRoute({ supabase, chat }: AppDeps) {
@@ -102,10 +190,15 @@ export function aiSearchRoute({ supabase, chat }: AppDeps) {
       });
     }
 
+    const answers = await loadAnswers(
+      supabase,
+      candidates.map((t) => t.id),
+    );
+
     let rawReply: string;
     try {
       rawReply = await chat(
-        buildPrompt(parsed.data.query, candidates, parsed.data.history),
+        buildPrompt(parsed.data.query, candidates, answers, parsed.data.history),
       );
     } catch (err) {
       console.error("openai call failed:", (err as Error).message);
