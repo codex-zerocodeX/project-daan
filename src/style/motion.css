@@ -1,0 +1,175 @@
+:root {
+  --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/*
+ * Motion is intentionally isolated from the layout layer so the parallel
+ * redesign can keep changing structure without coupling presentation to state.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .daan-header {
+    animation: daan-enter 200ms var(--motion-ease-out) both;
+  }
+
+  .daan-map-shell {
+    animation: daan-enter 220ms 35ms var(--motion-ease-out) both;
+  }
+
+  .daan-map-intro {
+    animation: daan-enter 220ms 70ms var(--motion-ease-out) both;
+  }
+
+  .daan-route-sheet {
+    animation: daan-sheet-enter 260ms 70ms var(--motion-ease-out) both;
+  }
+
+  .route-result-summary,
+  #place-panel > section {
+    animation: daan-state-enter 200ms var(--motion-ease-out) both;
+  }
+
+  .route-place-field [role="listbox"] {
+    animation: daan-popover-enter 160ms var(--motion-ease-out) both;
+    transform-origin: top center;
+  }
+
+  .route-submit,
+  .route-alternative-button,
+  .checkpoint-button,
+  .departure-control button,
+  .route-swap,
+  .maplibregl-ctrl-group button {
+    transition: transform 140ms var(--motion-ease-out);
+  }
+
+  .route-swap svg,
+  .daan-disclosure-summary svg {
+    transition: transform 180ms var(--motion-ease-in-out);
+  }
+
+  .route-submit:active,
+  .checkpoint-button:active,
+  .departure-control button:active,
+  .maplibregl-ctrl-group button:active {
+    transform: scale(0.97);
+  }
+
+  .route-alternative-button:active {
+    transform: scale(0.98);
+  }
+
+  .route-swap:active {
+    transform: translateY(-50%) scale(0.94);
+  }
+
+  .route-swap:active svg {
+    transform: rotate(12deg);
+  }
+
+  .route-alternative-button[aria-pressed="true"] .text-brand-gold {
+    animation: daan-check-enter 160ms var(--motion-ease-out) both;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .route-submit:hover,
+    .route-alternative-button:hover,
+    .checkpoint-button:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+@keyframes daan-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes daan-sheet-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes daan-state-enter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes daan-popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes daan-check-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes daan-fade-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .daan-header,
+  .daan-map-shell,
+  .daan-map-intro,
+  .daan-route-sheet,
+  .route-result-summary,
+  #place-panel > section,
+  .route-place-field [role="listbox"] {
+    animation: daan-fade-enter 160ms var(--motion-ease-out) both !important;
+    transform: none !important;
+  }
+
+  .route-submit,
+  .route-alternative-button,
+  .checkpoint-button,
+  .departure-control button,
+  .route-swap,
+  .maplibregl-ctrl-group button,
+  .route-swap svg,
+  .daan-disclosure-summary svg {
+    transition: opacity 140ms var(--motion-ease-out) !important;
+  }
+}
