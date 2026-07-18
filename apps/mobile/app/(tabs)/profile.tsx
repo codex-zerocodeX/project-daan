@@ -1,9 +1,12 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import type { Session } from "@supabase/supabase-js";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { AuthForm } from "../../src/components/AuthForm";
+import { Button } from "../../src/components/ui/Button";
+import { Pill } from "../../src/components/ui/Pill";
 import { useProfile } from "../../src/hooks/useProfile";
 import { useSession } from "../../src/hooks/useSession";
 import { supabase } from "../../src/lib/supabase";
+import { color, font, radius, shadow, text } from "../../src/lib/theme";
 
 function ProfileView({ session }: { session: Session }) {
   const { data: profile, error, isPending } = useProfile(session.user.id);
@@ -11,19 +14,34 @@ function ProfileView({ session }: { session: Session }) {
   if (isPending) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={color.p500} />
       </View>
     );
   }
 
+  const name = profile ? profile.username : (session.user.email ?? "Rider");
+
   return (
     <View style={styles.container}>
-      <Text style={styles.username}>{profile ? profile.username : session.user.email}</Text>
-      {profile && <Text style={styles.karma}>Karma: {profile.karma}</Text>}
-      {error && <Text style={styles.error}>Could not load profile: {error.message}</Text>}
-      <Pressable style={styles.signOut} onPress={() => supabase.auth.signOut()}>
-        <Text style={styles.signOutText}>Sign out</Text>
-      </Pressable>
+      <View style={styles.card}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{name[0]?.toUpperCase() ?? "?"}</Text>
+        </View>
+        <Text style={styles.username}>{name}</Text>
+        {profile && (
+          <Pill bg={color.primarySoft} fg={color.p700}>
+            {`${profile.karma} karma`}
+          </Pill>
+        )}
+        {error && (
+          <Text style={styles.error}>
+            Could not load profile: {error.message}
+          </Text>
+        )}
+      </View>
+      <Button variant="outline" full onPress={() => supabase.auth.signOut()}>
+        Sign out
+      </Button>
     </View>
   );
 }
@@ -34,7 +52,7 @@ export default function ProfileScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={color.p500} />
       </View>
     );
   }
@@ -43,18 +61,45 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 24, gap: 8 },
-  center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  username: { fontSize: 24, fontWeight: "700" },
-  karma: { fontSize: 16, color: "#0a7ea4", fontWeight: "600" },
-  error: { color: "#c0392b" },
-  signOut: {
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: "#c0392b",
-    borderRadius: 8,
-    paddingVertical: 10,
+  container: { flex: 1, padding: 16, gap: 12, backgroundColor: color.bgApp },
+  center: {
+    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: color.bgApp,
   },
-  signOutText: { color: "#c0392b", fontWeight: "600" },
+  card: {
+    backgroundColor: color.card,
+    borderWidth: 1,
+    borderColor: color.borderSubtle,
+    borderRadius: radius.xl,
+    padding: 24,
+    alignItems: "center",
+    gap: 10,
+    ...shadow.card,
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: color.p200,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatarText: {
+    fontSize: text.h1,
+    fontFamily: font.sansExtraBold,
+    color: color.p700,
+  },
+  username: {
+    fontSize: text.h2,
+    fontFamily: font.sansExtraBold,
+    color: color.textStrong,
+  },
+  error: {
+    color: color.alert,
+    fontFamily: font.sansMedium,
+    fontSize: text.sm,
+    textAlign: "center",
+  },
 });

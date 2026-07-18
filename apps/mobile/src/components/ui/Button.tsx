@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { Pressable, StyleSheet, Text, type ViewStyle } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  type ViewStyle,
+} from "react-native";
 import { color, font, radius, shadow, text } from "../../lib/theme";
 
 type Props = {
@@ -9,6 +15,8 @@ type Props = {
   size?: "md" | "lg";
   full?: boolean;
   icon?: ReactNode;
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 const variantStyles: Record<NonNullable<Props["variant"]>, ViewStyle> = {
@@ -34,30 +42,40 @@ export function Button({
   size = "md",
   full = false,
   icon,
+  loading = false,
+  disabled = false,
 }: Props) {
   return (
     <Pressable
       onPress={onPress}
+      disabled={disabled || loading}
       style={({ pressed }) => [
         styles.base,
         variantStyles[variant],
         { height: size === "lg" ? 52 : 44 },
         full && styles.full,
         pressed && styles.pressed,
+        (disabled || loading) && styles.disabled,
       ]}
     >
-      {icon}
-      <Text
-        style={[
-          styles.label,
-          {
-            color: labelColor[variant],
-            fontSize: size === "lg" ? text.bodyLg : text.bodyMd,
-          },
-        ]}
-      >
-        {children}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color={labelColor[variant]} />
+      ) : (
+        <>
+          {icon}
+          <Text
+            style={[
+              styles.label,
+              {
+                color: labelColor[variant],
+                fontSize: size === "lg" ? text.bodyLg : text.bodyMd,
+              },
+            ]}
+          >
+            {children}
+          </Text>
+        </>
+      )}
     </Pressable>
   );
 }
@@ -74,5 +92,6 @@ const styles = StyleSheet.create({
   },
   full: { alignSelf: "stretch", flexGrow: 1 },
   pressed: { opacity: 0.85 },
+  disabled: { opacity: 0.6 },
   label: { fontFamily: font.sansSemiBold },
 });

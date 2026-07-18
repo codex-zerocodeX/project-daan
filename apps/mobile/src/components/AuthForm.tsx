@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { supabase } from "../lib/supabase";
+import { color, font, radius, text } from "../lib/theme";
+import { Button } from "./ui/Button";
 
 export function AuthForm() {
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
@@ -11,23 +13,37 @@ export function AuthForm() {
   const [busy, setBusy] = useState(false);
 
   async function submit() {
+    if (mode === "signUp" && !username.trim()) {
+      setError("Pick a username first.");
+      return;
+    }
     setBusy(true);
     setError(null);
     const result =
       mode === "signIn"
         ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password, options: { data: { username } } });
+        : await supabase.auth.signUp({
+            email,
+            password,
+            options: { data: { username: username.trim() } },
+          });
     if (result.error) setError(result.error.message);
     setBusy(false);
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{mode === "signIn" ? "Sign in to Komyut" : "Join Komyut"}</Text>
+      <Text style={styles.heading}>
+        {mode === "signIn" ? "Sign in to Komyut" : "Join Komyut"}
+      </Text>
+      <Text style={styles.subheading}>
+        Community-powered commuting for the Philippines.
+      </Text>
       {mode === "signUp" && (
         <TextInput
           style={styles.input}
           placeholder="Username"
+          placeholderTextColor={color.textMuted}
           autoCapitalize="none"
           value={username}
           onChangeText={setUsername}
@@ -36,6 +52,7 @@ export function AuthForm() {
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor={color.textMuted}
         autoCapitalize="none"
         keyboardType="email-address"
         value={email}
@@ -44,46 +61,55 @@ export function AuthForm() {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor={color.textMuted}
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       {error && <Text style={styles.error}>{error}</Text>}
-      <Pressable style={styles.button} onPress={submit} disabled={busy}>
-        {busy ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>{mode === "signIn" ? "Sign in" : "Sign up"}</Text>
-        )}
-      </Pressable>
-      <Pressable onPress={() => setMode(mode === "signIn" ? "signUp" : "signIn")}>
-        <Text style={styles.switchText}>
-          {mode === "signIn" ? "No account? Sign up" : "Have an account? Sign in"}
-        </Text>
-      </Pressable>
+      <Button size="lg" full loading={busy} onPress={submit}>
+        {mode === "signIn" ? "Sign in" : "Sign up"}
+      </Button>
+      <Button
+        variant="ghost"
+        full
+        onPress={() => setMode(mode === "signIn" ? "signUp" : "signIn")}
+      >
+        {mode === "signIn" ? "No account? Sign up" : "Have an account? Sign in"}
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 24, gap: 12 },
-  heading: { fontSize: 22, fontWeight: "700", marginBottom: 8 },
+  container: { flex: 1, padding: 24, gap: 12, backgroundColor: color.bgApp },
+  heading: {
+    fontSize: text.h1,
+    fontFamily: font.sansExtraBold,
+    color: color.textStrong,
+    letterSpacing: -0.5,
+    marginTop: 12,
+  },
+  subheading: {
+    fontSize: text.bodyMd,
+    fontFamily: font.sansMedium,
+    color: color.textMuted,
+    marginBottom: 8,
+  },
   input: {
+    height: 48,
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
+    borderColor: color.borderStrong,
+    borderRadius: radius.md,
     paddingHorizontal: 14,
-    paddingVertical: 10,
-    fontSize: 16,
-    backgroundColor: "#fff",
+    fontSize: text.bodyMd,
+    fontFamily: font.sansMedium,
+    color: color.textStrong,
+    backgroundColor: color.card,
   },
-  error: { color: "#c0392b" },
-  button: {
-    backgroundColor: "#0a7ea4",
-    borderRadius: 8,
-    paddingVertical: 12,
-    alignItems: "center",
+  error: {
+    color: color.alert,
+    fontFamily: font.sansMedium,
+    fontSize: text.sm,
   },
-  buttonText: { color: "#fff", fontWeight: "600", fontSize: 16 },
-  switchText: { color: "#0a7ea4", textAlign: "center", marginTop: 8 },
 });
