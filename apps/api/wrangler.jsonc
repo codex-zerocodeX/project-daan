@@ -8,6 +8,11 @@
   "observability": {
     "enabled": true,
     "logs": { "head_sampling_rate": 1 }
+  },
+  // Not a secret - a public allowlist of browser origins permitted to call the
+  // API. Comma-separated. localhost entries are for `expo start --web`.
+  "vars": {
+    "CORS_ORIGIN": "https://komyut-web.pages.dev,http://localhost:8081,http://localhost:8082"
   }
   // Secrets are NOT stored here. Set them once with:
   //   npx wrangler secret put SUPABASE_URL

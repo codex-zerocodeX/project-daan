@@ -25,9 +25,14 @@ export function createApp(deps: AppDeps) {
 
   // The Expo web build runs on a different origin than the API, so without this
   // the browser blocks every call and preflights 404. Native is unaffected.
-  // Set CORS_ORIGIN to the deployed web origin in production - "*" leaves the
-  // API callable from any page, and it has no auth of its own.
-  app.use("*", cors({ origin: deps.corsOrigin ?? "*" }));
+  // CORS_ORIGIN is a comma-separated allowlist - the deployed web origin plus
+  // localhost for dev. Falling back to "*" leaves the API callable from any
+  // page, and it has no auth of its own.
+  const origins = deps.corsOrigin
+    ?.split(",")
+    .map((o) => o.trim())
+    .filter(Boolean);
+  app.use("*", cors({ origin: origins?.length ? origins : "*" }));
 
   app.route("/health", healthRoute());
   app.route("/v1/threads", threadsRoute(deps));
