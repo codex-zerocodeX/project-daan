@@ -44,9 +44,9 @@
   "devDependencies": {
     "@types/geojson": "^7946.0.16",
     "@types/react": "~19.2.2",
-    "eslint": "^9.39.5",
+    "eslint": "^10.8.0",
     "eslint-config-expo": "^57.0.0",
-    "typescript": "~6.0.3"
+    "typescript": "~7.0.2"
   },
   "scripts": {
     "start": "expo start",
